@@ -87,6 +87,7 @@
 }
 .dashboard-card{
     margin-top: 27px;
+    margin-bottom: 48px;
     background-color: #000000;
     width: 100%;
     padding: 0.8125rem 1.5rem;
@@ -110,4 +111,33 @@
     font-size: 1.125rem;
     font-weight: 700;
     color: rgba(255, 255, 255);
+}
+.dashboard-navigate{
+    margin-bottom: 24px;
+    display: flex;
+    gap: 14px;
+}
+.dashboard-transaction{
+    margin-top: 27px;
+}
+.recent-head{
+    font-family: "Poppins" !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    color: #000000 !important;
+}
+.transaction{
+    margin-bottom: 10px;
+}
+.transaction-name{
+    font-family: "Poppins" !important;
+    font-size: 0.75rem !important;
+    font-weight: 500 !important;
+    color: #000000 !important;
+}
+.transaction-date{
+    font-family: "Poppins" !important;
+    font-size: 0.65rem !important;
+    font-weight: 500 !important;
+    color: #000000 !important;
 }

@@ -1,0 +1,21 @@
+.box{
+    width: 100%;
+    padding: 1.5rem;
+    border-radius: 25px;
+}
+.box svg{
+    font-size: 2rem;
+    color: #000000;
+}
+.box h2{
+    margin-top: 18px;
+    color: #050505;
+    font-family: "Poppins";
+    font-size: 0.875rem;
+}
+.box p{
+    margin-top: 8px;
+    color: #050505;
+    font-family: "Poppins";
+    font-size: 0.625rem;
+}

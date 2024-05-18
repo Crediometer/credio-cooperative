@@ -18,7 +18,7 @@ function App() {
         <Route path='/join-list' element={<List/>}/>
         <Route path='/register-admin' element={<Activate/>}/>
         <Route path='/register-member' element={<ActivateMember/>}/>
-        <Route path='/dashboard' element={<Dashboard/>}/>
+        <Route path='/dashboard' element={<Dashboard  />}/>
       </Routes>
     </div>
   );

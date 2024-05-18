@@ -14,7 +14,7 @@ const Join = () => {
                         placeholder="SEARCH FOR COOPERATIVE "
                     ></input>
                     <Link to='/join-list'><FaChevronRight/></Link>
-                </div   >
+                </div>
                 <Link className="setup-link" to="/">
                    <div className="setup">
                         <p>SET UP A COOPERATIVE</p>  
