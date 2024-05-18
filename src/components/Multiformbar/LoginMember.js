@@ -10,6 +10,7 @@ import Inputfield from '../Formfield/Inputfield';
 import Selectfield from '../Formfield/Selectfield';
 import { useState } from 'react';
 import styles4 from '../../pages/Activate/Activate.module.css'
+import { Link } from 'react-router-dom';
 // import Errormodal from "../Modal/Errormodal";
 // import ErrorBoundary from "../../ErrorBoundary";
 const LoginMember = ({next, personal, error, loading}) => {
@@ -128,7 +129,7 @@ const LoginMember = ({next, personal, error, loading}) => {
                                 <LottieAnimation data={loader}/>
                             </button>
                         ) : ( */}
-                            <button onClick={()=>{next();}} className={styles3.activateButton}><span>PROCEED</span></button>
+                            <Link to='/dashboard'><button onClick={()=>{next();}} className={styles3.activateButton}><span>PROCEED</span></button></Link>
                     
                     </div>
                 
