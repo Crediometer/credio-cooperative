@@ -1,23 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import {Routes, Route} from 'react-router-dom'
+import Admin from './pages/Admin/Admin';
+import Activate from './pages/Activate/Activate';
+import Member from './pages/Members/Member';
+import Join from './pages/Members/Join';
+import List from './pages/Members/List';
+import ActivateMember from './pages/Activate/ActivateMember';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path='/' element={<Admin/>}/>
+        <Route path='/onboardmember' element={<Member/>}/>
+        <Route path='/join' element={<Join/>}/>
+        <Route path='/join-list' element={<List/>}/>
+        <Route path='/register-admin' element={<Activate/>}/>
+        <Route path='/register-member' element={<ActivateMember/>}/>
+        <Route path='/dashboard' element={<Dashboard/>}/>
+      </Routes>
     </div>
   );
 }

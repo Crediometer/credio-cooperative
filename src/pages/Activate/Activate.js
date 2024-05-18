@@ -1,0 +1,50 @@
+import { useEffect, useState } from 'react';
+import MultiStepProgressbar from '../../components/Multiformbar/MultiStepProgressbar';
+import styles from './Activate.module.css'
+import Personal from '../../components/Multiformbar/Personal';
+import Business from '../../components/Multiformbar/Business';
+import Verification from '../../components/Multiformbar/Verification';
+import Payout from '../../components/Multiformbar/Payout';
+const Activate = ({personal, fetchgetprofile}) => {
+    let initialCount = 1;
+    // if (!personal) {
+    //   initialCount = 1;
+    // }
+    // } else {
+    //   initialCount = 2;
+    // }
+    const [index, setIndex] = useState(initialCount)
+    const nextButton = () => {
+        window.scrollTo(0, 0);
+        if (index < 5){
+            setIndex(prevIndex => prevIndex + 1)
+        } 
+    }
+
+    return (
+        <div className="test">
+
+            <div className="right">
+                <div className="content">
+                    <div className={styles.activate}>
+                        <p className={styles.activateHead}>Setup  new cooperative account </p> 
+                        <div className={styles.activateProgress}>
+                            <MultiStepProgressbar step={index}/>
+                        </div>
+                        <div className={styles.activateFormOuter}>
+                            <div className={styles.activateForm}>
+                                {index===1 && (<Personal next={nextButton}/>)}
+                                {index===2 && (<Business next={nextButton}/>)}
+                                {index===3 && (<Payout next={nextButton}/>)}
+                                {index===4 && (<Verification  next={nextButton} />)}
+                            </div>
+                            {/* <button onClick={nextButton} className={styles.activateButton}>Save</button> */}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default Activate;

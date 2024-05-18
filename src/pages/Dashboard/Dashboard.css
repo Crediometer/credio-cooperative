@@ -1,0 +1,113 @@
+.dashboard{
+    padding: 1.5rem;
+}
+.navbar-profile{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+}
+.navbar{
+    margin-left:0px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: white
+}
+.wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.search{
+    margin-left: 40px;
+    padding: 20px;
+    height: 30px;
+    width: 40%;
+    display: flex;
+    align-items: center;
+    border:  1px solid rgba(0, 0, 0, 0.64);
+    border-radius: 8px;
+}
+.search svg{
+    margin-right: 15px;
+    font-weight: 500;
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.6);
+}
+.navbar-profile-left{
+    display: flex;
+    align-items: center;
+}
+.bell{
+    position: relative;
+    margin-right: 15px;
+}
+.bell svg{
+    font-size: 1.8rem;
+}
+.number{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 10px;
+    height: 10px;
+    background-color: #F72525;
+    border-radius: 50%;
+}
+.number p{
+    font-size: 8px;
+    color: white;
+    text-align: center;
+}
+.user-image{
+    margin-right: 15px;
+}
+
+.greeting{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 15px;
+    color: #000000;
+}
+.name{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #000000;
+}
+.dropdown svg{
+    font-size: 20px;
+}
+.dashboard-card{
+    margin-top: 27px;
+    background-color: #000000;
+    width: 100%;
+    padding: 0.8125rem 1.5rem;
+    border-radius: 10px;
+}
+.card-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.savings p{
+    font-family: "Poppins";
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.8);
+}
+.savings h2{
+    font-family: "Poppins";
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255);
+}

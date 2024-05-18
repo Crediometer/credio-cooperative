@@ -1,0 +1,111 @@
+.ready{
+    color: #B11226;
+    font-family: 'Poppins';
+    font-size: 1.5rem;
+    font-weight: 700
+}
+
+.ready-text{
+    text-align: center;
+    margin-top: 28px;
+    color: #B11226;
+    font-family: 'Poppins';
+    font-size: 0.875rem;
+    font-weight: 500
+}
+.join-text{
+    text-align: center;
+    margin-top: 12px;
+    color: #2B2B2B;
+    font-family: 'Poppins';
+    font-size: 0.75rem;
+    font-weight: 500
+}
+.join-text-2{
+    margin-top:5px;
+}
+.join-search{
+    width: 100%;
+    margin-top: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.3125rem 1.1rem;
+    border-radius: 4px;
+    background-color: white;
+    -webkit-box-shadow: 4px 4px 4px 0px rgba(0,0,0,0.04);
+    -moz-box-shadow: 4px 4px 4px 0px rgba(0,0,0,0.04);
+    box-shadow: 4px 4px 4px 0px rgba(0,0,0,0.04);
+}
+.join-search input{
+    background-color: transparent;
+    height: 100%;
+    border: none;
+    color: #B11226;
+    font-family: 'Inter';
+    font-size: 0.65rem;
+    font-weight: 500;   
+}
+.join-search input::placeholder{
+    color: #B11226;
+    font-family: 'Inter';
+    font-size: 0.65rem;
+    font-weight: 500;   
+}
+.join-search input:focus{
+    outline: none;
+}
+.join-search-2{
+    width: 100%;
+    margin-top: 35px;
+    display: flex;
+    align-items: center; 
+    gap: 8px;           
+    padding: 1.3125rem 1.1rem;
+    border-radius: 4px;
+    background-color: white;
+    border: 1px solid #2B2B2B;
+}
+.join-search-2 input{
+    background-color: transparent;
+    height: 100%;
+    border: none;
+    color: #B11226;
+    font-family: 'Inter';
+    font-size: 0.65rem;
+    font-weight: 500;   
+}
+.join-search-2 input::placeholder{
+    color: #B11226;
+    font-family: 'Inter';
+    font-size: 0.65rem;
+    font-weight: 500;   
+}
+.join-search-2 input:focus{
+    outline: none;
+}
+.join-search p{
+    color: #B11226;
+    font-family: 'Inter';
+    font-size: 0.65rem;
+    font-weight: 500;   
+}
+.setup{
+    width: 100%;
+    margin-top: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.3125rem 1.1rem;
+    border-radius: 4px;
+    background-color: #B11226;
+    -webkit-box-shadow: 4px 4px 4px 0px rgba(0,0,0,0.04);
+    -moz-box-shadow: 4px 4px 4px 0px rgba(0,0,0,0.04);
+    box-shadow: 4px 4px 4px 0px rgba(0,0,0,0.04);
+}
+.setup p,.setup svg{
+    color: white;
+}
+.buttons-2{
+    margin-top:30px;
+}
