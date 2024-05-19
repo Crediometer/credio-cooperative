@@ -18,7 +18,7 @@ const Verification = ({next}) => {
                 <p className="login-head">Password: </p>
                 <p className="login-body">Modex123</p>
             </div>
-            <Link to='/onboardmember'>
+            <Link to='/dashboard'>
                 <button className={styles3.activateButton}>
                     DONE
                 </button>

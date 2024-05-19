@@ -117,6 +117,9 @@
     display: flex;
     gap: 14px;
 }
+.dashboard-navigate a{
+    width: 100%;
+}
 .dashboard-transaction{
     margin-top: 27px;
 }

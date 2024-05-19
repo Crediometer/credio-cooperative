@@ -60,24 +60,26 @@ const Dashboard = () => {
                     text="O/s Ordinary Savings"
                     des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                 />
-                <Box
-                    color="rgba(255, 19, 19, 0.128)"
-                    icons={<HiOutlinePlusSm/>}
-                    text="Savings"
-                    des="Lorem ipsum dolor sit amet, consectetur adipiscing "
-                />
+                <Link to="/saving">
+                    <Box
+                        color="rgba(255, 19, 19, 0.128)"
+                        icons={<HiOutlinePlusSm/>}
+                        text="Coop Savings"
+                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
+                    />
+                </Link>
             </div>
             <div className="dashboard-navigate">
                 <Box
                     color="rgba(18, 15, 199, 0.123)"
                     icons={<HiOutlinePlusSm/>}
-                    text="Withdrawals"
+                    text="Coop Withdrawals"
                     des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                 />
                 <Box
                     color="rgba(210, 193, 43, 0.123)"
                     icons={<HiOutlinePlusSm/>}
-                    text="Donations"
+                    text="Coop Donations"
                     des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                 />
             </div>
@@ -85,13 +87,13 @@ const Dashboard = () => {
                 <Box
                     color="rgba(184, 102, 67, 0.123)"
                     icons={<HiOutlinePlusSm/>}
-                    text="Loans"
+                    text="Coop Loans"
                     des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                 />
                 <Box
                     color="rgba(67, 176, 184, 0.128)"
                     icons={<HiOutlinePlusSm/>}
-                    text="Shares"
+                    text="Coop Shares"
                     des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                 />
             </div>

@@ -41,13 +41,13 @@
     background-color: transparent;
     height: 100%;
     border: none;
-    color: #B11226;
+    color: hsl(352, 82%, 38%);
     font-family: 'Inter';
     font-size: 0.65rem;
     font-weight: 500;   
 }
 .join-search input::placeholder{
-    color: #B11226;
+    color: rgb(255, 233, 233);
     font-family: 'Inter';
     font-size: 0.65rem;
     font-weight: 500;   
