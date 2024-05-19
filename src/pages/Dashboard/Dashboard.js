@@ -92,12 +92,14 @@ const Dashboard = () => {
                     text="Loans"
                     des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                 />
-                <Box
-                    color="rgba(67, 176, 184, 0.128)"
-                    icons={<HiOutlinePlusSm/>}
-                    text="Members"
-                    des="Lorem ipsum dolor sit amet, consectetur adipiscing "
-                />
+                <Link to="/register-member">
+                    <Box
+                        color="rgba(67, 176, 184, 0.128)"
+                        icons={<HiOutlinePlusSm/>}
+                        text="Members"
+                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
+                    />
+                </Link>
             </div>
             <div className="dashboard-transaction">
                 <h2 className="recent-head">Recent Transaction</h2>
