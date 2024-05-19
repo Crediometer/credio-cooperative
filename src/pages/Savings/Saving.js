@@ -30,7 +30,7 @@ const Saving = () => {
                 </div>
                 <div className="saving-card">
                     <div className="saving-card-top">
-                        <p className="card-name">Modex Weekly Savings</p>
+                        <p className="card-name"><Link to="/saving-details">Modex Weekly Savings</Link></p>
                         <div className="card-range">
                             <input type="range"></input>
                         </div>

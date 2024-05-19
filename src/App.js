@@ -9,6 +9,8 @@ import ActivateMember from './pages/Activate/ActivateMember';
 import Dashboard from './pages/Dashboard/Dashboard';
 import PersonalAjo from './pages/PersonalAjo/PersonalAjo';
 import Saving from './pages/Savings/Saving';
+import SavingDetails from './pages/Savings/SavingDetails';
+import Withdrawal from './pages/Withdrawal/Withdrawal';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
         <Route path='/register-member' element={<ActivateMember/>}/>
         <Route path='/dashboard' element={<Dashboard  />}/>
         <Route path='/saving' element={<Saving/>}/>
+        <Route path='/saving-details' element={<SavingDetails/>}/>
+        <Route path='/withdraw' element={<Withdrawal/>}/>
       </Routes>
     </div>
   );

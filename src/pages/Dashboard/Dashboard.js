@@ -70,12 +70,14 @@ const Dashboard = () => {
                 </Link>
             </div>
             <div className="dashboard-navigate">
-                <Box
-                    color="rgba(18, 15, 199, 0.123)"
-                    icons={<HiOutlinePlusSm/>}
-                    text="Coop Withdrawals"
-                    des="Lorem ipsum dolor sit amet, consectetur adipiscing "
-                />
+                <Link to='/withdraw'>
+                    <Box
+                        color="rgba(18, 15, 199, 0.123)"
+                        icons={<HiOutlinePlusSm/>}
+                        text="Coop Withdrawals"
+                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
+                    />
+                </Link>
                 <Box
                     color="rgba(210, 193, 43, 0.123)"
                     icons={<HiOutlinePlusSm/>}

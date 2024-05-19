@@ -94,6 +94,9 @@
     font-weight: 500;  
     color: rgba(3, 79, 37, 0.849);
 }
+.card-name a{
+    color: rgba(3, 79, 37, 0.849);  
+}
 .saving-card-body{
     margin-top: 28px;
     display: flex;
@@ -135,7 +138,28 @@ input[type="range"] {
     box-shadow: 0 0 2px 0 #555;
     transition: background .3s ease-in-out;
   }
-  
+  .saving-details{
+    margin-top: 20px;
+  }
   /* input[type=range]::-webkit-slider-runnable-track  {
     background: #E5E7EB;
   } */
+  .saving-left, .saving-right{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .saving-right h3{
+    font-size: 0.75rem;
+    color: #4B4B4B;
+    font-weight: 500;
+  }
+  .saving-right svg{
+    color: #B11226;
+    font-size: 1rem;
+  }
+  .saving-left svg{
+    color: #058B42;
+    font-size: 1rem;
+  }
+  
