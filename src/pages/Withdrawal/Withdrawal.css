@@ -1,6 +1,9 @@
 .withdrawal-body{
     margin-top: 57px;
 }
+.withdrawal-card{
+    margin-bottom: 22px;
+}
 .withdrawal-open{
     display: flex;
     align-items: center;
@@ -25,6 +28,7 @@
     padding: 1.5rem 1.2rem;
     display: flex;
     align-items: center;
+    gap: 10px;
     justify-content: space-between;
     background-color: white;
     border-radius:0px 5px 0px 5px;
@@ -32,11 +36,11 @@
     -moz-box-shadow: 4px 4px 4px 0px rgba(0,0,0,0.04);
     box-shadow: 4px 4px 4px 0px rgba(0,0,0,0.04);
 }
-.withdrawal-details h3{
-    font-size: 0.75rem;
-    font-weight: 500;
-    font-family:"Poppins";
-    color: #000000;
+.withdrawal-details h3, .withdrawal-status p{
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    font-family:"Poppins" !important;
+    color: #000000 !important;
 }
 .withdrawal-details p{
     font-size: 0.5rem;

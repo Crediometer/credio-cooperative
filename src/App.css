@@ -10,9 +10,8 @@ body{
 }
 a{
   /* width: 100%; */
-  text-decoration: none !important;
-  
+  text-decoration: none !important;  
 }
-.setup-link {
+.setup-link{
   width: 100%;
 }

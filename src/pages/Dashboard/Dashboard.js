@@ -23,7 +23,7 @@ const Dashboard = () => {
                             </div>
                             <div className="user-name">
                                 <p className='greeting'>Good day</p>
-                                <p className='name'>Richard Stone</p>
+                                <p className='name'>Richard Cooporative Society</p>
                             </div>
                         </div>
                     </div>
@@ -32,23 +32,23 @@ const Dashboard = () => {
             <div className="dashboard-card">
                 <div className="card-top">
                     <div className="savings">
-                        <p>My Savings</p>
-                        <h2>N50,000</h2>
+                        <p>Account Balance</p>
+                        <h2>N50,000,000</h2>
                     </div>
                     <div className="savings">
-                        <p>My Donations</p>
-                        <h2>N10,000</h2>
+                        <p style={{textAlign: "right"}}>Expenses</p>
+                        <h2 style={{textAlign: "right"}}>N1,000,000</h2>
                     </div>
                     
                 </div>
                 <div className="card-top">
                     <div className="savings">
-                        <p>My Withdrawals</p>
+                        <p>Withdrawals</p>
                         <h2>N220,000</h2>
                     </div>
                     <div className="savings">
-                        <p>My Loans</p>
-                        <h2>N9,000</h2>
+                        <p style={{textAlign: "right"}}>Loans</p>
+                        <h2 style={{textAlign: "right"}}>N350,000,000</h2>
                     </div>
                     
                 </div>
@@ -64,7 +64,7 @@ const Dashboard = () => {
                     <Box
                         color="rgba(255, 19, 19, 0.128)"
                         icons={<HiOutlinePlusSm/>}
-                        text="Coop Savings"
+                        text="Savings"
                         des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                     />
                 </Link>
@@ -74,14 +74,14 @@ const Dashboard = () => {
                     <Box
                         color="rgba(18, 15, 199, 0.123)"
                         icons={<HiOutlinePlusSm/>}
-                        text="Coop Withdrawals"
+                        text="Withdrawals"
                         des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                     />
                 </Link>
                 <Box
                     color="rgba(210, 193, 43, 0.123)"
                     icons={<HiOutlinePlusSm/>}
-                    text="Coop Donations"
+                    text="Expenses"
                     des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                 />
             </div>
@@ -89,13 +89,13 @@ const Dashboard = () => {
                 <Box
                     color="rgba(184, 102, 67, 0.123)"
                     icons={<HiOutlinePlusSm/>}
-                    text="Coop Loans"
+                    text="Loans"
                     des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                 />
                 <Box
                     color="rgba(67, 176, 184, 0.128)"
                     icons={<HiOutlinePlusSm/>}
-                    text="Coop Shares"
+                    text="Members"
                     des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                 />
             </div>

@@ -54,6 +54,174 @@ const Withdrawal = () => {
                             </div>
                         </div>
                     )}
+                </div>
+                <div className="withdrawal-card">
+                    <div className="withdrawal-open">
+                        <div className="withdrawal-left">
+                            <p>Adewumi  098356363463</p>
+                        </div>
+                        <div className="withdrawal-right" onClick={()=>{setShow(!show)}}>
+                            <p>See Details</p>
+                        </div>
+                    </div>
+                    {show && (
+                        <div className="withdrawal-details">
+                            <div className="withdrawal-section">
+                                <h3>N900,000</h3>
+                                <p>Amount Requested :</p>
+                            </div>
+                            <div className="withdrawal-section">
+                                <h3>N1,000,000</h3>
+                                <p>Amount In Savings:</p>
+                            </div>
+                            <div className="withdrawal-section">
+                                <h3>17-03-2023</h3>
+                                <p>Maturity Date : </p>
+                            </div>
+                            <div className="withdrawal-section">
+                                <div className="withdrawal-status">
+                                    <p>Pending</p>
+                                    <div onClick={()=>{setShowDrop(!showDrop)}}>
+                                        <IoMdArrowDropdown/>
+                                    </div>
+                                    {showDrop && (
+                                        <div className="dropdown">
+                                            <p>Approve</p>
+                                            <p>Pending</p>
+                                            <p>Failed</p>
+                                        </div>
+                                    )}
+                                </div>
+                                <p>Status</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+                <div className="withdrawal-card">
+                    <div className="withdrawal-open">
+                        <div className="withdrawal-left">
+                            <p>Abisola  09098748799</p>
+                        </div>
+                        <div className="withdrawal-right" onClick={()=>{setShow(!show)}}>
+                            <p>See Details</p>
+                        </div>
+                    </div>
+                    {show && (
+                        <div className="withdrawal-details">
+                            <div className="withdrawal-section">
+                                <h3>N900,000</h3>
+                                <p>Amount Requested :</p>
+                            </div>
+                            <div className="withdrawal-section">
+                                <h3>N1,000,000</h3>
+                                <p>Amount In Savings:</p>
+                            </div>
+                            <div className="withdrawal-section">
+                                <h3>17-03-2023</h3>
+                                <p>Maturity Date : </p>
+                            </div>
+                            <div className="withdrawal-section">
+                                <div className="withdrawal-status">
+                                    <p>Pending</p>
+                                    <div onClick={()=>{setShowDrop(!showDrop)}}>
+                                        <IoMdArrowDropdown/>
+                                    </div>
+                                    {showDrop && (
+                                        <div className="dropdown">
+                                            <p>Approve</p>
+                                            <p>Pending</p>
+                                            <p>Failed</p>
+                                        </div>
+                                    )}
+                                </div>
+                                <p>Status</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+                <div className="withdrawal-card">
+                    <div className="withdrawal-open">
+                        <div className="withdrawal-left">
+                            <p>Oyekunle  0812678998</p>
+                        </div>
+                        <div className="withdrawal-right" onClick={()=>{setShow(!show)}}>
+                            <p>See Details</p>
+                        </div>
+                    </div>
+                    {show && (
+                        <div className="withdrawal-details">
+                            <div className="withdrawal-section">
+                                <h3>N900,000</h3>
+                                <p>Amount Requested :</p>
+                            </div>
+                            <div className="withdrawal-section">
+                                <h3>N1,000,000</h3>
+                                <p>Amount In Savings:</p>
+                            </div>
+                            <div className="withdrawal-section">
+                                <h3>17-03-2023</h3>
+                                <p>Maturity Date : </p>
+                            </div>
+                            <div className="withdrawal-section">
+                                <div className="withdrawal-status">
+                                    <p>Pending</p>
+                                    <div onClick={()=>{setShowDrop(!showDrop)}}>
+                                        <IoMdArrowDropdown/>
+                                    </div>
+                                    {showDrop && (
+                                        <div className="dropdown">
+                                            <p>Approve</p>
+                                            <p>Pending</p>
+                                            <p>Failed</p>
+                                        </div>
+                                    )}
+                                </div>
+                                <p>Status</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+                <div className="withdrawal-card">
+                    <div className="withdrawal-open">
+                        <div className="withdrawal-left">
+                            <p>Ademuyiwa  09098758993</p>
+                        </div>
+                        <div className="withdrawal-right" onClick={()=>{setShow(!show)}}>
+                            <p>See Details</p>
+                        </div>
+                    </div>
+                    {show && (
+                        <div className="withdrawal-details">
+                            <div className="withdrawal-section">
+                                <h3>N900,000</h3>
+                                <p>Amount Requested :</p>
+                            </div>
+                            <div className="withdrawal-section">
+                                <h3>N1,000,000</h3>
+                                <p>Amount In Savings:</p>
+                            </div>
+                            <div className="withdrawal-section">
+                                <h3>17-03-2023</h3>
+                                <p>Maturity Date : </p>
+                            </div>
+                            <div className="withdrawal-section">
+                                <div className="withdrawal-status">
+                                    <p>Pending</p>
+                                    <div onClick={()=>{setShowDrop(!showDrop)}}>
+                                        <IoMdArrowDropdown/>
+                                    </div>
+                                    {showDrop && (
+                                        <div className="dropdown">
+                                            <p>Approve</p>
+                                            <p>Pending</p>
+                                            <p>Failed</p>
+                                        </div>
+                                    )}
+                                </div>
+                                <p>Status</p>
+                            </div>
+                        </div>
+                    )}
                 </div>  
             </div>
         </div>    
