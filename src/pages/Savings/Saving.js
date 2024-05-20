@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Graph from "../../components/Graph/Graph";
 import { useState } from "react";
 const Saving = () => {
-    const [number, setNumber] = useState(1)
+    const [number, setNumber] = useState(1);
     return ( 
         <div className="saving">
             <div className="back">

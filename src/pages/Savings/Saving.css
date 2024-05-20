@@ -167,4 +167,36 @@ input[type="range"] {
     color: #058B42;
     font-size: 1rem;
   }
-  
+.filter-top{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    margin-bottom: 10px;
+}
+.filter-top button{
+    padding: 0.5rem 1.5rem;
+    background-color: #B11226;
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+    font-family: 'Poppins';
+    font-size: 1rem;
+    color: white;
+    font-weight: 600;
+}
+.search-filter{
+    width: 40%;
+    padding: 0.8rem;
+}
+.view-button{
+    padding: 0.5rem 0.5rem;
+    background-color: #B11226;
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+    font-family: 'Poppins';
+    font-size: 1rem;
+    color: white;
+    font-weight: 600;
+}

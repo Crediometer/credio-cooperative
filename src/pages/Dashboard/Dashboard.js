@@ -92,7 +92,7 @@ const Dashboard = () => {
                     text="Loans"
                     des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                 />
-                <Link to="/register-member">
+                <Link to="/member">
                     <Box
                         color="rgba(67, 176, 184, 0.128)"
                         icons={<HiOutlinePlusSm/>}

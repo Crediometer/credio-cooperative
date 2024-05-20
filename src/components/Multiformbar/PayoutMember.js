@@ -9,10 +9,11 @@ const PayoutMember = ({next}) => {
             <div className="payout-icon"><BiLike/></div>
             <h2>Congrats</h2>
             <p > You are new a member of <span>Modex  </span> cooperative society</p>
-            <button onClick={()=>{next()}} className={styles3.activateButton}>
-                GET LOGIN DETAILS
-            </button>
-    
+            <Link to='/member'      >
+                <button className={styles3.activateButton}>
+                    Ok
+                </button>
+            </Link>
         </div>
     );
 }

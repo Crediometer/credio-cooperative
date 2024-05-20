@@ -6,7 +6,7 @@ import { FaCheck } from 'react-icons/fa';
 const MultiStepProgressbarMember = (props) => {
     return ( 
         <ProgressBar
-            percent={((props.step - 1) * 100)/3}
+            percent={((props.step - 1) * 100)/2}
             filledBackground="#E24E61"
             height="2px"
             width='100%'
@@ -41,7 +41,7 @@ const MultiStepProgressbarMember = (props) => {
             </div>
             )}
             </Step>
-            <Step transition="scale">
+            {/* <Step transition="scale">
             {({ accomplished, index}) => (
                 <div className='step-outer'>
                     <div className={`step-number ${accomplished ? "completed" : ""}`}>
@@ -50,7 +50,7 @@ const MultiStepProgressbarMember = (props) => {
                     <p className={`step-name ${accomplished ? "completed" : ""}`}>login Details<br></br></p>
                 </div>
             )}
-            </Step>
+            </Step> */}
       </ProgressBar>
     );
 }

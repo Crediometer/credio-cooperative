@@ -227,6 +227,9 @@
 .payout p span{
     color: #B11226;
 }
+.payout a{
+    width: 100%;
+}
 .dropzone{
     display: flex;
     flex-direction: column;

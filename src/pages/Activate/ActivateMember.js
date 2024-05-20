@@ -21,7 +21,7 @@ const ActivateMember = ({personal, fetchgetprofile}) => {
     const [index, setIndex] = useState(initialCount)
     const nextButton = () => {
         window.scrollTo(0, 0);
-        if (index < 5){
+        if (index < 4){
             setIndex(prevIndex => prevIndex + 1)
         } 
     }
@@ -41,7 +41,7 @@ const ActivateMember = ({personal, fetchgetprofile}) => {
                                 {index===1 && (<PersonalMember next={nextButton}/>)}
                                 {index===2 && (<BusinessMember next={nextButton}/>)}
                                 {index===3 && (<PayoutMember next={nextButton}/>)}
-                                {index===4 && (<LoginMember next={nextButton} />)}
+                                {/* {index===4 && (<LoginMember next={nextButton} />)} */}
                             </div>
                             {/* <button onClick={nextButton} className={styles.activateButton}>Save</button> */}
                         </div>

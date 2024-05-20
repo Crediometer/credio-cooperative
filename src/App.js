@@ -11,6 +11,8 @@ import PersonalAjo from './pages/PersonalAjo/PersonalAjo';
 import Saving from './pages/Savings/Saving';
 import SavingDetails from './pages/Savings/SavingDetails';
 import Withdrawal from './pages/Withdrawal/Withdrawal';
+import MemberList from './pages/Members/MemberList';
+import MemberDetails from './pages/Members/MemberDetails';
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
         <Route path='/saving' element={<Saving/>}/>
         <Route path='/saving-details' element={<SavingDetails/>}/>
         <Route path='/withdraw' element={<Withdrawal/>}/>
+        <Route path='/member' element={<MemberList/>}/>
+        <Route path='/member-details' element={<MemberDetails/>}/>
       </Routes>
     </div>
   );

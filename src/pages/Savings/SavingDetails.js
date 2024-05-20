@@ -38,7 +38,7 @@ const SavingDetails = () => {
                         <p className="transaction-name">Oyekunle Timothy</p>
                     </div>
                     <div className="transaction-right saving-right">
-                        <h3>N400,000</h3>
+                        <h3>N40,000</h3>
                         <IoMdArrowDropdown/>
                     </div>
                 </div>
