@@ -7,6 +7,7 @@ import { PiBellSimpleFill } from "react-icons/pi";
 import {IoMdArrowDropdown} from 'react-icons/io'
 import { Link } from 'react-router-dom';
 import Box from "../../components/Box/Box";
+
 const Dashboard = () => {
     return ( 
         <div className="dashboard">
@@ -53,13 +54,28 @@ const Dashboard = () => {
                     
                 </div>
             </div>
+            <div className="date-picker">
+                <div className="statement-date">
+                    <input
+                        type='text'
+                        placeholder='Start Date'
+                        className='transferfield'
+                        onFocus={(e) => (e.target.type = "date")}
+                        onBlur={(e) => {(e.target.type = "text");}}
+                        // onChange={handlestartdate}
+                        required
+                    ></input>
+                </div>
+            </div>
             <div className="dashboard-navigate">
-                <Box
-                    color="rgba(5, 139, 65, 0.123)"
-                    icons={<HiOutlinePlusSm/>}
-                    text="O/s Ordinary Savings"
-                    des="Lorem ipsum dolor sit amet, consectetur adipiscing "
-                />
+                <Link to="/payment">
+                    <Box
+                        color="rgba(5, 139, 65, 0.123)"
+                        icons={<HiOutlinePlusSm/>}
+                        text="Payments"
+                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
+                    />
+                </Link>
                 <Link to="/saving">
                     <Box
                         color="rgba(255, 19, 19, 0.128)"

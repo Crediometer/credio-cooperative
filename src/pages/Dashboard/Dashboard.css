@@ -120,6 +120,9 @@
 .dashboard-navigate a{
     width: 105%;
 }
+.dashboard-navigate div{
+    width: 100%;
+}
 .dashboard-transaction{
     margin-top: 27px;
 }
@@ -143,4 +146,29 @@
     font-size: 0.65rem !important;
     font-weight: 500 !important;
     color: #000000 !important;
+}
+.date-picker{
+    margin-bottom: 20px;
+}
+
+.statement-date{
+    width: 15%;
+    display: flex;
+    align-items: center;
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 0.625rem;
+}
+.transferfield{
+    margin-left: 10px;
+    border: none;
+    background-color: transparent;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    color: #2B2B2B; 
+}
+.transferfield:focus{
+    outline: none;
 }

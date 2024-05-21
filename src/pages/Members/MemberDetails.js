@@ -23,10 +23,13 @@ const MemberDetails = () => {
                             <div className="user-image">
                                 <img src={image}></img>
                             </div>
-                            <div className="user-name">
-                                <p className='greeting'>Good day</p>
-                                <p className='name'>Ademola John</p>
-                            </div>
+                            <Link to="/member-profile">
+                                <div className="user-name">
+                                    <p className='greeting'>Good day</p>
+                                    <p className='name'>Ademola John</p>
+                                </div>
+                            </Link>
+                        
                         </div>
                     </div>
                 </div>
@@ -35,7 +38,7 @@ const MemberDetails = () => {
                 <div className="card-top">
                     <div className="savings">
                         <p>Account Balance</p>
-                        <h2>N50,000,000</h2>
+                        <h2>-N800,000</h2>
                     </div>
                     <div className="savings">
                         <p style={{textAlign: "right"}}>Loan</p>
@@ -45,23 +48,22 @@ const MemberDetails = () => {
                 </div>
                 <div className="card-top">
                     <div className="savings">
-                        <p>Withdrawals</p>
-                        <h2>N220,000</h2>
+                        <p >Savings</p>
+                        <h2 >N50,000</h2>
                     </div>
                     <div className="savings">
-                        <p style={{textAlign: "right"}}>Loans Repayed</p>
+                        <p style={{textAlign: "right"}}>Loan Repayed</p>
                         <h2 style={{textAlign: "right"}}>N200,000</h2>
                     </div>
-                    
                 </div>
             </div>
-            <div className="dashboard-navigate">
+            <div className="dashboard-navigate member-navigate">
                 <div onClick={()=>{setNumber(1)}}>
                     <Box
                         onClick={()=>{setNumber(1)}}
                         color="rgba(18, 15, 199, 0.123)"
                         icons={<HiOutlinePlusSm/>}
-                        text="Withdrawals"
+                        text="Transaction History"
                         des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                     />
                 </div>
@@ -81,8 +83,17 @@ const MemberDetails = () => {
                         des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                     />
                 </div>
-                   
-                </div>  
+                <div>
+                    <Link to="/payment">
+                        <Box
+                            color="rgba(5, 139, 65, 0.123)"
+                            icons={<HiOutlinePlusSm/>}
+                            text="Payments"
+                            des="Lorem ipsum dolor sit amet, consectetur adipiscing "
+                        />
+                    </Link>
+                </div>       
+            </div>  
 
             {number === 1 && (
                 <div className="dashboard-transaction">

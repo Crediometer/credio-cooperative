@@ -50,20 +50,20 @@
     padding-bottom: 25px;
     width: 48%;
     height: 64px;
-    border-bottom: 2px solid #6445BE;
+    border-bottom: 2px solid #B11226;
     border-radius: 9px;
-    background-color: white;
+    background-color: #f07b8b39;
 }
 .profile-textarea{
     height: 120px;
 }
 .profile-name label, .profile-other label{
-    font-family: 'Darker Grotesque';
+    font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
     font-size: 17.1607px;
     line-height: 120%;
-    color: #6445BE;
+    color: #B11226;
     margin: 0;
     padding: 0;
 }
@@ -90,7 +90,7 @@
     margin-top: 30px;
 }
 .submit-2 input{
-    font-family: 'Darker Grotesque';
+    font-family: 'Poppins';
     font-style: normal;
     font-weight: 700;
     font-size: 19.4488px;

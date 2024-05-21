@@ -1,5 +1,5 @@
 import './ProfileForm.css';
-import profile from '../../image/profile-image.jpg';
+import profile from '../../Assets/image.svg';
 import {FiEdit2} from 'react-icons/fi'
 const ProfileForm = () => {
     return ( 
@@ -52,19 +52,19 @@ const ProfileForm = () => {
                 </div>
                 <div className="form-6">
                     <div className="profile-other">
-                        <label>Optional E-mail</label><br></br>
+                        <label>Occuption</label><br></br>
                         <input
                         type='email'
-                        placeholder='Efahde9879_1smon@gmail.com'
+                        placeholder='Teacher'
                         ></input>
                     </div>
                 </div>
                 <div className="form-5">
                     <div className="profile-name">
-                        <label>Nationality </label><br></br>
+                        <label>Address </label><br></br>
                         <input
                         type='text'
-                        placeholder='Efua Etimobong'
+                        placeholder='Alagbaka Extension, Akure, Ondo State'
                         ></input>
                     </div>
                     <div className="profile-name">
@@ -74,13 +74,61 @@ const ProfileForm = () => {
                         placeholder='Efua Etimobong'
                         ></input>
                     </div>
+                </div>    
+                <div className="form-5">
+                    <div className="profile-name">
+                        <label>Age </label><br></br>
+                        <input
+                        type='text'
+                        placeholder='28'
+                        ></input>
+                    </div>
+                    <div className="profile-name">
+                        <label>State of origin </label><br></br>
+                        <input
+                        type='text'
+                        placeholder='Ondo State'
+                        ></input>
+                    </div>
                 </div>
                 <div className="form-6">
                     <div className="profile-other">
-                        <label>Password</label><br></br>
+                        <label>Gender</label><br></br>
                         <input
-                        type='password'
-                        placeholder='xxxxxxxxxxxxxxxxxxx'
+                        type='text'
+                        placeholder='Male'
+                        ></input>
+                    </div>
+                </div>
+                <div className="form-5">
+                    <div className="profile-name">
+                        <label>Religion </label><br></br>
+                        <input
+                        type='text'
+                        placeholder='28'
+                        ></input>
+                    </div>
+                    <div className="profile-name">
+                        <label>occupation/Business Address </label><br></br>
+                        <input
+                        type='text'
+                        placeholder='Ondo State'
+                        ></input>
+                    </div>
+                </div>
+                <div className="form-5">
+                    <div className="profile-name">
+                        <label>Next of kin</label><br></br>
+                        <input
+                        type='text'
+                        placeholder='28'
+                        ></input>
+                    </div>
+                    <div className="profile-name">
+                        <label>Next of kin address </label><br></br>
+                        <input
+                        type='text'
+                        placeholder='Ondo State'
                         ></input>
                     </div>
                 </div>
