@@ -167,333 +167,142 @@ const NewStudent = ({}) => {
     // },[]);
     return ( 
         <div className="payment saving">
-            <div className="filter-nav">
+            {/* <div className="filter-nav">
                 <p className={(number===1) ? "filter-text filter-active": "filter-text"} onClick={()=>{setNumber(1)}}>Cash Payment</p>
                 <p className={(number===2) ? "filter-text filter-active": "filter-text"} onClick={()=>{setNumber(2)}}>Card Payment</p>
                 <p className={(number===3) ? "filter-text filter-active": "filter-text"} onClick={()=>{setNumber(3)}}>Direct Bank Debit</p>
                 <p className={(number===4) ? "filter-text filter-active": "filter-text"} onClick={()=>{setNumber(4)}}>Recuring Payment</p>
+            </div> */}
+            <form>
+                <div className="invoice-body">
+                    <div className="invoice-payment">
+                        <h4 className="form-head">Student details</h4>
+                        <div className="payment-form">
+                            <div className="form-1">
+                                <label>Student Name<span>*</span></label>
+                                <div className="input-search-name">
+                                    <input 
+                                        type="text"
+                                        onChange={handleSchoolName}
+                                        onBlurCapture={handleSchoolName}
+                                        required
+                                    ></input>
+                                </div>
+                            </div>
 
-            </div>
-            {(number===4) && (
-                <form>
-                    <div className="invoice-body">
-                        <div className="invoice-payment">
-                            <h4 className="form-head">Student details</h4>
-                            <div className="payment-form">
+                            <div className="form-1">
+                                <label>Parent/Guardian Email Address<span>*</span></label>
+                                <div className="input-search-name">
+                                    <input 
+                                        type="email"
+                                        onChange={handleEmail}
+                                        onBlur={handleEmail}
+                                        required
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className="form-22 form-2-mobile">
                                 <div className="form-1">
-                                    <label>Student Name<span>*</span></label>
+                                    <label>Student Grade<span>*</span></label>
                                     <div className="input-search-name">
                                         <input 
                                             type="text"
-                                            onChange={handleSchoolName}
-                                            onBlurCapture={handleSchoolName}
                                             required
+                                            onChange={handleStudentGrade}
+                                            onBlur={handleStudentGrade}
                                         ></input>
                                     </div>
                                 </div>
-
                                 <div className="form-1">
-                                    <label>Parent/Guardian Email Address<span>*</span></label>
+                                    <label>Parent/Guardian Phone Number<span>*</span></label>
                                     <div className="input-search-name">
                                         <input 
-                                            type="email"
-                                            onChange={handleEmail}
-                                            onBlur={handleEmail}
+                                            type="text"
                                             required
-                                        ></input>
-                                    </div>
-                                </div>
-                                <div className="form-22 form-2-mobile">
-                                    <div className="form-1">
-                                        <label>Student Grade<span>*</span></label>
-                                        <div className="input-search-name">
-                                            <input 
-                                                type="text"
-                                                required
-                                                onChange={handleStudentGrade}
-                                                onBlur={handleStudentGrade}
-                                            ></input>
-                                        </div>
-                                    </div>
-                                    <div className="form-1">
-                                        <label>Parent/Guardian Phone Number<span>*</span></label>
-                                        <div className="input-search-name">
-                                            <input 
-                                                type="text"
-                                                required
-                                                onChange={handlePhoneNumber}
-                                                onBlur={handlePhoneNumber}
-                                                maxLength={11}
-                                            ></input>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="form-1">
-                                    <label>Terms<span>*</span></label>
-                                    <div className="select-field">
-                                        <select type="text" 
-                                            required
-                                            onChange={handleTerm}
-                                            onBlur={handleTerm}
-                                        >
-                                            <optgroup>
-                                                <option value={1}>Select Term</option>
-                                                <option value={1}>First Term</option>
-                                                <option value={2}>Second Term</option>
-                                                <option value={3}>Third Term</option>
-                                            </optgroup>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div className="form-1">
-                                    <label>Message</label>
-                                    <div className="input-search-name">
-                                        <input type="text"
-                                            onChange={handleMessage}
-                                            onBlur={handleMessage}
+                                            onChange={handlePhoneNumber}
+                                            onBlur={handlePhoneNumber}
+                                            maxLength={11}
                                         ></input>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="invoice-period">
-                            <h4 className="form-head">Period</h4>
-                            <div className="payment-form">
-                                <div className="form-1">
-                                    <label>Repeat Every<span>*</span></label>
-                                    <div className="select-field">
-                                        <select type="text" required onChange={handlerepeat} onBlur={handlerepeat}>
-                                            <optgroup>
-                                                <option>--Select Option--</option>
-                                                <option value={5}>5 Days</option>
-                                                <option value={7}>7 Days</option>
-                                                <option value={15}>Biweekly</option>
-                                                <option value={30}>Monthly</option>
-                                            </optgroup>
-                                        </select>
-                                    </div>
+                            <div className="form-1">
+                                <label>Terms<span>*</span></label>
+                                <div className="select-field">
+                                    <select type="text" 
+                                        required
+                                        onChange={handleTerm}
+                                        onBlur={handleTerm}
+                                    >
+                                        <optgroup>
+                                            <option value={1}>Select Term</option>
+                                            <option value={1}>First Term</option>
+                                            <option value={2}>Second Term</option>
+                                            <option value={3}>Third Term</option>
+                                        </optgroup>
+                                    </select>
                                 </div>
-                                <div className="form-1">
-                                    <label>Enter Total Amount<span>*</span></label>
-                                    <div className="input-search-name">
-                                        <input type="text" required onChange={handletotal} onBlur={handletotal}></input>
-                                    </div>
-                                </div>
-                                <div className="form-1">
-                                    <label>Enter Amount per unit<span>*</span></label>
-                                    <div className="input-search-name">
-                                        <input type="text" required onChange={handleunit} onBlur={handleunit}></input>
-                                    </div>
-                                </div>
-                                <div className="form-1">
-                                    <label>Start Date<span>*</span></label>
-                                    <div className="input-search-name">
-                                        <input type="date" required value={startDate} disabled></input>
-                        
-                                    </div>
-                                </div>
-                                <div className="form-1">
-                                    <label>End Date<span>*</span></label>
-                                    <div className="input-search-name">
-                                        <input type="date" required value={endDate} disabled ></input>
-                                    </div>
+                            </div>
+                            <div className="form-1">
+                                <label>Message</label>
+                                <div className="input-search-name">
+                                    <input type="text"
+                                        onChange={handleMessage}
+                                        onBlur={handleMessage}
+                                    ></input>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="save-con save-con-4">
-                        <button>Connect to Credio Reader</button>
-                    </div>
-                </form>
-            )}
-            {(number===3) && (
-                <div className="content">
-                    {/* {(num % 2 == 0) ? ( */}
-                        <div className="transfer">
-                        <p className="transfer-head">Fund Transfer</p>
-                        <div className="transfer-body">
-                            <div className="transfer-inner">
-                                <div className="transfer-to">
-                                    <p className='transfer-to-title'>Transfer To :</p>
-                                    <div className="transfer-to-inner">
-                                        <div className="to" onClick={handleClick}>
-                                            <p>Credio Account </p>
-                                            <div className="to-inner">
-                                                <div className="to-image">
-                                                    <img src={credio}></img>
-                                                </div>
-                                                <div className="to-select">
-                                                    <input type="radio" checked={isChecked} onChange={handleClick} name="bank" value="credio"  ></input>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                        <div className="to" onClick={handleClick}>
-                                            <p>Other Bank</p>
-                                            <div className="to-inner">
-                                                <div className="to-image">
-                                                    <BsBank2/>
-                                                </div>
-                                                <div className="to-select">
-                                                    <input type="radio" checked={!isChecked} onChange={handleClick} name="bank" value="credio"  ></input>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                    <div className="invoice-period">
+                        <h4 className="form-head">Period</h4>
+                        <div className="payment-form">
+                            <div className="form-1">
+                                <label>Repeat Every<span>*</span></label>
+                                <div className="select-field">
+                                    <select type="text" required onChange={handlerepeat} onBlur={handlerepeat}>
+                                        <optgroup>
+                                            <option>--Select Option--</option>
+                                            <option value={5}>5 Days</option>
+                                            <option value={7}>7 Days</option>
+                                            <option value={15}>Biweekly</option>
+                                            <option value={30}>Monthly</option>
+                                        </optgroup>
+                                    </select>
                                 </div>
-                                <div className="transfer-form">
-                                    <form method="POST">
-                                        {/* <LottieAnimation lotti={preloader} height={150} width={150} /> */}
-                                        <div className="form-1-outer">
-                                            {(!isChecked) && (
-                                                <div className="form-11">
-                                                    <div className="input">
-                                                        <label className='form-1-label'>Beneficiary’s  Bank </label>
-                                                        <div className="form-1-select" onClick={handleShow}>
-                                                            <p>{selectBank}</p>
-                                                            <FaChevronDown/>
-                                                        </div>
-                                                    </div>
-                                                    {showBank && (
-                                                        <div className="bank-select">
-                                                            <div className="bank-select-top">
-                                                                <p>Select a Bank</p>
-                                                                <div className="select-cancel" onClick={handleShow}>
-                                                                    <FaTimes/>
-                                                                </div>
-                                                            </div>
-                                                            <div className="bank-select-search">
-                                                                <input type='text' placeholder='Search for bank'></input>
-                                                            </div>
-                                                            <div className="bank-select-body">
-                                                            {/* {bank?.loading ? (
-                                                            <LottieAnimation data={preloader}/> 
-                                                            ):( */}
-                                                                <div>
-                                                                    {/* {bank?.filter(banks => banks.name.toLowerCase().includes(query)).map((bank)=>{
-                                                                        return( */}
-                                                                            <div className="banks" onClick={() => {handleShow()}}>
-                                                                                <div className="bank-icon">
-                                                                                    <BsBank2/>
-                                                                                </div>
-                                                                                <p className="bank-name">Sterling bank</p>
-                                                                            </div>
-                                                                            <div className="banks" onClick={() => {handleShow()}}>
-                                                                                <div className="bank-icon">
-                                                                                    <BsBank2/>
-                                                                                </div>
-                                                                                <p className="bank-name">UBA</p>
-                                                                            </div>
-                                                                            <div className="banks" onClick={() => {handleShow()}}>
-                                                                                <div className="bank-icon">
-                                                                                    <BsBank2/>
-                                                                                </div>
-                                                                                <p className="bank-name">GTB Bank</p>
-                                                                            </div>
-                                                                            <div className="banks" onClick={() => {handleShow()}}>
-                                                                                <div className="bank-icon">
-                                                                                    <BsBank2/>
-                                                                                </div>
-                                                                                <p className="bank-name">Zenith Bank</p>
-                                                                            </div>
-                                                                            <div className="banks" onClick={() => {handleShow()}}>
-                                                                                <div className="bank-icon">
-                                                                                    <BsBank2/>
-                                                                                </div>
-                                                                                <p className="bank-name">Polaris bank</p>
-                                                                            </div>
-                                                                            <div className="banks" onClick={() => {handleShow()}}>
-                                                                                <div className="bank-icon">
-                                                                                    <BsBank2/>
-                                                                                </div>
-                                                                                <p className="bank-name">First bank</p>
-                                                                            </div>
-                                                                        {/* )
-                                                                    })} */}
-                                                                </div>
-                                                            {/* )} */}
-                                                            </div>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                                ) } 
-                                            <div className="form-11" style={{ width: !isChecked ? '49%' : '32%' }}>
-                                                <div className="input">
-                                                    <label className='form-1-label'>Beneficiary’s  Account Number </label>
-                                                    <input type="text" placeholder="0198604538" 
-                                                    // value={accountNumber}
-                                                    // onBlur={handleNumber}
-                                                    // onChange={handleNumber}
-                                                    required
-                                                    maxLength={10}
-                                                    // disabled = {(business.length === 0 || !personal ) ? (true) : (false)}
-                                                    ></input>
-                                                </div>
-                                            </div>
-                                            <div className="form-11" style={{ width: !isChecked ? '49%' : '32%' }}>
-                                                <div className="input">
-                                                    <label className='form-1-label'>Beneficiary’s Name </label>
-                                                    <input type="text" 
-                                                    placeholder="Account Name"
-                                                    // value={name?.accountName}
-                                                    disabled
-                                                    required
-                                                    ></input>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="save-ben">
-                                            <p>save as beneficiary</p>
-                                            <div className="save-ben-switch">
-                                                <Switch/>
-                                            </div>
-                                        </div>
-                                        <div className="form-1-outer">
-                                            <div className="form-2">
-                                                <div className="input">
-                                                    <label>Amount</label>
-                                                    <input type="text" 
-                                                    placeholder="NGN 5,000"
-                                                    // value={formattedAmount}
-                                                    // onBlur={handleAmount}
-                                                    // onChange={handleAmount}
-                                                    required
-                                                    // disabled = {(business.length === 0 || !personal) ? (true) : (false)}
-                                                    ></input>
-                                                </div>
-                                            </div>
-                                            <div className="form-2">
-                                                <div className="input">
-                                                    <label>Narration</label>
-                                                    <input type="text"
-                                                    placeholder="e.g School Fees"
-                                                    // onBlur={handleComment}
-                                                    // onChange={handleComment}
-                                                    // disabled = {(business.length === 0 || !personal) ? (true) : (false)}
-                                                    ></input>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="form-button">
-                                            <button className='reset'>Reset</button><br></br>
-                                            <button className='transfer-button'>Transfer</button>
-                                        </div>
-                                    </form>
+                            </div>
+                            <div className="form-1">
+                                <label>Enter Total Amount<span>*</span></label>
+                                <div className="input-search-name">
+                                    <input type="text" required onChange={handletotal} onBlur={handletotal}></input>
                                 </div>
-                                {/* {show && <Pinconfirm togglemodal={handleModal2}/>} */}
+                            </div>
+                            <div className="form-1">
+                                <label>Enter Amount per unit<span>*</span></label>
+                                <div className="input-search-name">
+                                    <input type="text" required onChange={handleunit} onBlur={handleunit}></input>
+                                </div>
+                            </div>
+                            <div className="form-1">
+                                <label>Start Date<span>*</span></label>
+                                <div className="input-search-name">
+                                    <input type="date" required value={startDate} disabled></input>
+                    
+                                </div>
+                            </div>
+                            <div className="form-1">
+                                <label>End Date<span>*</span></label>
+                                <div className="input-search-name">
+                                    <input type="date" required value={endDate} disabled ></input>
+                                </div>
                             </div>
                         </div>
-                        </div>  
-                        {/* {loading && <LoadingModal/>}
-                        {showError && <Errormodal error="Insufficient Balance" togglemodal={handleError}/> } */}
-                    {/* ) : (
-                        <div className="key-error-notiication">
-                            <p>Please Complete Your Profile</p>
-                            <div className="error-cancle"><FaTimes/></div>
-                        </div>
-                    )} */}
+                    </div>
                 </div>
-            )}
+                <div className="save-con save-con-4">
+                    <button>Connect to Credio Reader</button>
+                </div>
+            </form>
             {/* <ReceiptModal/> */}
             {/* {showerror && (<Errormodal togglemodal={togglemodal2}/>)}
             {keyloading && (<LoadingModal/>)}

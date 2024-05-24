@@ -2,6 +2,18 @@
     display: flex;
     justify-content: right;
 }
+.payment2{
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    padding: 4rem;
+}
+.payment-method{
+    margin-top: 80px;
+}
 .students-top button{
     font-family: "Inter";
     font-size: 11px;
@@ -405,15 +417,18 @@
     padding-bottom: 52px;
     border-bottom: 0.2px solid #000000;
 }
-.to{
-    
+.to{ 
     width: 48%;
     padding: 1rem;
     margin-left: 10px;
     margin-right: 10px;
     background: #FFFFFF;
-    box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.066);
+    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.066);
     border-radius: 8px;
+}
+.to-select-2{
+    background-color: #b1122776;
+    box-shadow: 5px 5px 8px rgba(244, 113, 113, 0.066);
 }
 .to p{
     font-family: 'Poppins';
@@ -422,6 +437,15 @@
     font-size: 1rem;
     text-align: left;
     color: #000000;
+}
+.member-list{
+    width: 100%;
+    background-color: #FFFFFF;
+    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.066);
+    padding: 1rem;
+}
+.member-item{
+    margin-bottom: 10px;
 }
 .to-inner{
     margin-top: 20px;
@@ -701,12 +725,38 @@
     line-height: 39px;
     color: #FFFFFF;
 }
-.input label{
+.input label,.enter-pin{
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
     font-size: 0.8rem;
     color: rgba(0, 0, 0, 0.8);
+}
+.field-container{
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+.pinfield input{
+    width: 80px;
+    height: 80px;
+    font-size: 32px;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+    border-radius: 8px;
+    border: none;
+    margin: 2px;
+    background-color: #D6DEE0;
+    color: #000000;
+    outline: none;
+    transition: all 0.1s;
+}
+.pinfield input:focus{
+    background-color: #F1C37E;
 }
 .input input{
     margin-top: 16px;
@@ -721,6 +771,7 @@
     font-size: 1.2rem;
     color: #2B2B2B;
 }
+
 .input select{
     margin-top: 16px;
     background: #F5F5f5;
@@ -731,15 +782,30 @@
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     color: #2B2B2B;
 }
 .input input::placeholder{
-    font-family: 'Darker Grotesque';
+    font-family: 'Poppins';
     font-style: normal;
     font-weight: 500;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     color: #2b2b2b85;
+}
+.card-body{
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.card-field{
+    width: 40%;
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.087);
+    -webkit-box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.089);
+    -moz-box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.084);
 }
 @media (max-width: 1280px) {
     .account-left-head{
