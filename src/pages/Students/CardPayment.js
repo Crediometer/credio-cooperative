@@ -143,7 +143,7 @@ const CardPayment = () => {
                         </div>
                     </div>
                 }
-                { next===2 && <div className="c">
+                { next===2 && <div className="card-field">
                     <div className="form-2"  style={{width: "100%"}}>
                             <div className="input input-4">
                                 <label>Account Type</label>
