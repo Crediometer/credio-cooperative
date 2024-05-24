@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-
+import { FaWifi } from "react-icons/fa6";
 const CardPayment = () => {
     const members = ['John Doe', 'Jane Smith', 'Michael Johnson', 'Alice Williams', 'David Brown'];
     // State to hold the search input and the filtered members
@@ -124,26 +124,44 @@ const CardPayment = () => {
                 <h4 className="form-head">{searchUser}</h4>
             </div>
             <div className="card-body">
-               { next===1 && <div className="card-field">
+              { next===1 && <div className="connect-reader">
+                    <FaWifi />
+                    <p>Connect Credio Reader</p>
+                    <button onClick={handlenext}>Connect</button>
+                </div>}
+               { next===2 && <div className="card-field">
                     <div className="form-2"  style={{width: "100%"}}>
-                            <div className="input input-4">
-                                <label>Amount</label>
-                                <input type="text" 
-                                placeholder="Enter Amount"
-                                // value={formattedAmount}
-                                // onBlur={handleAmount}
-                                // onChange={handleAmount}
-                                required
-                                // disabled = {(business.length === 0 || !personal) ? (true) : (false)}
-                                ></input>
-                            </div>
-                        </div>
-                        <div className="form-button">
-                            <button onClick={handlenext} className='transfer-button'>Transfer</button>
+                        <div className="input input-4">
+                            <label>Amount</label>
+                            <input type="text" 
+                            placeholder="Enter Amount"
+                            // value={formattedAmount}
+                            // onBlur={handleAmount}
+                            // onChange={handleAmount}
+                            required
+                            // disabled = {(business.length === 0 || !personal) ? (true) : (false)}
+                            ></input>
                         </div>
                     </div>
+                    <div className="form-2"  style={{width: "100%"}}>
+                        <div className="input input-4">
+                            <label>Transaction Type</label>
+                            <select>
+                                <optgroup>
+                                    <option>--Transaction Type--</option>
+                                    <option>Savings</option>
+                                    <option>Loan</option>
+                                  
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="form-button">
+                        <button onClick={handlenext} className='transfer-button'>Transfer</button>
+                    </div>
+                    </div>
                 }
-                { next===2 && <div className="card-field">
+                { next===3 && <div className="card-field">
                     <div className="form-2"  style={{width: "100%"}}>
                             <div className="input input-4">
                                 <label>Account Type</label>
@@ -162,7 +180,7 @@ const CardPayment = () => {
                         </div>
                     </div>
                 }
-                {next === 3 &&
+                {next === 4 &&
                     <div className="cardpin-body-inner card-field">
                         <p className="enter-pin">Please Enter Your Card Pin</p>
                         <div className="field-container">
