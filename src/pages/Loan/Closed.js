@@ -16,6 +16,9 @@ const Closed = () => {
                             <div className="active-status active-status-red">
                                 <p>closed</p>
                             </div>
+                            {/* <div className="card-range">
+                                <input type="range"></input>
+                            </div> */}
                         </div>
                         <div className="active-body">
                             <p className="loan-for">Car Loan</p>
