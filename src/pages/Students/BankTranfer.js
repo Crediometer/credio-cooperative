@@ -3,12 +3,15 @@ import { FaChevronDown, FaSearch, FaTimes } from "react-icons/fa";
 import credio from "../../Assets/logo.png"
 import { useEffect, useState } from "react";
 import { BsBank2 } from "react-icons/bs";
+import { useParams } from 'react-router-dom';
+import ReceiptModal from '../../components/Modal/ReceiptModal';
 const BankTransfer = () => {
+    const {id} = useParams()
+    const [show, setshow] = useState(false)
     const [isChecked, setIsChecked] = useState(1);
     const [showBank, setShowBank] = useState(false);
     const [selectBank, setSelectBank]  = useState("Select a Bank")
     const members = ['John Doe', 'Jane Smith', 'Michael Johnson', 'Alice Williams', 'David Brown'];
-    
     // State to hold the search input and the filtered members
     const [searchInput, setSearchInput] = useState('');
     const [searchUser, setSearchUser] = useState('');
@@ -53,9 +56,9 @@ const BankTransfer = () => {
                                 <input 
                                     type="text" 
                                     placeholder="SEARCH FOR MEMBER"
-                                    value={searchInput}
+                                    value={id ? id: searchInput}
                                     onChange={handleInputChange}
-                                    required
+                                    disabled={id}
                                 ></input>
                             </div>
                         </div>
@@ -241,10 +244,11 @@ const BankTransfer = () => {
                             </div>
                             <div className="form-button">
                                 <button className='reset'>Reset</button><br></br>
-                                <button className='transfer-button'>Transfer</button>
+                                <button className='transfer-button' onClick={()=>{setshow(!show)}}>Transfer</button>
                             </div>
                         </form>
                     </div>
+                    {show && <ReceiptModal/>}
                     {/* {show && <Pinconfirm togglemodal={handleModal2}/>} */}
                 </div>
             </div>

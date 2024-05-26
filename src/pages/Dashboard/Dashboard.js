@@ -102,12 +102,14 @@ const Dashboard = () => {
                 />
             </div>
             <div className="dashboard-navigate">
-                <Box
-                    color="rgba(184, 102, 67, 0.123)"
-                    icons={<HiOutlinePlusSm/>}
-                    text="Loans"
-                    des="Lorem ipsum dolor sit amet, consectetur adipiscing "
-                />
+                <Link to="/loans">
+                    <Box
+                        color="rgba(184, 102, 67, 0.123)"
+                        icons={<HiOutlinePlusSm/>}
+                        text="Loans"
+                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
+                    />
+                </Link>
                 <Link to="/member">
                     <Box
                         color="rgba(67, 176, 184, 0.128)"

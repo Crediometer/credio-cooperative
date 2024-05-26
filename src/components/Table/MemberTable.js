@@ -53,7 +53,7 @@ export default function MemberTable() {
                     <TableCell  style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row.Gender}</TableCell>
                     <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row.Joined}</TableCell>
                     <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row.Occupation}</TableCell>
-                    <Link to="/member-details">  <TableCell><button className='view-button'>View</button></TableCell> </Link>
+                    <Link to={`/member-details/${row.Name}`}>  <TableCell><button className='view-button'>View</button></TableCell> </Link>
                 
                 </TableRow>
            

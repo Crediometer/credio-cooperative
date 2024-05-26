@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { FaWifi } from "react-icons/fa6";
+import ReceiptModal from "../../components/Modal/ReceiptModal";
+import { useParams } from 'react-router-dom';
 const CardPayment = () => {
+    const {id} = useParams()
     const members = ['John Doe', 'Jane Smith', 'Michael Johnson', 'Alice Williams', 'David Brown'];
     // State to hold the search input and the filtered members
     const [searchInput, setSearchInput] = useState('');
@@ -96,8 +99,9 @@ const CardPayment = () => {
                     <input 
                         type="text" 
                         placeholder="SEARCH FOR MEMBER"
-                        value={searchInput}
+                        value={id ? id: searchInput}
                         onChange={handleInputChange}
+                        disabled={id}
                         required
                     ></input>
                 </div>
@@ -181,7 +185,7 @@ const CardPayment = () => {
                     </div>
                 }
                 {next === 4 &&
-                    <div className="cardpin-body-inner card-field">
+                    <div className="card-field">
                         <p className="enter-pin">Please Enter Your Card Pin</p>
                         <div className="field-container">
                             <div className="field-1">
@@ -231,10 +235,11 @@ const CardPayment = () => {
                             </div>
                         </div>
                         <div className="form-button">
-                            <button className='transfer-button'>Transfer</button>
+                            <button onClick={handlenext}  className='transfer-button'>Transfer</button>
                         </div>
                     </div>
                 }
+                {next === 5 && <ReceiptModal /> }
             </div>
         </div>
     );

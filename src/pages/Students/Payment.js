@@ -1,11 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Box from "../../components/Box/Box";
 import { HiOutlinePlusSm } from "react-icons/hi";
 
 const Payment = () => {
+    const {id} = useParams()
     return ( 
         <div className="payment2 saving">
+            
             <h4 className="form-head">Select a Payment Method</h4>
+            <h4 className="form-body">{id}</h4>
             <div className="payment-method">
                 <div className="dashboard-navigate">
                     <Link to="/payment">
@@ -16,7 +19,7 @@ const Payment = () => {
                             des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                         />
                     </Link>
-                    <Link to="/card-transfer">
+                    <Link to={id ? `/card-transfer/${id}` : "/card-transfer" }>
                         <Box
                             color="rgba(255, 19, 19, 0.128)"
                             icons={<HiOutlinePlusSm/>}
@@ -26,7 +29,7 @@ const Payment = () => {
                     </Link>
                 </div>
                 <div className="dashboard-navigate">
-                    <Link to='/transfer'>
+                    <Link  to={id ? `/transfer/${id}` : "/transfer" }>
                         <Box
                             color="rgba(18, 15, 199, 0.123)"
                             icons={<HiOutlinePlusSm/>}
@@ -34,7 +37,7 @@ const Payment = () => {
                             des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                         />
                     </Link>
-                    <Link to='/recurring'>
+                    <Link to={id ? `/recurring/${id}` : "/recurring" }>
                     <Box
                         color="rgba(210, 193, 43, 0.123)"
                         icons={<HiOutlinePlusSm/>}

@@ -4,12 +4,14 @@ import {IoNotificationsOutline} from 'react-icons/io5'
 import { HiOutlinePlusSm } from "react-icons/hi";
 import { PiBellSimpleFill } from "react-icons/pi";
 import {IoMdArrowDropdown} from 'react-icons/io'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Box from "../../components/Box/Box";
 import { GoArrowDownRight } from 'react-icons/go';
 import { useState } from 'react';
 const MemberDetails = () => {
     const [number, setNumber] = useState(1)
+    const {id} = useParams()
+    console.log(id)
     return ( 
         <div className="dashboard">
             <div className="navbar">
@@ -84,7 +86,7 @@ const MemberDetails = () => {
                     />
                 </div>
                 <div>
-                    <Link to="/payment">
+                    <Link to={`/payment/${id}`}>
                         <Box
                             color="rgba(5, 139, 65, 0.123)"
                             icons={<HiOutlinePlusSm/>}

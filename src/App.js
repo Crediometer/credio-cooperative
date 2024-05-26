@@ -18,6 +18,14 @@ import Profile from './pages/Profile/Profile';
 import Payment from './pages/Students/Payment';
 import BankTransfer from './pages/Students/BankTranfer';
 import CardPayment from './pages/Students/CardPayment';
+import Loan from './pages/Loan/Loan';
+import Approval from './pages/Loan/Approval';
+import Overdue from './pages/Loan/Overdue';
+import Active from './pages/Loan/Active';
+import ActiveDetails from './pages/Loan/ActiveDetails';
+import Closed from './pages/Loan/Closed';
+import ClosedDetails from './pages/Loan/ClosedDetails';
+import Lenders from './pages/Loan/Lenders';
 
 function App() {
   return (
@@ -34,12 +42,24 @@ function App() {
         <Route path='/saving-details' element={<SavingDetails/>}/>
         <Route path='/withdraw' element={<Withdrawal/>}/>
         <Route path='/member' element={<MemberList/>}/>
-        <Route path='/member-details' element={<MemberDetails/>}/>
+        <Route path='/member-details/:id' element={<MemberDetails/>}/>
         <Route path='/payment' element={<Payment/>}/>
+        <Route path='/payment/:id' element={<Payment/>}/>
         <Route path='/recurring' element={<NewStudent/>}/>
+        <Route path='/recurring/:id' element={<NewStudent/>}/>
         <Route path='/transfer' element={<BankTransfer/>}/>
+        <Route path='/transfer/:id' element={<BankTransfer/>}/>
         <Route path='/card-transfer' element={<CardPayment/>}/>
+        <Route path='/card-transfer/:id' element={<CardPayment/>}/>
         <Route path='/member-profile' element={<Profile/>}/>
+        <Route path='/loans' element={<Loan/>}/>
+        <Route path='/loan-approval' element={<Approval/>}/>
+        <Route path='/loan-overdue' element={<Overdue/>}/>
+        <Route path='/loan-lender' element={<Lenders/>}/>
+        <Route path='/loan-active' element={<Active/>}/>
+        <Route path='/loan-closed' element={<Closed/>}/>
+        <Route path='/loan-closed-details' element={<ClosedDetails/>}/>
+        <Route path='/loan-active-details' element={<ActiveDetails/>}/>
       </Routes>
     </div>
   );
