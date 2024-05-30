@@ -10,8 +10,19 @@ const Loan = () => {
         <div className="dashboard-card">
                 <div className="card-top">
                     <div className="savings">
-                        <p>Total Borrowing</p>
+                        <p>Total Loan</p>
                         <h2>N50,000,000</h2>
+                    </div>
+                    <div className="savings">
+                        <p style={{textAlign: "right"}}>Active Loan</p>
+                        <h2 style={{textAlign: "right"}}>30,000,000</h2>
+                    </div>
+                    
+                </div>
+                <div className="card-top">
+                    <div className="savings">
+                        <p>Paid back Loans</p>
+                        <h2>N19,000,000</h2>
                     </div>
                     <div className="savings">
                         <p style={{textAlign: "right"}}>Current Outstanding</p>
@@ -22,19 +33,19 @@ const Loan = () => {
             </div>
         <div className="payment-method">
             <div className="dashboard-navigate">
+                <Link to="/loan-create">
+                    <Box
+                        color="rgba(255, 19, 19, 0.128)"
+                        icons={<HiOutlinePlusSm/>}
+                        text="Create Loan"
+                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
+                    />
+                </Link>
                 <Link to="/loan-approval">
                     <Box
                         color="rgba(5, 139, 65, 0.123)"
                         icons={<HiOutlinePlusSm/>}
-                        text="Loan Approval"
-                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
-                    />
-                </Link>
-                <Link to="/loan-lender">
-                    <Box
-                        color="rgba(255, 19, 19, 0.128)"
-                        icons={<HiOutlinePlusSm/>}
-                        text="Lenders"
+                        text="Loan Approved"
                         des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                     />
                 </Link>

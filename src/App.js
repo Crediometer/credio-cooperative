@@ -26,6 +26,7 @@ import ActiveDetails from './pages/Loan/ActiveDetails';
 import Closed from './pages/Loan/Closed';
 import ClosedDetails from './pages/Loan/ClosedDetails';
 import Lenders from './pages/Loan/Lenders';
+import CreateLoan from './pages/Loan/CreateLoan';
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
         <Route path='/loan-approval' element={<Approval/>}/>
         <Route path='/loan-overdue' element={<Overdue/>}/>
         <Route path='/loan-lender' element={<Lenders/>}/>
+        <Route path='/loan-create' element={<CreateLoan/>}/>
         <Route path='/loan-active' element={<Active/>}/>
         <Route path='/loan-closed' element={<Closed/>}/>
         <Route path='/loan-closed-details' element={<ClosedDetails/>}/>

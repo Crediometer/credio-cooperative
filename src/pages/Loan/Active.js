@@ -70,7 +70,7 @@ const Active = () => {
                             </div>
                         </div>
                         <div className="active-body">
-                            <p className="loan-for">Car Loan</p>
+                            <p className="loan-for">Ademola John</p>
                             <h3>N400,000</h3>
                             <p className="loan-details">Your car loan request has been approved and disbursed</p>
                             <div className="active-warning">
