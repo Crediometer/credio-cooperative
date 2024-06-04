@@ -1,24 +1,85 @@
+import { useState } from "react";
 import { BiChevronLeft } from "react-icons/bi";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Approval = () => {
+    const members = ['John Doe', 'Jane Smith', 'Michael Johnson', 'Alice Williams', 'David Brown'];
+    // State to hold the search input and the filtered members
+    const [searchInput, setSearchInput] = useState('');
+    const [searchUser, setSearchUser] = useState('');
+    const [filteredMembers, setFilteredMembers] = useState(members);
+    const handleInputChange = (e) => {
+        const value = e.target.value;
+        setSearchInput(value);
+        
+        // Filter members based on input value
+        if (value) {
+            const filtered = members.filter(member => 
+                member.toLowerCase().includes(value.toLowerCase())
+            );
+            setFilteredMembers(filtered);
+        } else {
+            setFilteredMembers([]);
+        }
+    };
+    const handleMemberClick = (member) => {
+        setSearchUser(member);
+        setSearchInput("")
+        setFilteredMembers([]);
+    };
     return ( 
         <div className="saving approval">
             <div className="back">
                 <Link to='/loans'><BiChevronLeft/></Link>
-                <p className="title">Loan Approval</p>
+                <p className="title">Loan Approved</p>
             </div>
-          
+        
             <div className="loan-approval-body">
-                <div className="form-11" style={{ width: '100%' }}>
-                    <div className="input">
-                        <input 
-                            type="text" 
-                            placeholder="SEARCH LOAN"
+                <div className="top-search">
+                    <div className="form-11" style={{ width: '100%' }}>
+                        <div className="input">
+                            <input 
+                                type="text" 
+                                placeholder="SEARCH FOR MEMBER"
+                                value={searchInput}
+                                onChange={handleInputChange}
+                                required
+                            ></input>
+                        </div>
+                    </div>
+                    <div className="statement-date statement-date-2">
+                        <input
+                            type='text'
+                            placeholder='Start Date'
+                            className='transferfield'
+                            onFocus={(e) => (e.target.type = "date")}
+                            onBlur={(e) => {(e.target.type = "text");}}
+                            // onChange={handlestartdate}
                             required
                         ></input>
                     </div>
+                </div>
+                {searchInput && (
+                    <div className="member-list">
+                        {filteredMembers.length > 0 ? (
+                            filteredMembers.map((member, index) => (
+                                <div    
+                                    onClick={() => handleMemberClick(member)}
+                                    style={{ cursor: 'pointer' }} 
+                                    key={index} 
+                                    className="member-item"
+                                >
+                                    {member}
+                                </div>
+                            ))
+                        ) : (
+                            <div>No members found</div>
+                        )}
+                    </div>
+                )}
+                <div className="selected-user">
+                    <h4 className="form-head">{searchUser}</h4>
                 </div>
                 <div className="approval-card">
                     <div className="personal-section">
@@ -48,7 +109,7 @@ const Approval = () => {
                             </div>
                             <div className="information-inner">
                                 <p>Purpose: <span>Car</span></p>
-                                <p>Monthly Income: <span>N200,000</span></p>
+                                <p>Monthly Payback: <span>N200,000</span></p>
                             </div>
                         </div>
                     </div>
@@ -81,7 +142,7 @@ const Approval = () => {
                             </div>
                             <div className="information-inner">
                                 <p>Purpose: <span>Business</span></p>
-                                <p>Monthly Income: <span>N100,000</span></p>
+                                <p>Monthly Payback: <span>N100,000</span></p>
                             </div>
                         </div>
                     </div>
@@ -114,7 +175,7 @@ const Approval = () => {
                             </div>
                             <div className="information-inner">
                                 <p>Purpose: <span>Business</span></p>
-                                <p>Monthly Income: <span>N500,000</span></p>
+                                <p>Monthly Payback: <span>N500,000</span></p>
                             </div>
                         </div>
                     </div>
@@ -147,7 +208,7 @@ const Approval = () => {
                             </div>
                             <div className="information-inner">
                                 <p>Purpose: <span>Business</span></p>
-                                <p>Monthly Income: <span>N300,000</span></p>
+                                <p>Monthly Payback: <span>N300,000</span></p>
                             </div>
                         </div>
                     </div>

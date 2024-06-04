@@ -27,6 +27,7 @@ import Closed from './pages/Loan/Closed';
 import ClosedDetails from './pages/Loan/ClosedDetails';
 import Lenders from './pages/Loan/Lenders';
 import CreateLoan from './pages/Loan/CreateLoan';
+import CashPayment from './pages/Students/CashPayment';
 
 function App() {
   return (
@@ -52,6 +53,8 @@ function App() {
         <Route path='/transfer/:id' element={<BankTransfer/>}/>
         <Route path='/card-transfer' element={<CardPayment/>}/>
         <Route path='/card-transfer/:id' element={<CardPayment/>}/>
+        <Route path='/cash-payment' element={<CashPayment/>}/>
+        <Route path='/cash-payment/:id' element={<CashPayment/>}/>
         <Route path='/member-profile' element={<Profile/>}/>
         <Route path='/loans' element={<Loan/>}/>
         <Route path='/loan-approval' element={<Approval/>}/>

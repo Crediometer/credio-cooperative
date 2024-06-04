@@ -34,6 +34,16 @@
 .status-red{
     background-color: #B11226;
 }
+.top-search{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 16px;
+}
+.statement-date-2{
+    padding: 1rem;
+}
 .status p, .status svg{
     color: #fff;
     font-weight: 600;

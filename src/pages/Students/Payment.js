@@ -11,7 +11,7 @@ const Payment = () => {
             <h4 className="form-body">{id}</h4>
             <div className="payment-method">
                 <div className="dashboard-navigate">
-                    <Link to="/payment">
+                    <Link to="/cash-payment">
                         <Box
                             color="rgba(5, 139, 65, 0.123)"
                             icons={<HiOutlinePlusSm/>}

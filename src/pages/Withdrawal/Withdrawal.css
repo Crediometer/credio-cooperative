@@ -71,3 +71,15 @@
     font-family:"Poppins";
     color: #000000;
 }
+.approval-saving{
+    background-color: rgba(9, 165, 9, 0.249);
+}
+.approval-loan{
+    background-color: #c948594b;
+}
+.withdrawal-type{
+    font-size: 0.9  rem;
+    font-weight: 700;
+    font-family:"Poppins";
+    color: #000000;
+}

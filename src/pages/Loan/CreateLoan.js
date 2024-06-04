@@ -33,15 +33,27 @@ const CreateLoan = () => {
     };
     return ( 
         <div className="saving createloan">
-              <p className="transfer-head">Create Loan</p>
-            <div className="form-11" style={{ width: '100%' }}>
-                <div className="input">
-                    <input 
-                        type="text" 
-                        placeholder="SEARCH FOR MEMBER"
-                        value={searchInput}
-                        onChange={handleInputChange}
-                        // disabled={id}
+            <p className="transfer-head">Create Loan</p>
+            <div className="top-search">
+                <div className="form-11" style={{ width: '100%' }}>
+                    <div className="input">
+                        <input 
+                            type="text" 
+                            placeholder="SEARCH FOR MEMBER"
+                            value={searchInput}
+                            onChange={handleInputChange}
+                            required
+                        ></input>
+                    </div>
+                </div>
+                <div className="statement-date statement-date-2">
+                    <input
+                        type='text'
+                        placeholder='Start Date'
+                        className='transferfield'
+                        onFocus={(e) => (e.target.type = "date")}
+                        onBlur={(e) => {(e.target.type = "text");}}
+                        // onChange={handlestartdate}
                         required
                     ></input>
                 </div>

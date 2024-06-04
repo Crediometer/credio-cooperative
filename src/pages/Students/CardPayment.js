@@ -94,6 +94,7 @@ const CardPayment = () => {
     return ( 
         <div className="saving">
             <p className="transfer-head">Card Payments</p>
+            
             <div className="form-11" style={{ width: '100%' }}>
                 <div className="input">
                     <input 
