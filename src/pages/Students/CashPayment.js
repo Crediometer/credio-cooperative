@@ -103,7 +103,7 @@ const CashPayment = () => {
                 </div>
             </div>
             
-            {show && <ReceiptModal /> }
+            {show && <ReceiptModal togglemodal={togglemodal} /> }
         </div>
     </div>
     );

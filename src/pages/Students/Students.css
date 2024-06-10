@@ -949,6 +949,9 @@
     }
 }
 @media (max-width: 800px){
+    .card-field{
+        width: 90%;
+    }
     .student-invoice-top h4{
         font-size: 18px;
     }
