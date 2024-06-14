@@ -3,12 +3,21 @@ import {BiSearch} from 'react-icons/bi';
 import image from '../../Assets/image.svg'
 import {IoNotificationsOutline} from 'react-icons/io5'
 import { HiOutlinePlusSm } from "react-icons/hi";
-import { PiBellSimpleFill } from "react-icons/pi";
+import { PiBellSimpleFill, PiSignOut } from "react-icons/pi";
 import {IoMdArrowDropdown} from 'react-icons/io'
 import { Link } from 'react-router-dom';
 import Box from "../../components/Box/Box";
+import { RiAdminFill } from "react-icons/ri";
+import { CgProfile } from "react-icons/cg";
+import { MdOutlinePermContactCalendar } from "react-icons/md";
+import { useState } from "react";
 
 const Dashboard = () => {
+    const [show, setShow] = useState(false)
+
+    const handleshow =()=>{
+        setShow(!show)
+    }
     return ( 
         <div className="dashboard">
             <div className="navbar">
@@ -18,7 +27,8 @@ const Dashboard = () => {
                             <PiBellSimpleFill />
                             <div className="number"><p>2</p></div>
                         </div>
-                        <div className='navbar-profile-left'>
+                        
+                        <div className='navbar-profile-left' onClick={handleshow}>
                             <div className="user-image">
                                 <img src={image}></img>
                             </div>
@@ -27,6 +37,30 @@ const Dashboard = () => {
                                 <p className='name'>Richard Cooporative Society</p>
                             </div>
                         </div>
+                        {show && (
+                            <div className="navbar-dropdown">
+                                <Link to="/dashboard">
+                                    <div className="nav-bar-content">
+                                        <RiAdminFill/>
+                                        <p>Admin</p>
+                                    </div>
+                                </Link>
+                                <Link to="/admin-profile">
+                                    <div className="nav-bar-content">
+                                        <CgProfile />
+                                        <p>Profile</p>
+                                    </div>
+                                </Link>
+                                <div className="nav-bar-content">
+                                    <MdOutlinePermContactCalendar />
+                                    <p>Contact Us</p>
+                                </div>
+                                <div className="nav-bar-content sign-out">
+                                    <PiSignOut />
+                                    <p>Sign Out</p>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -73,7 +107,7 @@ const Dashboard = () => {
                         color="rgba(5, 139, 65, 0.123)"
                         icons={<HiOutlinePlusSm/>}
                         text="Payments"
-                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
+                        
                     />
                 </Link>
                 <Link to="/saving">
@@ -81,7 +115,7 @@ const Dashboard = () => {
                         color="rgba(255, 19, 19, 0.128)"
                         icons={<HiOutlinePlusSm/>}
                         text="Savings"
-                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
+                   
                     />
                 </Link>
             </div>
@@ -91,14 +125,14 @@ const Dashboard = () => {
                         color="rgba(18, 15, 199, 0.123)"
                         icons={<HiOutlinePlusSm/>}
                         text="Withdrawals"
-                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
+                    
                     />
                 </Link>
                 <Box
                     color="rgba(210, 193, 43, 0.123)"
                     icons={<HiOutlinePlusSm/>}
                     text="Expenses"
-                    des="Lorem ipsum dolor sit amet, consectetur adipiscing "
+                
                 />
             </div>
             <div className="dashboard-navigate">
@@ -107,7 +141,7 @@ const Dashboard = () => {
                         color="rgba(184, 102, 67, 0.123)"
                         icons={<HiOutlinePlusSm/>}
                         text="Loans"
-                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
+                       
                     />
                 </Link>
                 <Link to="/member">
@@ -115,40 +149,123 @@ const Dashboard = () => {
                         color="rgba(67, 176, 184, 0.128)"
                         icons={<HiOutlinePlusSm/>}
                         text="Members"
-                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                     />
                 </Link>
             </div>
             <div className="dashboard-transaction">
-                <h2 className="recent-head">Recent Transaction</h2>
+                <h2 className="recent-head">Recent Transactions</h2>
                 <div className="transactions">
-                    <div className="join-search transaction">
-                       <div className="transaction-left">
-                            <p className="transaction-name">From david temidayo</p>
-                            <p className="transaction-date">06/01/2022</p>
-                       </div>
-                       <div className="transaction-right">
-                            <h3>N50.5</h3>
-                       </div>
-                    </div>
-                    <div className="join-search transaction">
-                       <div className="transaction-left">
-                            <p className="transaction-name">From david temidayo</p>
-                            <p className="transaction-date">06/01/2022</p>
-                       </div>
-                       <div className="transaction-right">
-                            <h3>N50.5</h3>
-                       </div>
-                    </div>
-                    <div className="join-search transaction">
-                       <div className="transaction-left">
-                            <p className="transaction-name">From david temidayo</p>
-                            <p className="transaction-date">06/01/2022</p>
-                       </div>
-                       <div className="transaction-right">
-                            <h3>N50.5</h3>
-                       </div>
-                    </div>
+                <div className="approval-card approval-saving">
+                            <div className="personal-section">
+                                <div className="approval-card-top">
+                                    <p className="card-header">Personal Information</p>
+                                    <div className="information-inner information-inner-2">
+                                        <p className="withdrawal-type">Savings</p>
+                                        <h2 className="withdrawal-type withdrawal-type-2">N200,000</h2>
+                                    </div>
+                                    <p>15th May, 2024</p>
+                                </div>
+                                
+                                <div className="aprroval-information">
+                                    <div className="information-inner">
+                                        <p>First Name: <span>Adewunmi</span></p>
+                                        <p style={{textAlign: "right"}}>Email: <span>adewumi@gmail.com</span></p>
+                                    </div>
+                                    <div className="information-inner">
+                                        <p>Last Name: <span>George</span></p>
+                                        <p style={{textAlign: "right"}}>Phone : <span>09078987678</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="personal-section">
+                                <div className="approval-card-top">
+                                    <p className="card-header">Financial Information</p>
+                                </div>
+                                <div className="aprroval-information">
+                                    <div className="information-inner">
+                                        <p>Loan Request: <span>Adewunmi</span></p>
+                                        <p>Total Amount Saved: <span>N1,000,000</span></p>
+                                    </div>
+                                    <div className="information-inner">
+                                        <p>Purpose: <span>Car</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="approval-card approval-loan">
+                            <div className="personal-section">
+                                <div className="approval-card-top">
+                                    <p className="card-header">Personal Information</p>
+                                    <div className="information-inner information-inner-2">
+                                        <p className="withdrawal-type">Loan</p>
+                                        <h2 className="withdrawal-type withdrawal-type-2">N500,000</h2>
+                                    </div>
+                                    <p>20th May, 2024</p>
+                                </div>
+                                <div className="aprroval-information">
+                                    <div className="information-inner">
+                                        <p>First Name: <span>Adeleye</span></p>
+                                        <p style={{textAlign: "right"}}>Email: <span>adeleye@gmail.com</span></p>
+                                    </div>
+                                    <div className="information-inner">
+                                        <p>Last Name: <span>Tobi</span></p>
+                                        <p style={{textAlign: "right"}}>Phone : <span>090789589</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="personal-section">
+                                <div className="approval-card-top">
+                                    <p className="card-header">Financial Information</p>
+                                </div>
+                                <div className="aprroval-information">
+                                    <div className="information-inner">
+                                        <p>Loan Request: <span>Adeleye</span></p>
+                                        <p>Total Amount Loaned: <span>N500,000</span></p>
+                                    </div>
+                                    <div className="information-inner">
+                                        <p>Purpose: <span>Business</span></p>
+                                        <p>Monthly Payback: <span>N100,000</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="approval-card approval-loan">
+                            <div className="personal-section">
+                                <div className="approval-card-top">
+                                    <p className="card-header">Personal Information</p>
+                                    <div className="information-inner information-inner-2">
+                                        <p className="withdrawal-type">Loan</p>
+                                        <h2 className="withdrawal-type withdrawal-type-2">N5,000,000</h2>
+                                    </div>
+                                    <p>22th May, 2024</p>
+                                </div>
+                                <div className="aprroval-information">
+                                    <div className="information-inner">
+                                        <p>First Name: <span>Akin</span></p>
+                                        <p style={{textAlign: "right"}}>Email: <span>akin@gmail.com</span></p>
+                                    </div>
+                                    <div className="information-inner">
+                                        <p>Last Name: <span>Lara</span></p>
+                                        <p style={{textAlign: "right"}}>Phone : <span>08090987646</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="personal-section">
+                                <div className="approval-card-top">
+                                    <p className="card-header">Financial Information</p>
+                                </div>
+                                <div className="aprroval-information">
+                                    <div className="information-inner">
+                                        <p>Loan Request: <span>Akin</span></p>
+                                        <p>Total Amount Loaned: <span>N5,000,000</span></p>
+                                    </div>
+                                    <div className="information-inner">
+                                        <p>Purpose: <span>Business</span></p>
+                                        <p>Monthly Payback: <span>N500,000</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>

@@ -28,6 +28,7 @@ import ClosedDetails from './pages/Loan/ClosedDetails';
 import Lenders from './pages/Loan/Lenders';
 import CreateLoan from './pages/Loan/CreateLoan';
 import CashPayment from './pages/Students/CashPayment';
+import AdminProfile from './pages/Profile/AdminProfile';
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
         <Route path='/cash-payment/:id' element={<CashPayment/>}/>
         <Route path='/member-profile' element={<Profile/>}/>
         <Route path='/loans' element={<Loan/>}/>
+        <Route path='/admin-profile' element={<AdminProfile/>}/>
         <Route path='/loan-approval' element={<Approval/>}/>
         <Route path='/loan-overdue' element={<Overdue/>}/>
         <Route path='/loan-lender' element={<Lenders/>}/>

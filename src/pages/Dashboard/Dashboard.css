@@ -17,9 +17,39 @@
     background-color: white
 }
 .wrapper{
+    position: relative;
     width: 100%;
     display: flex;
     justify-content: space-between;
+}
+.navbar-dropdown{
+    position: absolute;
+    left: 1rem;
+    top: 50px;
+    background-color: white;
+    width: 280px;
+    height: 400px;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0px 0px 13px 0px rgba(101, 100, 100, 0.178);
+    -webkit-box-shadow: 0px 0px 13px 0px rgba(101, 100, 100, 0.178);
+    -moz-box-shadow: 0px 0px 13px 0px rgba(101, 100, 100, 0.178);
+}
+.navbar-dropdown a{
+    color: #000000;
+}
+.nav-bar-content{
+    display: flex;
+    align-items: center;
+    padding: 0.8rem;
+    gap: 10px;
+    cursor: pointer;
+}
+.nav-bar-content p{
+    font-size: 1.3rem;
+}
+.sign-out{
+    margin-top: 150px;
 }
 .search{
     margin-left: 40px;
@@ -40,6 +70,7 @@
 .navbar-profile-left{
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 .bell{
     position: relative;
@@ -102,13 +133,13 @@
 
 .savings p{
     font-family: "Poppins";
-    font-size: 0.75rem;
+    font-size: 1rem;
     font-weight: 700;
     color: rgba(255, 255, 255, 0.8);
 }
 .savings h2{
     font-family: "Poppins";
-    font-size: 1.125rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: rgba(255, 255, 255);
 }
@@ -128,7 +159,7 @@
 }
 .recent-head{
     font-family: "Poppins" !important;
-    font-size: 1rem !important;
+    font-size: 1.5rem !important;
     font-weight: 500 !important;
     color: #000000 !important;
 }
@@ -137,13 +168,13 @@
 }
 .transaction-name{
     font-family: "Poppins" !important;
-    font-size: 0.75rem !important;
+    font-size: 1.5rem !important;
     font-weight: 500 !important;
     color: #000000 !important;
 }
 .transaction-date{
     font-family: "Poppins" !important;
-    font-size: 0.65rem !important;
+    font-size: 1rem !important;
     font-weight: 500 !important;
     color: #000000 !important;
 }
