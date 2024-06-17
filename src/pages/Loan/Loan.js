@@ -38,7 +38,7 @@ const Loan = () => {
                         color="rgba(255, 19, 19, 0.128)"
                         icons={<HiOutlinePlusSm/>}
                         text="Create Loan"
-                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
+                        
                     />
                 </Link>
                 <Link to="/loan-approval">
@@ -46,7 +46,7 @@ const Loan = () => {
                         color="rgba(5, 139, 65, 0.123)"
                         icons={<HiOutlinePlusSm/>}
                         text="Loan Approved"
-                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
+                        
                     />
                 </Link>
             </div>
@@ -56,7 +56,7 @@ const Loan = () => {
                         color="rgba(18, 15, 199, 0.123)"
                         icons={<HiOutlinePlusSm/>}
                         text="Overdue Loans"
-                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
+                       
                     />
                 </Link>
                 <Link to="/loan-active">
@@ -64,7 +64,7 @@ const Loan = () => {
                     color="rgba(210, 193, 43, 0.123)"
                     icons={<HiOutlinePlusSm/>}
                     text="Active Loans"
-                    des="Lorem ipsum dolor sit amet, consectetur adipiscing "
+                    
                 />
                 </Link>            
             </div>
@@ -74,7 +74,7 @@ const Loan = () => {
                         color="rgba(5, 139, 65, 0.123)"
                         icons={<HiOutlinePlusSm/>}
                         text="Closed Loans"
-                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
+                      
                     />
                 </Link>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
             </div>

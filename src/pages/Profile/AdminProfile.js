@@ -58,6 +58,19 @@ const AdminProfile = () => {
                         )}
                 </div>
             </div>
+            <div className="date-picker">
+                <div className="statement-date">
+                    <input
+                        type='text'
+                        placeholder='Start Date'
+                        className='transferfield'
+                        onFocus={(e) => (e.target.type = "date")}
+                        onBlur={(e) => {(e.target.type = "text");}}
+                        // onChange={handlestartdate}
+                        required
+                    ></input>
+                </div>
+            </div> 
             <div className="admin-profile-data">
                 {cardData.map(data=>{
                     return(
@@ -65,6 +78,7 @@ const AdminProfile = () => {
                             <Card
                                 name={data.name}
                                 value={data.value}
+                                link={data.link}
                             />
                         </div>
                     )

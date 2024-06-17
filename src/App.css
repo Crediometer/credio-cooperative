@@ -10,7 +10,8 @@ body{
 }
 a{
   /* width: 100%; */
-  text-decoration: none !important;  
+  text-decoration: none !important; 
+  color: rgba(0, 0, 0, 0.664); 
 }
 .setup-link{
   width: 100%;

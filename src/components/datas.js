@@ -1,13 +1,15 @@
 export const cardData =[
     {
         id:1,
-        name: "New Users",
-        value: "50"
+        name: "New Members",
+        value: "50",
+        link: "/newmember"
     },
     {
         id:2,
-        name: "Total Users",
-        value: "250"
+        name: "Total Members",
+        value: "250",
+        link: "/member"
     },
     {
         id:3,

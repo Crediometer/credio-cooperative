@@ -29,6 +29,8 @@ import Lenders from './pages/Loan/Lenders';
 import CreateLoan from './pages/Loan/CreateLoan';
 import CashPayment from './pages/Students/CashPayment';
 import AdminProfile from './pages/Profile/AdminProfile';
+import NewMemberList from './pages/Members/NewMemberList';
+import Newsavings from './pages/Savings/Newsaving';
 
 function App() {
   return (
@@ -41,10 +43,12 @@ function App() {
         <Route path='/register-admin' element={<Activate/>}/>
         <Route path='/register-member' element={<ActivateMember/>}/>
         <Route path='/dashboard' element={<Dashboard  />}/>
-        <Route path='/saving' element={<Saving/>}/>
+        {/* <Route path='/saving' element={<Saving/>}/> */}
+        <Route path='/saving' element={<Newsavings/>}/>
         <Route path='/saving-details' element={<SavingDetails/>}/>
         <Route path='/withdraw' element={<Withdrawal/>}/>
         <Route path='/member' element={<MemberList/>}/>
+        <Route path='/newmember' element={<NewMemberList/>}/>
         <Route path='/member-details/:id' element={<MemberDetails/>}/>
         <Route path='/payment' element={<Payment/>}/>
         <Route path='/payment/:id' element={<Payment/>}/>

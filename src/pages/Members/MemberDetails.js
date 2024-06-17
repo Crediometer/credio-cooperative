@@ -66,7 +66,6 @@ const MemberDetails = () => {
                         color="rgba(18, 15, 199, 0.123)"
                         icons={<HiOutlinePlusSm/>}
                         text="Transaction History"
-                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                     />
                 </div>
                 <div onClick={()=>{setNumber(2)}}>
@@ -74,7 +73,6 @@ const MemberDetails = () => {
                         color="rgba(255, 19, 19, 0.128)"
                         icons={<HiOutlinePlusSm/>}
                         text="Savings"
-                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                     />
                 </div>
                 <div onClick={()=>{setNumber(3)}}>
@@ -82,7 +80,6 @@ const MemberDetails = () => {
                         color="rgba(184, 102, 67, 0.123)"
                         icons={<HiOutlinePlusSm/>}
                         text="Loans"
-                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                     />
                 </div>
                 <div>
@@ -91,7 +88,6 @@ const MemberDetails = () => {
                             color="rgba(5, 139, 65, 0.123)"
                             icons={<HiOutlinePlusSm/>}
                             text="Payments"
-                            des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                         />
                     </Link>
                 </div>       
