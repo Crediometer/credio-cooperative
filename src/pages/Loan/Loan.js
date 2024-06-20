@@ -2,11 +2,14 @@ import { Link } from "react-router-dom";
 import Box from "../../components/Box/Box";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import "./Loan.css"
+import { BiChevronLeft } from "react-icons/bi";
 const Loan = () => {
     return ( 
         <div className="payment2 saving">
-            
-        <h4 className="form-head">Loans</h4>
+            <div className="back">
+                <Link to='/dashboard'><BiChevronLeft/></Link>
+                <h4 className="form-head">Loans</h4>
+            </div>
         <div className="dashboard-card">
                 <div className="card-top">
                     <div className="savings">

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import LoanModal from "../../components/Modal/LoanModal";
+import { BiChevronLeft } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 const CreateLoan = () => {
     const members = ['John Doe', 'Jane Smith', 'Michael Johnson', 'Alice Williams', 'David Brown'];
@@ -33,7 +35,10 @@ const CreateLoan = () => {
     };
     return ( 
         <div className="saving createloan">
-            <p className="transfer-head">Create Loan</p>
+             <div className="back">
+                <Link to='/loans'><BiChevronLeft/></Link>
+                <p className="title">Create Loan</p>
+            </div>
             <div className="top-search">
                 <div className="form-11" style={{ width: '100%' }}>
                     <div className="input">
