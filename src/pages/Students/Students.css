@@ -164,6 +164,8 @@
     width: 40%;
 }
 .form-head{
+    text-align: center;
+    width: 100%;
     font-size: 24px;
     color: #B11226;
     font-weight: 600;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { BiChevronLeft } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
-const OverdueSaving = () => {
+const Overdue = () => {
     const members = ['John Doe', 'Jane Smith', 'Michael Johnson', 'Alice Williams', 'David Brown'];
     // State to hold the search input and the filtered members
     const [searchInput, setSearchInput] = useState('');
@@ -30,8 +30,8 @@ const OverdueSaving = () => {
     return ( 
         <div className="saving overdue">
             <div className="back">
-                <Link to='/loans'><BiChevronLeft/></Link>
-                <p className="title">Overdue Loan</p>
+                <Link to='/saving'><BiChevronLeft/></Link>
+                <p className="title">Overdue saving</p>
             </div>
             <div className="top-search">
                 <div className="form-11" style={{ width: '100%' }}>
@@ -82,7 +82,7 @@ const OverdueSaving = () => {
                 <div className="overdue-card">
                     <div className="overdue-card-top">
                         <div className="overdue-stat">
-                            <h3 className="card-header">Total Loan</h3>
+                            <h3 className="card-header">Total saving</h3>
                             <p>N1,000,000</p>
                         </div>
                         <div className="overdue-stat">
@@ -115,8 +115,8 @@ const OverdueSaving = () => {
                         </div>
                         <div className="aprroval-information">
                             <div className="information-inner">
-                                <p>Loan Request: <span>Adewunmi</span></p>
-                                <p>Total Loan: <span>N1,000,000</span></p>
+                                <p>saving Request: <span>Adewunmi</span></p>
+                                <p>Total saving: <span>N1,000,000</span></p>
                             </div>
                             <div className="information-inner">
                                 <p>Purpose: <span>Car</span></p>
@@ -128,7 +128,7 @@ const OverdueSaving = () => {
                 <div className="overdue-card">
                     <div className="overdue-card-top">
                         <div className="overdue-stat">
-                            <h3 className="card-header">Total Loan</h3>
+                            <h3 className="card-header">Total saving</h3>
                             <p>N2,500,000</p>
                         </div>
                         <div className="overdue-stat">
@@ -161,8 +161,8 @@ const OverdueSaving = () => {
                         </div>
                         <div className="aprroval-information">
                             <div className="information-inner">
-                                <p>Loan Request: <span>Akin</span></p>
-                                <p>Total Loan: <span>N2,500,000</span></p>
+                                <p>saving Request: <span>Akin</span></p>
+                                <p>Total saving: <span>N2,500,000</span></p>
                             </div>
                             <div className="information-inner">
                                 <p>Purpose: <span>Car</span></p>
@@ -207,8 +207,8 @@ const OverdueSaving = () => {
                         </div>
                         <div className="aprroval-information">
                             <div className="information-inner">
-                                <p>Loan Request: <span>Kola</span></p>
-                                <p>Total Loan: <span>N1,200,000</span></p>
+                                <p>saving Request: <span>Kola</span></p>
+                                <p>Total saving: <span>N1,200,000</span></p>
                             </div>
                             <div className="information-inner">
                                 <p>Purpose: <span>Car</span></p>
@@ -220,7 +220,7 @@ const OverdueSaving = () => {
                 <div className="overdue-card">
                     <div className="overdue-card-top">
                         <div className="overdue-stat">
-                            <h3 className="card-header">Total Loan</h3>
+                            <h3 className="card-header">Total saving</h3>
                             <p>N500,000</p>
                         </div>
                         <div className="overdue-stat">
@@ -253,8 +253,8 @@ const OverdueSaving = () => {
                         </div>
                         <div className="aprroval-information">
                             <div className="information-inner">
-                                <p>Loan Request: <span>Adetola</span></p>
-                                <p>Total Loan: <span>N500,000</span></p>
+                                <p>saving Request: <span>Adetola</span></p>
+                                <p>Total saving: <span>N500,000</span></p>
                             </div>
                             <div className="information-inner">
                                 <p>Purpose: <span>Car</span></p>
@@ -268,4 +268,4 @@ const OverdueSaving = () => {
     );
 }
  
-export default OverdueSaving;
+export default Overdue;

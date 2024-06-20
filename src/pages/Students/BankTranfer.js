@@ -3,8 +3,9 @@ import { FaChevronDown, FaSearch, FaTimes } from "react-icons/fa";
 import credio from "../../Assets/logo.png"
 import { useEffect, useState } from "react";
 import { BsBank2 } from "react-icons/bs";
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ReceiptModal from '../../components/Modal/ReceiptModal';
+import { BiChevronLeft } from 'react-icons/bi';
 const BankTransfer = () => {
     const {id} = useParams()
     const [show, setshow] = useState(false)
@@ -47,7 +48,10 @@ const BankTransfer = () => {
         <div className="content">
         {/* {(num % 2 == 0) ? ( */}
             <div className="transfer">
-            <p className="transfer-head">Direct Bank Debit</p>
+            <div className="back">
+                <Link to='/payment'><BiChevronLeft/></Link>
+                <p className="title">Direct Bank Debit</p>
+            </div>
             <div className="transfer-body">
                 <div className="transfer-inner">
                     <div className="transfer-to">

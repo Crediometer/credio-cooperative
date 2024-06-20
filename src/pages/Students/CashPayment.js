@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ReceiptModal from "../../components/Modal/ReceiptModal";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { BiChevronLeft } from "react-icons/bi";
 
 const CashPayment = () => {
     const [show, setShow] = useState(false)
@@ -34,8 +35,10 @@ const CashPayment = () => {
     }
     return ( 
         <div className="saving">
-        <p className="transfer-head">Cash Payments</p>
-        
+        <div className="back">
+            <Link to='/payment'><BiChevronLeft/></Link>
+            <p className="title">Cash Payments</p>
+        </div>
         <div className="form-11" style={{ width: '100%' }}>
             <div className="input">
                 <input 

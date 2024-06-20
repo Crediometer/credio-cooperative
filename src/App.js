@@ -31,6 +31,12 @@ import CashPayment from './pages/Students/CashPayment';
 import AdminProfile from './pages/Profile/AdminProfile';
 import NewMemberList from './pages/Members/NewMemberList';
 import Newsavings from './pages/Savings/Newsaving';
+import CreateSaving from './pages/Savings/CreateSaving';
+import ActiveSavings from './pages/Savings/Active';
+import ClosedSaving from './pages/Savings/Closed';
+import OverdueSaving from './pages/Savings/Overdue';
+import ActiveDetailsSavings from './pages/Savings/ActiveDetails';
+import ClosedDetailsSaving from './pages/Savings/ClosedDetails';
 
 function App() {
   return (
@@ -65,12 +71,18 @@ function App() {
         <Route path='/admin-profile' element={<AdminProfile/>}/>
         <Route path='/loan-approval' element={<Approval/>}/>
         <Route path='/loan-overdue' element={<Overdue/>}/>
+        <Route path='/saving-overdue' element={<OverdueSaving/>}/>
         <Route path='/loan-lender' element={<Lenders/>}/>
         <Route path='/loan-create' element={<CreateLoan/>}/>
+        <Route path='/loan-saving' element={<CreateSaving/>}/>
         <Route path='/loan-active' element={<Active/>}/>
+        <Route path='/saving-active' element={<ActiveSavings/>}/>
         <Route path='/loan-closed' element={<Closed/>}/>
+        <Route path='/saving-closed' element={<ClosedSaving/>}/>
         <Route path='/loan-closed-details' element={<ClosedDetails/>}/>
+        <Route path='/saving-closed-details' element={<ClosedDetailsSaving/>}/>
         <Route path='/loan-active-details' element={<ActiveDetails/>}/>
+        <Route path='/saving-active-details' element={<ActiveDetailsSavings/>}/>
       </Routes>
     </div>
   );

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { FaWifi } from "react-icons/fa6";
 import ReceiptModal from "../../components/Modal/ReceiptModal";
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { BiChevronLeft } from "react-icons/bi";
 const CardPayment = () => {
     const {id} = useParams()
     const members = ['John Doe', 'Jane Smith', 'Michael Johnson', 'Alice Williams', 'David Brown'];
@@ -93,7 +94,10 @@ const CardPayment = () => {
     }
     return ( 
         <div className="saving">
-            <p className="transfer-head">Card Payments</p>
+            <div className="back">
+                <Link to='/payment'><BiChevronLeft/></Link>
+                <p className="title">Card Payments</p>
+            </div>
             
             <div className="form-11" style={{ width: '100%' }}>
                 <div className="input">

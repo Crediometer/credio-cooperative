@@ -1,13 +1,16 @@
 import { Link, useParams } from "react-router-dom";
 import Box from "../../components/Box/Box";
 import { HiOutlinePlusSm } from "react-icons/hi";
+import { BiChevronLeft } from "react-icons/bi";
 
 const Payment = () => {
     const {id} = useParams()
     return ( 
         <div className="payment2 saving">
-            
-            <h4 className="form-head">Select a Payment Method</h4>
+            <div className="back">
+                <Link to='/dashboard'><BiChevronLeft/></Link>
+                <h4 className="form-head">Select a Payment Method</h4>
+            </div>
             <h4 className="form-body">{id}</h4>
             <div className="payment-method">
                 <div className="dashboard-navigate">

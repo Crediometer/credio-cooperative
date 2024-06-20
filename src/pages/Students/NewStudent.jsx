@@ -5,8 +5,9 @@ import "./Students.css"
 import {Select, Switch} from 'antd'
 import { useEffect, useRef, useState } from "react";
 import { BsBank2 } from "react-icons/bs";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ReceiptModal from "../../components/Modal/ReceiptModal";
+import { BiChevronLeft } from "react-icons/bi";
 const NewStudent = ({}) => {
     const [show1, setShow1] = useState(false)
     const [showBank, setShowBank] = useState(false);
@@ -262,7 +263,10 @@ const NewStudent = ({}) => {
                 <p className={(number===3) ? "filter-text filter-active": "filter-text"} onClick={()=>{setNumber(3)}}>Direct Bank Debit</p>
                 <p className={(number===4) ? "filter-text filter-active": "filter-text"} onClick={()=>{setNumber(4)}}>Recuring Payment</p>
             </div> */}
-            <p className="transfer-head">Recurring Payments</p>
+            <div className="back">
+                <Link to='/payment'><BiChevronLeft/></Link>
+                <p className="title">Recurring Payments</p>
+            </div>
             <div className="form-11" style={{ width: '100%' }}>
                 <div className="input">
                     <input 

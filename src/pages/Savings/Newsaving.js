@@ -1,12 +1,15 @@
 import { Link } from "react-router-dom";
 import Box from "../../components/Box/Box";
 import { HiOutlinePlusSm } from "react-icons/hi";
+import { BiChevronLeft } from "react-icons/bi";
 
 const Newsavings = () => {
     return ( 
         <div className="payment2 saving">
-            
-        <h4 className="form-head">Savings</h4>
+            <div className="back">
+                <Link to='/dashboard'><BiChevronLeft/></Link>
+                <h4 className="form-head">Savings</h4>
+            </div>
         <div className="dashboard-card">
                 <div className="card-top">
                     <div className="savings">
@@ -33,7 +36,7 @@ const Newsavings = () => {
             </div>
         <div className="payment-method">
             <div className="dashboard-navigate">
-                <Link to="/loan-create">
+                <Link to="/loan-saving">
                     <Box
                         color="rgba(255, 19, 19, 0.128)"
                         icons={<HiOutlinePlusSm/>}
@@ -41,7 +44,7 @@ const Newsavings = () => {
                         
                     />
                 </Link>
-                <Link to="/loan-active">
+                <Link to="/saving-active">
                 <Box
                     color="rgba(210, 193, 43, 0.123)"
                     icons={<HiOutlinePlusSm/>}
@@ -51,7 +54,7 @@ const Newsavings = () => {
                 </Link> 
             </div>
             <div className="dashboard-navigate">
-                <Link  to="/loan-overdue">
+                <Link  to="/saving-overdue">
                     <Box
                         color="rgba(18, 15, 199, 0.123)"
                         icons={<HiOutlinePlusSm/>}
@@ -59,7 +62,7 @@ const Newsavings = () => {
                        
                     />
                 </Link>
-                <Link to="/loan-closed">
+                <Link to="/saving-closed">
                     <Box
                         color="rgba(5, 139, 65, 0.123)"
                         icons={<HiOutlinePlusSm/>}
