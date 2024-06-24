@@ -19,3 +19,8 @@
     font-family: "Poppins";
     font-size: 0.625rem;
 }
+@media (max-width: 800px){
+    .box h2{
+        font-size: 0.8rem;
+    }
+}

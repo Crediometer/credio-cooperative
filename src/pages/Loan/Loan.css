@@ -317,3 +317,17 @@
         font-family: "Poppins";
     }
 }
+@media (max-width: 800px){
+    .card-header{
+        color: #B11226;
+        font-weight: 600;
+        font-size: 0.675rem;
+        font-family: "Poppins";
+    }
+    .approval-card-top p{
+        font-size: 0.675rem;
+    }
+    .information-inner p{
+        font-size: 0.675rem;
+    }
+}

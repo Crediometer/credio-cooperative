@@ -19,7 +19,6 @@ const Payment = () => {
                             color="rgba(5, 139, 65, 0.123)"
                             icons={<HiOutlinePlusSm/>}
                             text="Cash Payments"
-                            des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                         />
                     </Link>
                     <Link to={id ? `/card-transfer/${id}` : "/card-transfer" }>
@@ -27,7 +26,6 @@ const Payment = () => {
                             color="rgba(255, 19, 19, 0.128)"
                             icons={<HiOutlinePlusSm/>}
                             text="Card Payments"
-                            des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                         />
                     </Link>
                 </div>
@@ -37,7 +35,6 @@ const Payment = () => {
                             color="rgba(18, 15, 199, 0.123)"
                             icons={<HiOutlinePlusSm/>}
                             text="Direct Bank Debit"
-                            des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                         />
                     </Link>
                     <Link to={id ? `/recurring/${id}` : "/recurring" }>
@@ -45,7 +42,6 @@ const Payment = () => {
                         color="rgba(210, 193, 43, 0.123)"
                         icons={<HiOutlinePlusSm/>}
                         text="Setup Recurring Payment"
-                        des="Lorem ipsum dolor sit amet, consectetur adipiscing "
                     />
                     </Link>            
                 </div>

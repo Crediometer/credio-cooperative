@@ -142,3 +142,12 @@
     font-family:"Poppins";
     color: #fff !important;
 }
+@media (max-width: 800px){
+    .withdrawal-type{
+        font-size: 0.675rem;
+    }
+    .withdrawal-type-2{
+        font-size: 0.7rem;
+    }
+  
+}

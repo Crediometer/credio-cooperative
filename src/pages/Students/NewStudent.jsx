@@ -384,7 +384,7 @@ const NewStudent = ({}) => {
                                 </div>
                             </div> */}
                             <div className="invoice-period"  style={{ width: '100%' }} >
-                                <h4 className="form-head">Period</h4>
+                                {/* <h4 className="form-head">Period</h4> */}
                                 <div className="payment-form">
                                     <div className="form-1">
                                         <label>Repeat Every<span>*</span></label>

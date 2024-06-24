@@ -4,6 +4,7 @@
 .back{
     display: flex;
     align-items: center;
+    margin-bottom: 20px;
 }
 .back a{
     color: #383838;

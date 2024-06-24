@@ -117,7 +117,7 @@ const BankTransfer = () => {
                         <form method="POST">
                             {/* <LottieAnimation lotti={preloader} height={150} width={150} /> */}
                             <div className="form-1-outer">
-                                {/* {(!isChecked) && ( */}
+                                {(!isChecked) && (
                                     <div className="form-11">
                                         <div className="input">
                                             <label className='form-1-label'>Beneficiary’s  Bank </label>
@@ -188,7 +188,7 @@ const BankTransfer = () => {
                                             </div>
                                         )}
                                     </div>
-                                    {/* ) }  */}
+                                     ) } 
                                 <div className="form-11" style={{ width: !isChecked ? '49%' : '32%' }}>
                                     <div className="input">
                                         <label className='form-1-label'>Beneficiary’s  Account Number </label>

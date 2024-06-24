@@ -128,12 +128,13 @@ const Dashboard = () => {
                     
                     />
                 </Link>
-                <Box
-                    color="rgba(210, 193, 43, 0.123)"
-                    icons={<HiOutlinePlusSm/>}
-                    text="Expenses"
-                
-                />
+                <Link to='/dashboard'>
+                    <Box
+                        color="rgba(210, 193, 43, 0.123)"
+                        icons={<HiOutlinePlusSm/>}
+                        text="Expenses"
+                    />
+                </Link>
             </div>
             <div className="dashboard-navigate">
                 <Link to="/loans">

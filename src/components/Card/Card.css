@@ -38,3 +38,20 @@
     font-weight: 800;
     font-family:"Poppins";
 }
+@media (max-width: 800px){
+    .card-icon{
+        width: 30px;
+        height: 30px;
+
+    }
+    .card-icon svg{
+        color: white;
+        font-size: 1.3rem;
+    }
+    .card-topic{
+        font-size: 1rem;
+    }
+    .card-body-2 h4{
+        font-size: 1.3rem;
+    }
+}
