@@ -41,7 +41,7 @@ export default function MemberTable({data}) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data?.map((row) => (
+          {data?.map((row,index) => (
                 <TableRow
                 key={row.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -56,7 +56,6 @@ export default function MemberTable({data}) {
                     <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row.createdAt.slice(0,10)}</TableCell>
                     <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row?.personalInfo?.occupationBusiness}</TableCell>
                     <Link to={`/member-details/${row.Name}`}>  <TableCell><button className='view-button'>View</button></TableCell> </Link>
-                
                 </TableRow>
            
           ))}

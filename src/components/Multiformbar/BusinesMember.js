@@ -169,6 +169,7 @@ const BusinessMember = ({
                         required
                     >
                         <optgroup>
+                            <option >--select an option--</option>
                             <option value="YES">Yes</option>
                             <option value="NO">No</option>
                         </optgroup>
