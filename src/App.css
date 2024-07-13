@@ -16,3 +16,18 @@ a{
 .setup-link{
   width: 100%;
 }
+.spinner{
+  width: 20%;
+}
+.alert-error{
+  background-color: #ea6375;
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 8px;
+  color: #202020;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1rem;
+  text-align: center;
+}

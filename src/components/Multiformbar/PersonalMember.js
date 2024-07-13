@@ -12,63 +12,91 @@ import { useState } from 'react';
 import styles4 from '../../pages/Activate/Activate.module.css'
 // import Errormodal from "../Modal/Errormodal";
 // import ErrorBoundary from "../../ErrorBoundary";
-const PersonalMember = ({next, personal, error, loading}) => {
-    const [nameState, setNameState] = useState({});
-    const [businessDescriptions, setbusinessDescriptions] = useState("");
-    const [phoneNumber, setphoneNumber] = useState("")
-    const [businessEmail, setbusinessEmail] = useState("")
-    const [supportEmail, setsupportEmail] = useState("")
-    const [address1, setaddress1] = useState("")
-    const [address2, setaddress2] = useState("")
+const PersonalMember = ({
+    next, 
+    personal, 
+    error, 
+    loading, 
+    nameState, 
+    setNameState
+}) => {
+    const [fullname, setfullname] = useState("");
+    const [phone, setphone] = useState("")
+    const [email, setemail] = useState("")
+    const [sex, setsex] = useState("")
+    const [age, setage] = useState("")
+    const [homeAddress, sethomeAddress] = useState("")
+    const [townCity, settownCity] = useState("")
     const [state, setstate] = useState("")
-    const [websiteLink, setwebsiteLink] = useState("")
-    const[filename, setFilename] = useState('')
-    const[image, setImage] = useState(null)
+    const[originState, setoriginState] = useState('')
+    const[religion, setreligion] = useState(null)
+    const[occupationBusiness, setoccupationBusiness] = useState(null)
+    const[occupationBusinessAddres, setoccupationBusinessAddres] = useState(null)
     const[filename2, setFilename2] = useState('')
     const[image2, setImage2] = useState(null)
     const [errorHandler, setErrorHandler] = useState([false, ""]);
     const [showerror, setshowerror] = useState(false)
-    const handleDescription = (e) => {
+    const handleFullName = (e) => {
         const value = e.target.value;
-        setbusinessDescriptions(value);
-        setNameState({ ...nameState, ...{ businessDescriptions } });
+        setfullname(value);
+        setNameState({ ...nameState, ...{ fullname } });
     };
     const handleNumber = (e) => {
         const value = e.target.value;
-        setphoneNumber(value);
-        setNameState({ ...nameState, ...{ phoneNumber } });
+        setphone(value);
+        setNameState({ ...nameState, ...{ phone } });
     };
     const handleEmail = (e) => {
         const value = e.target.value;
-        setbusinessEmail(value);
-        setNameState({ ...nameState, ...{ businessEmail } });
+        setemail(value);
+        setNameState({ ...nameState, ...{ email } });
     };
-    const handleSupportEmail = (e) => {
+    const handleSex = (e) => {
         const value = e.target.value;
-        setsupportEmail(value);
-        setNameState({ ...nameState, ...{ supportEmail } });
+        setsex(value);
+        setNameState({ ...nameState, ...{ sex } });
     };
     const handleState = (e) => {
         const value = e.target.value;
         setstate(value);
         setNameState({ ...nameState, ...{ state } });
     };
-    const handleAddress1 = (e) => {
+    const handleAddress= (e) => {
         const value = e.target.value;
-        setaddress1(value);
-        setNameState({ ...nameState, ...{ address1 } });
+        sethomeAddress(value);
+        setNameState({ ...nameState, ...{ homeAddress } });
     };
-    const handleAddress2 = (e) => {
+    const handleage = (e) => {
         const value = e.target.value;
-        setaddress2(value);
-        setNameState({ ...nameState, ...{ address2 } });
+        const newvalue = parseFloat(value)
+        setage(value);
+        setNameState({ ...nameState, ...{ age:newvalue } });
     };
-    const handleWebsite = (e) => {
+    const handletownCity = (e) => {
         const value = e.target.value;
-        setwebsiteLink(value);
-        setNameState({ ...nameState, ...{ websiteLink } });
+        settownCity(value);
+        setNameState({ ...nameState, ...{ townCity } });
     };
-
+    const handleoriginState = (e) => {
+        const value = e.target.value;
+        setoriginState(value);
+        setNameState({ ...nameState, ...{ originState} });
+    };
+    const handlereligion = (e) => {
+        const value = e.target.value;
+        setreligion(value);
+        setNameState({ ...nameState, ...{ religion } });
+    };
+    const handleoccupationBusiness = (e) => {
+        const value = e.target.value;
+        setoccupationBusiness(value);
+        setNameState({ ...nameState, ...{ occupationBusiness } });
+    };
+    const handleoccupationBusinessAddres = (e) => {
+        const value = e.target.value;
+        setoccupationBusinessAddres(value);
+        setNameState({ ...nameState, ...{ occupationBusinessAddress: occupationBusinessAddres } });
+    };
     const togglemodal = ()=>{
         setshowerror(!showerror)
     }
@@ -105,6 +133,8 @@ const PersonalMember = ({next, personal, error, loading}) => {
                                 type="text"
                                 placeholder="Enter Your Full Name "
                                 required
+                                onChange={handleFullName}
+                                onBlur={handleFullName}
                             >
                             </input>
                         </div>
@@ -116,6 +146,8 @@ const PersonalMember = ({next, personal, error, loading}) => {
                                 className={styles2.fieldinput}
                                 type="text"
                                 placeholder="Enter an official phone number"
+                                onChange={handleNumber}
+                                onBlur={handleNumber}
 
                             >
                             </input>
@@ -129,6 +161,8 @@ const PersonalMember = ({next, personal, error, loading}) => {
                                 type="email"
                                 placeholder="Enter your Email"
                                 required
+                                onChange={handleEmail}
+                                onBlur={handleEmail}
                             >
                             </input>
                         </div>
@@ -148,9 +182,15 @@ const PersonalMember = ({next, personal, error, loading}) => {
                                 <input type="file" className='upload' hidden required
                                     onChange={({target: {files}})=>{
                                         files[0] && setFilename2(files[0])
+                                        const data =new FileReader()
+                                        data.addEventListener('load',()=>{
+                                            setImage2(data.result)
+                                            setNameState({ ...nameState, ...{ image: data.result } });
+                                        }) 
+                                        data.readAsDataURL(files[0])
                                         if(files){
                                             setImage2(URL.createObjectURL(files[0]))
-                                            // setNameState({ ...nameState, ...{ filename: image } });
+                                            
                                         }
                                     }}
                                     // onBlur={handlemermat}
@@ -164,13 +204,17 @@ const PersonalMember = ({next, personal, error, loading}) => {
                         <div className={styles.form2}>
                             <div className={styles2.field}>
                                 <label className={styles2.fieldlabel}>Sex<span>*</span></label>
-                                <input 
+                                <select
                                     className={styles2.fieldinput}
-                                    type="text"
-                                    placeholder="Choose Gender "
+                                    onChange={handleSex}
+                                    onBlur={handleSex}
                                     required
                                 >
-                                </input>
+                                    <optgroup>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </optgroup>
+                                </select>
                             </div>
                         </div>
                         <div className={styles.form2}>
@@ -181,6 +225,8 @@ const PersonalMember = ({next, personal, error, loading}) => {
                                     className={styles2.fieldinput}
                                     type="text"
                                     placeholder="Enter Age"
+                                    onChange={handleage}
+                                    onBlur={handleage}
                                 >
                                 </input>
                             </div>
@@ -194,6 +240,8 @@ const PersonalMember = ({next, personal, error, loading}) => {
                                 type="text"
                                 placeholder="Number of persons in the organization "
                                 required
+                                onChange={handleAddress}
+                                onBlur={handleAddress }
                             >
                             </input>
                         </div>
@@ -207,6 +255,8 @@ const PersonalMember = ({next, personal, error, loading}) => {
                                     type="text"
                                     placeholder="Enter Town/City"
                                     required
+                                    onChange={handletownCity}
+                                    onBlur={handletownCity}
                                 >
                                 </input>
                             </div>
@@ -214,13 +264,53 @@ const PersonalMember = ({next, personal, error, loading}) => {
                         <div className={styles.form2}>
                             <div className={styles2.field}>
                                 <label className={styles2.fieldlabel}>State of origin <span>*</span></label>
-                                <input 
-                                    required
+                                <select 
                                     className={styles2.fieldinput}
-                                    type="text"
-                                    placeholder="Enter State of origin "
+                                    onChange={handleoriginState}
+                                    onBlur={handleoriginState}
+                                    required
                                 >
-                                </input>
+                                    <optgroup>
+                                        <option disabled selected>--Select State--</option>
+                                        <option value="Abia">Abia</option>
+                                        <option value="Adamawa">Adamawa</option>
+                                        <option value="Akwa Ibom">Akwa Ibom</option>
+                                        <option value="Anambra">Anambra</option>
+                                        <option value="Bauchi">Bauchi</option>
+                                        <option value="Bayelsa">Bayelsa</option>
+                                        <option value="Benue">Benue</option>
+                                        <option value="Borno">Borno</option>
+                                        <option value="Cross River">Cross River</option>
+                                        <option value="Delta">Delta</option>
+                                        <option value="Ebonyi">Ebonyi</option>
+                                        <option value="Edo">Edo</option>
+                                        <option value="Ekiti">Ekiti</option>
+                                        <option value="Enugu">Enugu</option>
+                                        <option value="FCT">Federal Capital Territory</option>
+                                        <option value="Gombe">Gombe</option>
+                                        <option value="Imo">Imo</option>
+                                        <option value="Jigawa">Jigawa</option>
+                                        <option value="Kaduna">Kaduna</option>
+                                        <option value="Kano">Kano</option>
+                                        <option value="Katsina">Katsina</option>
+                                        <option value="Kebbi">Kebbi</option>
+                                        <option value="Kogi">Kogi</option>
+                                        <option value="Kwara">Kwara</option>
+                                        <option value="Lagos">Lagos</option>
+                                        <option value="Nasarawa">Nasarawa</option>
+                                        <option value="Niger">Niger</option>
+                                        <option value="Ogun">Ogun</option>
+                                        <option value="Ondo">Ondo</option>
+                                        <option value="Osun">Osun</option>
+                                        <option value="Oyo">Oyo</option>
+                                        <option value="Plateau">Plateau</option>
+                                        <option value="Rivers">Rivers</option>
+                                        <option value="Sokoto">Sokoto</option>
+                                        <option value="Taraba">Taraba</option>
+                                        <option value="Yobe">Yobe</option>
+                                        <option value="Zamfara">Zamfara</option>
+                                    </optgroup>
+                                </select>
                             </div>
                         </div>
                     </div>   
@@ -232,6 +322,8 @@ const PersonalMember = ({next, personal, error, loading}) => {
                                 className={styles2.fieldinput}
                                 type="text"
                                 placeholder="Enter Religion"
+                                onChange={handlereligion}
+                                onBlur={handlereligion }
                             >   
                             </input>
                         </div>
@@ -244,6 +336,8 @@ const PersonalMember = ({next, personal, error, loading}) => {
                                 className={styles2.fieldinput}
                                 type="text"
                                 placeholder="Enter occupation or business"
+                                onChange={handleoccupationBusiness}
+                                onBlur={handleoccupationBusiness }
                             >   
                             </input>
                         </div>
@@ -256,6 +350,8 @@ const PersonalMember = ({next, personal, error, loading}) => {
                                 className={styles2.fieldinput}
                                 type="text"
                                 placeholder="Enter detailed address description: "
+                                onChange={handleoccupationBusinessAddres}
+                                onBlur={handleoccupationBusinessAddres }
                             >   
                             </input>
                         </div>

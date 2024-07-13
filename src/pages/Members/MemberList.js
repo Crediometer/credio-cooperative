@@ -4,7 +4,18 @@ import MemberTable from "../../components/Table/MemberTable";
 import { FaSearch } from "react-icons/fa";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-const MemberList = () => {
+import { getmember } from "../../Redux/Member/MemberAction";
+import { useEffect } from "react";
+import { connect } from "react-redux";
+const MemberList = ({
+    loading, 
+    error, 
+    getprofile,
+    getmember
+}) => {
+    useEffect(()=>{
+        getmember();
+    }, [])
     return ( 
         <div className="saving">
             <div className="back">
@@ -30,5 +41,17 @@ const MemberList = () => {
         </div>
     );
 }
- 
-export default MemberList;
+const mapStateToProps = state => {
+    return{
+        error:state?.member?.error,
+        loading: state?.member?.loading,
+        getprofile: state?.member?.data?.payload,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return{
+        getmember: () => dispatch(getmember()),
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(MemberList);

@@ -10,12 +10,25 @@ import { FaTimesCircle } from 'react-icons/fa';
 import {FiAlertTriangle} from 'react-icons/fi'
 import {AiOutlineFile} from 'react-icons/ai'
 import TermsModal from '../Modal/TermsModal';
+import LottieAnimation from '../../Lotties';
+import loader from '../../Assets/animations/loading.json'
 // import LottieAnimation from '../../Lotties';
 // import loader from '../../Assets/loading.json'
 // import Errormodal from '../Modal/Errormodal';
 // import LoadingModal from '../Modal/LoadingModal';
 // import DragandDropMermat from '../Drag-and-Drop/DragandDropMermat';
-const BusinessMember = ({next, business, error, loading,kyc,kycload, kycerror}) => {
+const BusinessMember = ({
+    next, 
+    business, 
+    error, 
+    loading,
+    kyc,
+    kycload, 
+    kycerror,
+    cooperativeInfo,
+    setcooperativeInfo,
+    handleSubmit
+}) => {
     const [nameState, setNameState] = useState({});
     const [formState, setFormState] = useState(null)
     const [postState, setPostState] = useState({});
@@ -24,12 +37,14 @@ const BusinessMember = ({next, business, error, loading,kyc,kycload, kycerror}) 
     const[image, setImage] = useState(null)
     const[filename2, setFilename2] = useState('')
     const[image2, setImage2] = useState(null)
-    const [mermat, setMermat] = useState("");
-    const [bvn, setbvn] = useState("");
-    const [dob, setdob] = useState('');
-    const [address1, setaddress1] = useState("")
-    const [address2, setaddress2] = useState("")
-    const [state, setstate] = useState("")
+    const [purposeJoining, setpurposeJoining] = useState("");
+    const [referralName, setreferralName] = useState("");
+    const [referralPhone, setreferralPhone] = useState('');
+    const [belongedToCooperative, setbelongedToCooperative] = useState("")
+    const [reasonForLeaving, setreasonForLeaving] = useState("")
+    const [nextOfKin, setnextOfKin] = useState("")
+    const [nextOfKinAddress, setnextOfKinAddress] = useState("")
+    const [nextOfKinRelationship, setnextOfKinRelationship] = useState("")
     const [show, setShow] = useState(false)
     const [showkyc, setshowkyc]= useState(false)
     const [websiteLink, setwebsiteLink] = useState("")
@@ -39,56 +54,46 @@ const BusinessMember = ({next, business, error, loading,kyc,kycload, kycerror}) 
     const [showerror, setshowerror] = useState(false)
     // const options = [{name:'name'},{name:'games'}]
 
-    const handlebvn = (e) => {
+    const handlepurpose = (e) => {
         const value = e.target.value;
-        setbvn(value);
-        setNameState({ ...nameState, ...{ bvn } });
-        setPostState({ ...postState, ...{ bvn } });
+        setpurposeJoining(value);
+        setcooperativeInfo({ ...cooperativeInfo, ...{ purposeJoining } });
+       
     };
-    const handledob = (e) => {
+    const handlereferralName = (e) => {
         const value = e.target.value;
-        setdob(value);
-        setNameState({ ...nameState, ...{ dob } });
-        setPostState({ ...postState, ...{ dob } });
+        setreferralName(value);
+        setcooperativeInfo({ ...cooperativeInfo, ...{ referralName } });
     };
-    // useEffect(() => {
-    //     if (dob !== "" && bvn.length === 11) {
-    //         kyc(postState, 
-    //             ()=>{ 
-    //                 setShow(true);
-    //             }, ()=>{ 
-    //                 setshowkyc(true);
-    //             }
-    //         )
-    //         // postData(nameState);
-    //         // setaccountName(name.data.accountName)
-    //     }
-        
-    // }, [bvn, dob, postState]);
-    const handlercnumber = (e) => {
+    const handlereferralPhone = (e) => {
         const value = e.target.value;
-        setrcNumber(value);
-        setNameState({ ...nameState, ...{ rcNumber } });
+        setreferralPhone(value);
+        setcooperativeInfo({ ...cooperativeInfo, ...{ referralPhone } });
     };
-    const handlemermat = (e) => {
+    const handlebelongedToCooperative = (e) => {
         const value = e.target.value;
-        setMermat(value);
-        setNameState({ ...nameState, ...{ mermat } });
+        setbelongedToCooperative(value);
+        setcooperativeInfo({ ...cooperativeInfo, ...{belongedToCooperative} });
     };
-    const handleState = (e) => {
+    const handlereasonForLeaving = (e) => {
         const value = e.target.value;
-        setstate(value);
-        setNameState({ ...nameState, ...{ state } });
+        setreasonForLeaving(value);
+        setcooperativeInfo({ ...cooperativeInfo, ...{ reasonForLeaving } });
     };
-    const handleAddress1 = (e) => {
+    const handlenextOfKin = (e) => {
         const value = e.target.value;
-        setaddress1(value);
-        setNameState({ ...nameState, ...{ address1 } });
+        setnextOfKin(value);
+        setcooperativeInfo({ ...cooperativeInfo, ...{ nextOfKin } });
     };
-    const handleAddress2 = (e) => {
+    const handlenextOfKinAddress = (e) => {
         const value = e.target.value;
-        setaddress2(value);
-        setNameState({ ...nameState, ...{ email:address2 } });
+        setnextOfKinAddress(value);
+        setcooperativeInfo({ ...cooperativeInfo, ...{ nextOfKinAddress } });
+    };
+    const handlenextOfKinRelationship = (e) => {
+        const value = e.target.value;
+        setnextOfKinRelationship(value);
+        setcooperativeInfo({ ...cooperativeInfo, ...{ nextOfKinRelationship } });
     };
     const handleWebsite = (e) => {
         const value = e.target.value;
@@ -107,33 +112,13 @@ const BusinessMember = ({next, business, error, loading,kyc,kycload, kycerror}) 
     const handleshow = () =>{
         setShow(!show)
     }
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append('mermat',filename2);
-        formData.append('bvn', bvn);
-        formData.append('dob',dob);
-        formData.append('rcNumber', rcNumber);
-        formData.append('state', state);
-        formData.append('address1', address1);
-        formData.append('businessEmail', address2);
-        formData.append('websiteLink', websiteLink);
-        try{
-            
-            await business(formData, ()=>{ 
-            next();
-            // setPending(true);
-            }, ()=>{ 
-                setErrorHandler(error)
-                setshowerror(true)
-                // setPending(false);
-            });
-        }catch(error){
-            // setPending(false)
-        }
-    };
     return ( 
         <form onSubmit={handleSubmit} method='post'>
+            {showerror && (
+                <div className="alert-error alert-danger" role="alert">
+                    {error}
+                </div>
+            )}
             <div className={styles.form2}>
                 <div className={styles2.field}>
                     <label className={styles2.fieldlabel}>Purpose of joinin<span>*</span> </label>
@@ -141,8 +126,8 @@ const BusinessMember = ({next, business, error, loading,kyc,kycload, kycerror}) 
                         className={styles2.fieldinput}
                         type="text"
                         placeholder="give reason why you want to join"
-                        onBlur={handleAddress1}
-                        onChange={handleAddress1}
+                        onBlur={handlepurpose}
+                        onChange={handlepurpose}
                         required
                     >
                     </input>
@@ -155,8 +140,8 @@ const BusinessMember = ({next, business, error, loading,kyc,kycload, kycerror}) 
                         className={styles2.fieldinput}
                         type="text"
                         placeholder="Enter full name of referral"
-                        onBlur={handleWebsite}
-                        onChange={handleWebsite}
+                        onBlur={handlereferralName}
+                        onChange={handlereferralName}
 
                     >
                     </input>
@@ -169,8 +154,8 @@ const BusinessMember = ({next, business, error, loading,kyc,kycload, kycerror}) 
                         className={styles2.fieldinput}
                         type="text"
                         placeholder="Enter phone number of referral "
-                        onBlur={handleAddress2}
-                        onChange={handleAddress2}
+                        onBlur={handlereferralPhone}
+                        onChange={handlereferralPhone}
                         required
                     >
                     </input>
@@ -179,27 +164,29 @@ const BusinessMember = ({next, business, error, loading,kyc,kycload, kycerror}) 
             <div className={styles.form2}>
                 <div className={styles2.field}>
                     <label className={styles2.fieldlabel}>Have you belong to any cooperative before <span>*</span></label>
-                    <input 
-                        className={styles2.fieldinput}
-                        type="text"
-                        placeholder="yes"
-                        onBlur={handlebvn}
-                        onChange={handlebvn}
+                    <select
+                     className={styles2.fieldinput}
+                        onBlur={handlebelongedToCooperative}
+                        onChange={handlebelongedToCooperative}
                         required
                     >
-                    </input>
+                        <optgroup>
+                            <option value="YES">Yes</option>
+                            <option value="NO">No</option>
+                        </optgroup>
+                    </select>
+                   
                 </div>
             </div>
             <div className={styles.form2}>
                 <div className={styles2.field}>
-                    <label className={styles2.fieldlabel}>If yes, why did you leave <span>*</span></label>
+                    <label className={styles2.fieldlabel}>If yes, why did you leave <span></span></label>
                     <input 
                         className={styles2.fieldinput}
                         type="text"
                         placeholder="Enter detailed reason "
-                        onBlur={handlercnumber}
-                        required
-                        onChange={handlercnumber}
+                        onBlur={handlereasonForLeaving}
+                        onChange={handlereasonForLeaving}
                     >
                     </input>
                 </div>
@@ -211,9 +198,9 @@ const BusinessMember = ({next, business, error, loading,kyc,kycload, kycerror}) 
                         className={styles2.fieldinput}
                         type="text"
                         placeholder="Enter full name of next of kin "
-                        onBlur={handlercnumber}
+                        onBlur={handlenextOfKin}
                         required
-                        onChange={handlercnumber}
+                        onChange={handlenextOfKin}
                     >
                     </input>
                 </div>
@@ -225,9 +212,9 @@ const BusinessMember = ({next, business, error, loading,kyc,kycload, kycerror}) 
                         className={styles2.fieldinput}
                         type="text"
                         placeholder="Enter detailed address description: "
-                        onBlur={handlercnumber}
+                        onBlur={handlenextOfKinAddress}
                         required
-                        onChange={handlercnumber}
+                        onChange={handlenextOfKinAddress}
                     >
                     </input>
                 </div>
@@ -239,21 +226,22 @@ const BusinessMember = ({next, business, error, loading,kyc,kycload, kycerror}) 
                         className={styles2.fieldinput}
                         type="text"
                         placeholder="Enter relationship with next of kin "
-                        onBlur={handlercnumber}
+                        onBlur={handlenextOfKinRelationship}
                         required
-                        onChange={handlercnumber}
+                        onChange={handlenextOfKinRelationship}
                     >
                     </input>
                 </div>
             </div>
             <p className={styles2.fieldtext2}>Setting up means you have agreed with our <span onClick={handleshow}> Terms of Service</span></p>
             <div>
-                {/* {loading ? (
+                {loading ? (
                     <button className={styles3.activateButton} disabled>
                         <LottieAnimation data={loader}/>
                     </button>
-                ) : ( */}
-                    <button onClick={()=>{next();}} className={styles3.activateButton}><span>PROCEED</span></button>
+                ) : (
+                    <button className={styles3.activateButton}><span>PROCEED</span></button>
+                )}
             </div>
            {show && (<TermsModal togglemodal={handleshow}/>)}
             {/* <button onClick={handleSubmit} className={styles3.activateButton}>

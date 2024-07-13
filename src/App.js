@@ -1,5 +1,6 @@
 import './App.css';
 import {Routes, Route} from 'react-router-dom'
+import store from './Redux/Store';
 import Admin from './pages/Admin/Admin';
 import Activate from './pages/Activate/Activate';
 import Member from './pages/Members/Member';
@@ -37,53 +38,58 @@ import ClosedSaving from './pages/Savings/Closed';
 import OverdueSaving from './pages/Savings/Overdue';
 import ActiveDetailsSavings from './pages/Savings/ActiveDetails';
 import ClosedDetailsSaving from './pages/Savings/ClosedDetails';
+import Login from './pages/Login/Login';
+import { Provider } from 'react-redux';
 
 function App() {
   return (
     <div className="App">
-      <Routes>
-        <Route path='/' element={<Admin/>}/>
-        <Route path='/onboardmember' element={<Member/>}/>
-        <Route path='/join' element={<Join/>}/>
-        <Route path='/join-list' element={<List/>}/>
-        <Route path='/register-admin' element={<Activate/>}/>
-        <Route path='/register-member' element={<ActivateMember/>}/>
-        <Route path='/dashboard' element={<Dashboard  />}/>
-        {/* <Route path='/saving' element={<Saving/>}/> */}
-        <Route path='/saving' element={<Newsavings/>}/>
-        <Route path='/saving-details' element={<SavingDetails/>}/>
-        <Route path='/withdraw' element={<Withdrawal/>}/>
-        <Route path='/member' element={<MemberList/>}/>
-        <Route path='/newmember' element={<NewMemberList/>}/>
-        <Route path='/member-details/:id' element={<MemberDetails/>}/>
-        <Route path='/payment' element={<Payment/>}/>
-        <Route path='/payment/:id' element={<Payment/>}/>
-        <Route path='/recurring' element={<NewStudent/>}/>
-        <Route path='/recurring/:id' element={<NewStudent/>}/>
-        <Route path='/transfer' element={<BankTransfer/>}/>
-        <Route path='/transfer/:id' element={<BankTransfer/>}/>
-        <Route path='/card-transfer' element={<CardPayment/>}/>
-        <Route path='/card-transfer/:id' element={<CardPayment/>}/>
-        <Route path='/cash-payment' element={<CashPayment/>}/>
-        <Route path='/cash-payment/:id' element={<CashPayment/>}/>
-        <Route path='/member-profile' element={<Profile/>}/>
-        <Route path='/loans' element={<Loan/>}/>
-        <Route path='/admin-profile' element={<AdminProfile/>}/>
-        <Route path='/loan-approval' element={<Approval/>}/>
-        <Route path='/loan-overdue' element={<Overdue/>}/>
-        <Route path='/saving-overdue' element={<OverdueSaving/>}/>
-        <Route path='/loan-lender' element={<Lenders/>}/>
-        <Route path='/loan-create' element={<CreateLoan/>}/>
-        <Route path='/loan-saving' element={<CreateSaving/>}/>
-        <Route path='/loan-active' element={<Active/>}/>
-        <Route path='/saving-active' element={<ActiveSavings/>}/>
-        <Route path='/loan-closed' element={<Closed/>}/>
-        <Route path='/saving-closed' element={<ClosedSaving/>}/>
-        <Route path='/loan-closed-details' element={<ClosedDetails/>}/>
-        <Route path='/saving-closed-details' element={<ClosedDetailsSaving/>}/>
-        <Route path='/loan-active-details' element={<ActiveDetails/>}/>
-        <Route path='/saving-active-details' element={<ActiveDetailsSavings/>}/>
-      </Routes>
+      <Provider store={store}>
+        <Routes>
+          <Route path='/' element={<Admin/>}/>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/onboardmember' element={<Member/>}/>
+          <Route path='/join' element={<Join/>}/>
+          <Route path='/join-list' element={<List/>}/>
+          <Route path='/register-admin' element={<Activate/>}/>
+          <Route path='/register-member' element={<ActivateMember/>}/>
+          <Route path='/dashboard' element={<Dashboard  />}/>
+          {/* <Route path='/saving' element={<Saving/>}/> */}
+          <Route path='/saving' element={<Newsavings/>}/>
+          <Route path='/saving-details' element={<SavingDetails/>}/>
+          <Route path='/withdraw' element={<Withdrawal/>}/>
+          <Route path='/member' element={<MemberList/>}/>
+          <Route path='/newmember' element={<NewMemberList/>}/>
+          <Route path='/member-details/:id' element={<MemberDetails/>}/>
+          <Route path='/payment' element={<Payment/>}/>
+          <Route path='/payment/:id' element={<Payment/>}/>
+          <Route path='/recurring' element={<NewStudent/>}/>
+          <Route path='/recurring/:id' element={<NewStudent/>}/>
+          <Route path='/transfer' element={<BankTransfer/>}/>
+          <Route path='/transfer/:id' element={<BankTransfer/>}/>
+          <Route path='/card-transfer' element={<CardPayment/>}/>
+          <Route path='/card-transfer/:id' element={<CardPayment/>}/>
+          <Route path='/cash-payment' element={<CashPayment/>}/>
+          <Route path='/cash-payment/:id' element={<CashPayment/>}/>
+          <Route path='/member-profile' element={<Profile/>}/>
+          <Route path='/loans' element={<Loan/>}/>
+          <Route path='/admin-profile' element={<AdminProfile/>}/>
+          <Route path='/loan-approval' element={<Approval/>}/>
+          <Route path='/loan-overdue' element={<Overdue/>}/>
+          <Route path='/saving-overdue' element={<OverdueSaving/>}/>
+          <Route path='/loan-lender' element={<Lenders/>}/>
+          <Route path='/loan-create' element={<CreateLoan/>}/>
+          <Route path='/loan-saving' element={<CreateSaving/>}/>
+          <Route path='/loan-active' element={<Active/>}/>
+          <Route path='/saving-active' element={<ActiveSavings/>}/>
+          <Route path='/loan-closed' element={<Closed/>}/>
+          <Route path='/saving-closed' element={<ClosedSaving/>}/>
+          <Route path='/loan-closed-details' element={<ClosedDetails/>}/>
+          <Route path='/saving-closed-details' element={<ClosedDetailsSaving/>}/>
+          <Route path='/loan-active-details' element={<ActiveDetails/>}/>
+          <Route path='/saving-active-details' element={<ActiveDetailsSavings/>}/>
+        </Routes>
+      </Provider>
     </div>
   );
 }

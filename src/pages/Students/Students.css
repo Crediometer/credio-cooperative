@@ -581,6 +581,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 12px;
+    margin-bottom: 20px;
 }
 .form-11, .form-2{
     position: relative;
@@ -594,7 +595,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 16px;
+    margin-top: 1px;
     background: #F5F5f5;
     border-radius: 4px;
     border: none;

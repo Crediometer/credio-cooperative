@@ -9,128 +9,97 @@ import { useEffect, useState } from 'react';
 import { FaTimesCircle } from 'react-icons/fa';
 import {FiAlertTriangle} from 'react-icons/fi'
 import {AiOutlineFile} from 'react-icons/ai'
-// import LottieAnimation from '../../Lotties';
-// import loader from '../../Assets/loading.json'
+import LottieAnimation from '../../Lotties';
+import loader from '../../Assets/animations/loading.json'
 // import Errormodal from '../Modal/Errormodal';
 // import LoadingModal from '../Modal/LoadingModal';
 // import DragandDropMermat from '../Drag-and-Drop/DragandDropMermat';
-const Business = ({next, business, error, loading,kyc,kycload, kycerror}) => {
-    const [nameState, setNameState] = useState({});
-    const [formState, setFormState] = useState(null)
+const Business = ({
+    loading,
+    next, 
+    business, 
+    error,
+    showerror,
+    handleSubmit,
+    institutionState,
+    setinstitutionState
+}) => {
     const [postState, setPostState] = useState({});
-    const[filename, setFilename] = useState('')
-    const [file, setFile] = useState(null);
-    const[image, setImage] = useState(null)
+    const[institutionName, setinstitutionName] = useState('')
+    const [institutionType, setinstitutionType] = useState("");
+    const[smsName, setsmsName] = useState("")
+    const [country, setcountry] = useState("");
+    const [contactPhone, setcontactPhone] = useState("");
+    const [contactName, setcontactName] = useState('');
+    const [email, setEmail] = useState('');
+    const [contactPosition, setcontactPosition] = useState('');
     const[filename2, setFilename2] = useState('')
     const[image2, setImage2] = useState(null)
-    const [mermat, setMermat] = useState("");
-    const [bvn, setbvn] = useState("");
-    const [dob, setdob] = useState('');
-    const [address1, setaddress1] = useState("")
-    const [address2, setaddress2] = useState("")
     const [state, setstate] = useState("")
     const [show, setShow] = useState(false)
     const [showkyc, setshowkyc]= useState(false)
-    const [websiteLink, setwebsiteLink] = useState("")
-    // const [mermat, setmermat] = useState('');
-    const [rcNumber, setrcNumber]= useState("");
     const [errorHandler, setErrorHandler] = useState([false, ""]);
-    const [showerror, setshowerror] = useState(false)
     // const options = [{name:'name'},{name:'games'}]
 
-    const handlebvn = (e) => {
+    const handleinstitutionName = (e) => {
         const value = e.target.value;
-        setbvn(value);
-        setNameState({ ...nameState, ...{ bvn } });
-        setPostState({ ...postState, ...{ bvn } });
+        setinstitutionName(value);
+        setinstitutionState({ ...institutionState, ...{institutionName}  });
     };
-    const handledob = (e) => {
+    const handleinstitutionType= (e) => {
         const value = e.target.value;
-        setdob(value);
-        setNameState({ ...nameState, ...{ dob } });
-        setPostState({ ...postState, ...{ dob } });
+        setinstitutionType(value);
+        setinstitutionState({ ...institutionState, ...{institutionType} });
+
     };
-    // useEffect(() => {
-    //     if (dob !== "" && bvn.length === 11) {
-    //         kyc(postState, 
-    //             ()=>{ 
-    //                 setShow(true);
-    //             }, ()=>{ 
-    //                 setshowkyc(true);
-    //             }
-    //         )
-    //         // postData(nameState);
-    //         // setaccountName(name.data.accountName)
-    //     }
-        
-    // }, [bvn, dob, postState]);
-    const handlercnumber = (e) => {
+    const handlesmsName= (e) => {
         const value = e.target.value;
-        setrcNumber(value);
-        setNameState({ ...nameState, ...{ rcNumber } });
+        setsmsName(value);
+        setinstitutionState({ ...institutionState, ...{smsName } });
     };
-    const handlemermat = (e) => {
+    const handlecountry = (e) => {
         const value = e.target.value;
-        setMermat(value);
-        setNameState({ ...nameState, ...{ mermat } });
+        setcountry(value);
+        setinstitutionState({ ...institutionState, ...{country }  });
     };
     const handleState = (e) => {
         const value = e.target.value;
         setstate(value);
-        setNameState({ ...nameState, ...{ state } });
+        setinstitutionState({ ...institutionState, ...{ state } });
     };
-    const handleAddress1 = (e) => {
+    const handlecontactPhone = (e) => {
         const value = e.target.value;
-        setaddress1(value);
-        setNameState({ ...nameState, ...{ address1 } });
-    };
-    const handleAddress2 = (e) => {
-        const value = e.target.value;
-        setaddress2(value);
-        setNameState({ ...nameState, ...{ email:address2 } });
-    };
-    const handleWebsite = (e) => {
-        const value = e.target.value;
-        setwebsiteLink(value);
-        setNameState({ ...nameState, ...{ websiteLink } });
-    };
-    const updateMermat = (filedata) => {
-        setFilename2(filedata);
-    };
-    const togglemodal = ()=>{
-        setshowerror(!showerror)
-    }
-    const togglemodal2 = ()=>{
-        setshowkyc(!showkyc)
-    }
+        let formattedNumber = value.trim().replace(/\D/g, ''); // Remove non-numeric characters
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append('mermat',filename2);
-        formData.append('bvn', bvn);
-        formData.append('dob',dob);
-        formData.append('rcNumber', rcNumber);
-        formData.append('state', state);
-        formData.append('address1', address1);
-        formData.append('businessEmail', address2);
-        formData.append('websiteLink', websiteLink);
-        try{
-            
-            await business(formData, ()=>{ 
-            next();
-            // setPending(true);
-            }, ()=>{ 
-                setErrorHandler(error)
-                setshowerror(true)
-                // setPending(false);
-            });
-        }catch(error){
-            // setPending(false)
+        // Check if the first digit is '0' and remove it, then prepend '+234'
+        if (formattedNumber.charAt(0) === '0') {
+            formattedNumber = '+234' + formattedNumber.slice(1);
         }
+        setcontactPhone(formattedNumber);
+        setinstitutionState({ ...institutionState, ...{contactPhone}  });
+    };
+    const handlecontactName = (e) => {
+        const value = e.target.value;
+        setcontactName(value);
+        setinstitutionState({ ...institutionState, ...{contactName} });
+    };
+    const handleEmail = (e) => {
+        const value = e.target.value;
+        setEmail(value);
+        setinstitutionState({ ...institutionState, ...{email}});
+    };
+    const handlecontactPosition = (e) => {
+        const value = e.target.value;
+        setcontactPosition(value);
+        setinstitutionState({ ...institutionState, ...{contactPosition}});
     };
     return ( 
         <form onSubmit={handleSubmit} method='post'>
+            {showerror && (
+                <div className="alert-error alert-danger" role="alert">
+                    {error}
+                </div>
+            )}
             <div className={styles.form2}>
                 <div className={styles2.field}>
                     <label className={styles2.fieldlabel}>Your Institution Name<span>*</span> </label>
@@ -138,8 +107,8 @@ const Business = ({next, business, error, loading,kyc,kycload, kycerror}) => {
                         className={styles2.fieldinput}
                         type="text"
                         placeholder="Enter Institution Name"
-                        onBlur={handleAddress1}
-                        onChange={handleAddress1}
+                        onBlur={handleinstitutionName}
+                        onChange={handleinstitutionName}
                         required
                     >
                     </input>
@@ -152,8 +121,8 @@ const Business = ({next, business, error, loading,kyc,kycload, kycerror}) => {
                         className={styles2.fieldinput}
                         type="text"
                         placeholder="Cooperative"
-                        onBlur={handleWebsite}
-                        onChange={handleWebsite}
+                        onBlur={handleinstitutionType}
+                        onChange={handleinstitutionType}
 
                     >
                     </input>
@@ -161,13 +130,13 @@ const Business = ({next, business, error, loading,kyc,kycload, kycerror}) => {
             </div>
             <div className={styles.form2}>
                 <div className={styles2.field}>
-                    <label className={styles2.fieldlabel}>SMS Name<span>*</span></label>
+                    <label className={styles2.fieldlabel}>CMS Name<span>*</span></label>
                     <input 
                         className={styles2.fieldinput}
                         type="text"
-                        placeholder="Enter SMS Name"
-                        onBlur={handleAddress2}
-                        onChange={handleAddress2}
+                        placeholder="Enter CMS Name"
+                        onBlur={handlesmsName}
+                        onChange={handlesmsName}
                         required
                     >
                     </input>
@@ -180,8 +149,8 @@ const Business = ({next, business, error, loading,kyc,kycload, kycerror}) => {
                         className={styles2.fieldinput}
                         type="text"
                         placeholder="Nigeria"
-                        onBlur={handlebvn}
-                        onChange={handlebvn}
+                        onBlur={handlecountry}
+                        onChange={handlecountry}
                         required
                     >
                     </input>
@@ -246,9 +215,9 @@ const Business = ({next, business, error, loading,kyc,kycload, kycerror}) => {
                         className={styles2.fieldinput}
                         type="text"
                         placeholder="Enter Contact Person Name "
-                        onBlur={handlercnumber}
+                        onBlur={handlecontactName}
                         required
-                        onChange={handlercnumber}
+                        onChange={handlecontactName}
                     >
                     </input>
                 </div>
@@ -260,9 +229,9 @@ const Business = ({next, business, error, loading,kyc,kycload, kycerror}) => {
                         className={styles2.fieldinput}
                         type="text"
                         placeholder="Enter Contact Person Phone"
-                        onBlur={handlercnumber}
+                        onBlur={handlecontactPhone}
                         required
-                        onChange={handlercnumber}
+                        onChange={handlecontactPhone}
                     >
                     </input>
                 </div>
@@ -274,9 +243,9 @@ const Business = ({next, business, error, loading,kyc,kycload, kycerror}) => {
                         className={styles2.fieldinput}
                         type="text"
                         placeholder="Enter Email For Cooperative "
-                        onBlur={handlercnumber}
+                        onBlur={handleEmail}
                         required
-                        onChange={handlercnumber}
+                        onChange={handleEmail}
                     >
                     </input>
                 </div>
@@ -288,21 +257,22 @@ const Business = ({next, business, error, loading,kyc,kycload, kycerror}) => {
                         className={styles2.fieldinput}
                         type="text"
                         placeholder="Enter Contact Person Position"
-                        onBlur={handlercnumber}
+                        onBlur={handlecontactPosition}
                         required
-                        onChange={handlercnumber}
+                        onChange={handlecontactPosition}
                     >
                     </input>
                 </div>
             </div>
             <p className={styles2.fieldtext2}>Setting up means you have agreed with our <span>Terms of Service</span></p>
             <div>
-                {/* {loading ? (
+                {loading ? (
                     <button className={styles3.activateButton} disabled>
                         <LottieAnimation data={loader}/>
                     </button>
-                ) : ( */}
-                    <button onClick={()=>{next();}} className={styles3.activateButton}><span>PROCEED</span></button>
+                ) : (
+                    <button className={styles3.activateButton}><span>PROCEED</span></button>
+                )}
             </div>
            
             {/* <button onClick={handleSubmit} className={styles3.activateButton}>
@@ -315,9 +285,6 @@ const Business = ({next, business, error, loading,kyc,kycload, kycerror}) => {
                     <span>Save</span>
                         )} 
             </button> */}
-            {/* {kycload && (<LoadingModal/>)}
-            {showkyc&& (<Errormodal error={kycerror} togglemodal={togglemodal2}/>)}
-            {showerror && (<Errormodal error={error} togglemodal={togglemodal}/>)} */}
         </form>
     );
 }

@@ -22,6 +22,9 @@
     margin-top: 250px;
     width: 100%;
 }
+.login-buttons{
+    margin-top: 30px;
+}
 .buttons button{
     width: 100%;
     padding: 1rem;

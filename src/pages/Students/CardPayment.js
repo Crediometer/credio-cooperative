@@ -3,7 +3,24 @@ import { FaWifi } from "react-icons/fa6";
 import ReceiptModal from "../../components/Modal/ReceiptModal";
 import { Link, useParams } from 'react-router-dom';
 import { BiChevronLeft } from "react-icons/bi";
-const CardPayment = () => {
+import { connect } from "react-redux";
+import { buttonScan, DisConnect, getQPosInfo, init, sendPIN, startTrade } from "../../Redux/Card/CardScript";
+import { depositData, singledepositData } from "../../Redux/Deposit/DepositAction";
+import LottieAnimation from "../../Lotties";
+import loader from "../../Assets/animations/loading.json"
+import LoadingModal from "../../components/Modal/LoadingModal";
+const CardPayment = ({
+    buttonScan, 
+    cardData, 
+    disconnect,
+    connected,
+    doTrade,
+    sendPin,
+    Deposit,
+    loading,
+    error, 
+    data
+}) => {
     const {id} = useParams()
     const members = ['John Doe', 'Jane Smith', 'Michael Johnson', 'Alice Williams', 'David Brown'];
     // State to hold the search input and the filtered members
@@ -12,11 +29,35 @@ const CardPayment = () => {
     const [filteredMembers, setFilteredMembers] = useState(members);
     const [next, setnext] = useState(1)
     const [pin, setPin] = useState("");
+    const [amount, setAmount] = useState("")
+    const [transactionType, setTransactionType] = useState("")
+    const [accountType, setAccountType] = useState("")
+    const [postState, setpostState] = useState({});
     const [showPin, setShowPin] = useState(false);
     const [showPin1, setShowPin1] = useState(false);
     const [showPin2, setShowPin2] = useState(false);
     const [showPin3, setShowPin3] = useState(false);
     const [success,  setSuccess] = useState(false);
+    const [success2,  setSuccess2] = useState(false);
+    const handletransactiontype =(e)=>{
+        const value = e.target.value
+        setTransactionType(value)
+        setpostState({ ...postState, ...{transactionType} }); 
+    }
+
+    const handletotal =(e)=>{
+        const value = e.target.value
+        setAmount(value)
+        const newvalue = parseFloat(value)
+        setpostState({ ...postState, ...{totalAmount: amount} });
+    }
+
+    const handleAccount=(e)=>{
+        const value = e.target.value
+        setAccountType(value);
+        const newvalue = parseInt(value, 10)
+        setpostState({ ...postState, ...{accountType: newvalue} }); 
+    }
     const atmpin = useRef(null);
     useEffect(()=>{
         if(pin.length === 1){
@@ -92,6 +133,71 @@ const CardPayment = () => {
     const handlenext = () =>{
         setnext(next+1)
     }
+    const connectreader =  (e)=>{
+        e.preventDefault();
+        if (!cardData.connected) {
+            init();
+            buttonScan();
+        } else {
+            // togglemodal()
+        }
+    }
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+        try{
+            doTrade(amount)
+        }catch{
+        }
+    }  
+    const handlePin = () => {
+        // e.preventDefault();
+        if (pin && pin1 && pin2 && pin3) {
+          // send pin to redux
+          sendPin(`${pin}${pin1}${pin2}${pin3}`);
+        }
+    };
+    useEffect(() => {  
+        if (cardData && cardData.tlv) {
+            console.log(cardData)
+            console.log(data)
+            Deposit(
+                { ...postState, ...{tlv: cardData.tlv} },
+                () => {
+                    setSuccess2(true)
+                    setpostState({})
+                    // On Success
+                },
+                () => {
+                    // On Error
+                }
+            );
+        }
+    }, [cardData.tlv]);
+    useEffect(() => {
+        // Check if cardData exists and has the required properties
+        if (cardData && cardData.posinfo && cardData.posinfo.name) {
+            // // setpostState({ ...postState, ...{
+            // //     tlv:cardData?.tlv,
+            // // } }); 
+            // // Compare the last 10 characters of name properties
+            // if (connected){
+            //     for (let i = 0; i < getprofile.schoolReaders.length; i++) {
+            //         // Check if the valueToSearch is in the current array
+            //         if (getprofile.schoolReaders[i].uuid.slice(-10).includes(cardData.posinfo.name.slice(-10))) {
+                        setnext(2)
+            //         }else{
+            //             disconnect();
+            //             setShowError(true);
+            //         }
+            //     }
+            // }
+        }
+    }, [cardData.posinfo, connected]); 
+    useEffect(()=>{
+        if(cardData.pinRequest ){
+            setnext(3)
+        }
+    },[cardData]) 
     return ( 
         <div className="saving">
             <div className="back">
@@ -136,60 +242,66 @@ const CardPayment = () => {
               { next===1 && <div className="connect-reader">
                     <FaWifi />
                     <p>Connect Credio Reader</p>
-                    <button onClick={handlenext}>Connect</button>
+                    <button onClick={connectreader}>Connect</button>
                 </div>}
-               { next===2 && <div className="card-field">
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>Amount</label>
-                            <input type="text" 
-                            placeholder="Enter Amount"
-                            // value={formattedAmount}
-                            // onBlur={handleAmount}
-                            // onChange={handleAmount}
-                            required
-                            // disabled = {(business.length === 0 || !personal) ? (true) : (false)}
-                            ></input>
-                        </div>
-                    </div>
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>Transaction Type</label>
-                            <select>
-                                <optgroup>
-                                    <option>--Transaction Type--</option>
-                                    <option>Savings</option>
-                                    <option>Loan</option>
-                                  
-                                </optgroup>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="form-button">
-                        <button onClick={handlenext} className='transfer-button'>Transfer</button>
-                    </div>
-                    </div>
-                }
-                { next===3 && <div className="card-field">
-                    <div className="form-2"  style={{width: "100%"}}>
-                            <div className="input input-4">
-                                <label>Account Type</label>
-                                <select>
-                                    <optgroup>
-                                        <option>--Select Account Type--</option>
-                                        <option>Savings Account</option>
-                                        <option>Current Account</option>
-                                        <option>Universal Account</option>
-                                    </optgroup>
-                                </select>
+               { next===2 && 
+                    <div className="card-field">
+                        <form onSubmit={handleSubmit}>
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>Amount</label>
+                                    <input type="text" 
+                                    placeholder="Enter Amount"
+                                    // value={formattedAmount}
+                                    onBlur={handletotal}
+                                    onChange={handletotal}
+                                    required
+                                    // disabled = {(business.length === 0 || !personal) ? (true) : (false)}
+                                    ></input>
+                                </div>
                             </div>
-                        </div>
-                        <div className="form-button">
-                            <button onClick={handlenext} className='transfer-button'>Transfer</button>
-                        </div>
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>Transaction Type</label>
+                                    <select required onChange={handletransactiontype} onBlur={handletransactiontype}>
+                                        <optgroup>
+                                            <option>--Transaction Type--</option>
+                                            <option value="savings">Savings</option>
+                                            <option value="loan">Loan</option>
+                                        
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>Account Type</label>
+                                    <select required onChange={handleAccount} onBlur={handleAccount}>
+                                        <optgroup>
+                                            <option>--Select Account Type--</option>
+                                            <option value={1}>Savings Account</option>
+                                            <option value={2}>Current Account</option>
+                                            <option value={0}>Universal Account</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="form-button">
+                                <button className='transfer-button'>
+                                    {cardData?.requestDisplay
+                                    ? (
+                                        <>
+                                            <LottieAnimation data={loader}/>
+                                            "Scanning your Card.."
+                                        </>
+                                    ) 
+                                    : "Continue"}
+                                </button>
+                            </div>
+                        </form>  
                     </div>
                 }
-                {next === 4 &&
+                {next === 3 &&
                     <div className="card-field">
                         <p className="enter-pin">Please Enter Your Card Pin</p>
                         <div className="field-container">
@@ -240,8 +352,9 @@ const CardPayment = () => {
                             </div>
                         </div>
                         <div className="form-button">
-                            <button onClick={handlenext}  className='transfer-button'>Transfer</button>
+                            <button onClick={handlePin} className='transfer-button'>Transfer</button>
                         </div>
+                        {loading && (<LoadingModal/>)}
                     </div>
                 }
                 {next === 5 && <ReceiptModal /> }
@@ -249,5 +362,39 @@ const CardPayment = () => {
         </div>
     );
 }
- 
-export default CardPayment;
+
+
+const mapStoreToProps = (state) => {
+    return {
+        cardData: state?.card,
+        connected: state?.card?.connected,
+        loading: state.deposit.loading,
+        data: state.deposit,
+        error: state.deposit.error
+    };  
+  };
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+        buttonScan: () => {
+            dispatch(buttonScan());
+        },
+        disconnect: () => {
+            dispatch(DisConnect());
+        },
+        info: () => {
+            dispatch(getQPosInfo())
+        },
+        doTrade: (postState) => {
+            dispatch(startTrade(postState));
+        },
+        sendPin: (pin) => {
+            dispatch(sendPIN(pin));
+        },
+        Deposit: (postdata, history, error) => {
+            dispatch(singledepositData(postdata, history, error));
+        },
+    };
+  };
+  
+export default connect(mapStoreToProps, mapDispatchToProps)(CardPayment);

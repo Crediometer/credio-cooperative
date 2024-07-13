@@ -8,7 +8,7 @@ const Payout = ({next}) => {
         <div className="payout">
             <div className="payout-icon"><BiLike/></div>
             <h2>Congrats</h2>
-            <p >Welcome <span>Modex</span>, your <br></br>cooperative setup has <br></br> been completed</p>
+            <p >Welcome, your <br></br>cooperative setup has <br></br> been completed</p>
             <button onClick={()=>{next()}} className={styles3.activateButton}>
                 GET LOGIN DETAILS
             </button>

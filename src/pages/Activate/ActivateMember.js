@@ -10,7 +10,17 @@ import PersonalMember from '../../components/Multiformbar/PersonalMember';
 import BusinessMember from '../../components/Multiformbar/BusinesMember';
 import PayoutMember from '../../components/Multiformbar/PayoutMember';
 import LoginMember from '../../components/Multiformbar/LoginMember';
-const ActivateMember = ({personal, fetchgetprofile}) => {
+import { connect } from 'react-redux';
+import { postmember } from '../../Redux/Member/MemberAction';
+const ActivateMember = ({
+    personal, 
+    fetchgetprofile,
+    loading,
+    data,
+    error,
+    postmember,
+    getprofile
+}) => {
     let initialCount = 1;
     // if (!personal) {
     //   initialCount = 1;
@@ -18,14 +28,34 @@ const ActivateMember = ({personal, fetchgetprofile}) => {
     // } else {
     //   initialCount = 2;
     // }
+    const [nameState, setNameState] = useState({});
+    const [cooperativeInfo, setcooperativeInfo] = useState({})
     const [index, setIndex] = useState(initialCount)
+    const [errorHandler, setErrorHandler] = useState([false, ""]);
+    const [showerror, setshowerror] = useState(false)
     const nextButton = () => {
         window.scrollTo(0, 0);
         if (index < 4){
             setIndex(prevIndex => prevIndex + 1)
         } 
     }
-
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try{
+            await postmember(
+                {
+                    personalInfo:nameState, 
+                    cooperativeInfo,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+                }, ()=>{ 
+                nextButton()
+            }, ()=>{ 
+                window.scrollTo(0, 0);
+                setshowerror(true)
+            });
+        }catch(error){
+            // setPending(false);
+        }
+    };
     return (
         <div className="test">
 
@@ -38,9 +68,23 @@ const ActivateMember = ({personal, fetchgetprofile}) => {
                         </div>
                         <div className={styles.activateFormOuter}>
                             <div className={styles.activateForm}>
-                                {index===1 && (<PersonalMember next={nextButton}/>)}
-                                {index===2 && (<BusinessMember next={nextButton}/>)}
-                                {index===3 && (<PayoutMember next={nextButton}/>)}
+                                {index===1 && (<PersonalMember 
+                                    next={nextButton}
+                                    setNameState={setNameState}
+                                    nameState={nameState} 
+                                    handleSubmit={handleSubmit} 
+                                />)}
+                                {index===2 && (
+                                    <BusinessMember 
+                                        next={nextButton}
+                                        cooperativeInfo={cooperativeInfo}
+                                        setcooperativeInfo={setcooperativeInfo}
+                                        handleSubmit={handleSubmit} 
+                                        showerror={showerror}
+                                        loading={loading}
+                                        error={error}
+                                    />)}
+                                {index===3 && (<PayoutMember next={nextButton} name={getprofile?.personalInfo?.organizationName}/>)}
                                 {/* {index===4 && (<LoginMember next={nextButton} />)} */}
                             </div>
                             {/* <button onClick={nextButton} className={styles.activateButton}>Save</button> */}
@@ -51,5 +95,21 @@ const ActivateMember = ({personal, fetchgetprofile}) => {
         </div>
     );
 }
+const mapStateToProps = state => {
+    console.log(state)
+    return{
+        loading:state.addMember.loading,
+        error:state?.addMember?.error?.message,
+        data: state.addMember.data,
+        getprofile: state?.profile?.data?.payload,
+    }
+}
 
-export default ActivateMember;
+const mapDispatchToProps = dispatch => {
+    return{
+        postmember: (postdata, history, error) => {
+            dispatch(postmember(postdata, history, error));
+        },
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ActivateMember);

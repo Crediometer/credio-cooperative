@@ -54,142 +54,81 @@ const BankTransfer = () => {
             </div>
             <div className="transfer-body">
                 <div className="transfer-inner">
-                    <div className="transfer-to">
-                        <div className="form-11" style={{ width: '100%' }}>
-                            <div className="input">
-                                <input 
-                                    type="text" 
-                                    placeholder="SEARCH FOR MEMBER"
-                                    value={id ? id: searchInput}
-                                    onChange={handleInputChange}
-                                    disabled={id}
-                                ></input>
-                            </div>
-                        </div>
-                        {searchInput && (
-                            <div className="member-list">
-                                {filteredMembers.length > 0 ? (
-                                    filteredMembers.map((member, index) => (
-                                        <div    
-                                            onClick={() => handleMemberClick(member)}
-                                            style={{ cursor: 'pointer' }} 
-                                            key={index} 
-                                            className="member-item"
-                                        >
-                                            {member}
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div>No members found</div>
-                                )}
-                            </div>
-                        )}
-                        <div className="selected-user">
-                        <h4 className="form-head">{searchUser}</h4>
-                        </div>
-                        <div className="transfer-to-inner">
-                            <div className={isChecked==1 ? "to to-select-2" : "to"} onClick={()=>{setIsChecked(1)}}>
-                                <p>Via Account Number</p>
-                                <div className="to-inner">
-                                    <div className="to-image">
-                                        <img src={credio}></img>
-                                    </div>
-                                    <div className="to-select">
-                                        <input type="radio" checked={isChecked} onChange={handleClick} name="bank" value="credio"  ></input>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            <div className={isChecked==2 ? "to to-select-2" : "to"} onClick={()=>{setIsChecked(2)}}>
-                                <p>Via USSD</p>
-                                <div className="to-inner">
-                                    <div className="to-image">
-                                        <BsBank2/>
-                                    </div>
-                                    <div className="to-select">
-                                        <input type="radio" checked={!isChecked} onChange={handleClick} name="bank" value="credio"  ></input>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div className="transfer-form">
                         <form method="POST">
                             {/* <LottieAnimation lotti={preloader} height={150} width={150} /> */}
                             <div className="form-1-outer">
-                                {(!isChecked) && (
-                                    <div className="form-11">
-                                        <div className="input">
-                                            <label className='form-1-label'>Beneficiary’s  Bank </label>
-                                            <div className="form-1-select" onClick={handleShow}>
-                                                <p>{selectBank}</p>
-                                                <FaChevronDown/>
+                                <div className="form-11">
+                                    <div className="input">
+                                        <label className='form-1-label'>Beneficiary’s  Bank </label>
+                                        <div className="form-1-select" onClick={handleShow}>
+                                            <p>{selectBank}</p>
+                                            <FaChevronDown/>
+                                        </div>
+                                    </div>
+                                    {showBank && (
+                                        <div className="bank-select">
+                                            <div className="bank-select-top">
+                                                <p>Select a Bank</p>
+                                                <div className="select-cancel" onClick={handleShow}>
+                                                    <FaTimes/>
+                                                </div>
+                                            </div>
+                                            <div className="bank-select-search">
+                                                <input type='text' placeholder='Search for bank'></input>
+                                            </div>
+                                            <div className="bank-select-body">
+                                            {/* {bank?.loading ? (
+                                            <LottieAnimation data={preloader}/> 
+                                            ):( */}
+                                                <div>
+                                                    {/* {bank?.filter(banks => banks.name.toLowerCase().includes(query)).map((bank)=>{
+                                                        return( */}
+                                                            <div className="banks" onClick={() => {handleShow()}}>
+                                                                <div className="bank-icon">
+                                                                    <BsBank2/>
+                                                                </div>
+                                                                <p className="bank-name">Sterling bank</p>
+                                                            </div>
+                                                            <div className="banks" onClick={() => {handleShow()}}>
+                                                                <div className="bank-icon">
+                                                                    <BsBank2/>
+                                                                </div>
+                                                                <p className="bank-name">UBA</p>
+                                                            </div>
+                                                            <div className="banks" onClick={() => {handleShow()}}>
+                                                                <div className="bank-icon">
+                                                                    <BsBank2/>
+                                                                </div>
+                                                                <p className="bank-name">GTB Bank</p>
+                                                            </div>
+                                                            <div className="banks" onClick={() => {handleShow()}}>
+                                                                <div className="bank-icon">
+                                                                    <BsBank2/>
+                                                                </div>
+                                                                <p className="bank-name">Zenith Bank</p>
+                                                            </div>
+                                                            <div className="banks" onClick={() => {handleShow()}}>
+                                                                <div className="bank-icon">
+                                                                    <BsBank2/>
+                                                                </div>
+                                                                <p className="bank-name">Polaris bank</p>
+                                                            </div>
+                                                            <div className="banks" onClick={() => {handleShow()}}>
+                                                                <div className="bank-icon">
+                                                                    <BsBank2/>
+                                                                </div>
+                                                                <p className="bank-name">First bank</p>
+                                                            </div>
+                                                        {/* )
+                                                    })} */}
+                                                </div>
+                                            {/* )} */}
                                             </div>
                                         </div>
-                                        {showBank && (
-                                            <div className="bank-select">
-                                                <div className="bank-select-top">
-                                                    <p>Select a Bank</p>
-                                                    <div className="select-cancel" onClick={handleShow}>
-                                                        <FaTimes/>
-                                                    </div>
-                                                </div>
-                                                <div className="bank-select-search">
-                                                    <input type='text' placeholder='Search for bank'></input>
-                                                </div>
-                                                <div className="bank-select-body">
-                                                {/* {bank?.loading ? (
-                                                <LottieAnimation data={preloader}/> 
-                                                ):( */}
-                                                    <div>
-                                                        {/* {bank?.filter(banks => banks.name.toLowerCase().includes(query)).map((bank)=>{
-                                                            return( */}
-                                                                <div className="banks" onClick={() => {handleShow()}}>
-                                                                    <div className="bank-icon">
-                                                                        <BsBank2/>
-                                                                    </div>
-                                                                    <p className="bank-name">Sterling bank</p>
-                                                                </div>
-                                                                <div className="banks" onClick={() => {handleShow()}}>
-                                                                    <div className="bank-icon">
-                                                                        <BsBank2/>
-                                                                    </div>
-                                                                    <p className="bank-name">UBA</p>
-                                                                </div>
-                                                                <div className="banks" onClick={() => {handleShow()}}>
-                                                                    <div className="bank-icon">
-                                                                        <BsBank2/>
-                                                                    </div>
-                                                                    <p className="bank-name">GTB Bank</p>
-                                                                </div>
-                                                                <div className="banks" onClick={() => {handleShow()}}>
-                                                                    <div className="bank-icon">
-                                                                        <BsBank2/>
-                                                                    </div>
-                                                                    <p className="bank-name">Zenith Bank</p>
-                                                                </div>
-                                                                <div className="banks" onClick={() => {handleShow()}}>
-                                                                    <div className="bank-icon">
-                                                                        <BsBank2/>
-                                                                    </div>
-                                                                    <p className="bank-name">Polaris bank</p>
-                                                                </div>
-                                                                <div className="banks" onClick={() => {handleShow()}}>
-                                                                    <div className="bank-icon">
-                                                                        <BsBank2/>
-                                                                    </div>
-                                                                    <p className="bank-name">First bank</p>
-                                                                </div>
-                                                            {/* )
-                                                        })} */}
-                                                    </div>
-                                                {/* )} */}
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-                                     ) } 
-                                <div className="form-11" style={{ width: !isChecked ? '49%' : '32%' }}>
+                                    )}
+                                </div>                
+                                <div className="form-11">
                                     <div className="input">
                                         <label className='form-1-label'>Beneficiary’s  Account Number </label>
                                         <input type="text" placeholder="0198604538" 
@@ -202,7 +141,7 @@ const BankTransfer = () => {
                                         ></input>
                                     </div>
                                 </div>
-                                <div className="form-11" style={{ width: !isChecked ? '49%' : '32%' }}>
+                                <div className="form-11">
                                     <div className="input">
                                         <label className='form-1-label'>Beneficiary’s Name </label>
                                         <input type="text" 
@@ -214,12 +153,49 @@ const BankTransfer = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="save-ben">
+                            <div className="form-1-outer">            
+                                <div className="form-11">
+                                    <div className="input">
+                                        <label className='form-1-label'>Beneficiary’s  Address</label>
+                                        <input type="text" placeholder="Alagbaka, Akure Ondo State" 
+                                        // value={accountNumber}
+                                        // onBlur={handleNumber}
+                                        // onChange={handleNumber}
+                                        required
+                                        maxLength={10}
+                                        // disabled = {(business.length === 0 || !personal ) ? (true) : (false)}
+                                        ></input>
+                                    </div>
+                                </div>
+                                <div className="form-11">
+                                    <div className="input">
+                                        <label className='form-1-label'>Payee's Name </label>
+                                        <input type="text" 
+                                        placeholder="Account Name"
+                                        // value={name?.accountName}
+                                        disabled
+                                        required
+                                        ></input>
+                                    </div>
+                                </div>
+                                <div className="form-11">
+                                    <div className="input">
+                                        <label className='form-1-label'>Payee's Address</label>
+                                        <input type="text" 
+                                        placeholder="Account Name"
+                                        // value={name?.accountName}
+                                        disabled
+                                        required
+                                        ></input>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* <div className="save-ben">
                                 <p>save as beneficiary</p>
                                 <div className="save-ben-switch">
                                     <Switch/>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="form-1-outer">
                                 <div className="form-2">
                                     <div className="input">
@@ -242,6 +218,35 @@ const BankTransfer = () => {
                                         // onBlur={handleComment}
                                         // onChange={handleComment}
                                         // disabled = {(business.length === 0 || !personal) ? (true) : (false)}
+                                        ></input>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="form-1-outer">
+                                <div className="form-11">
+                                    <div className="input">
+                                        <label className='form-1-label'>Duration </label>
+                                        <select>
+                                            <optgroup>
+                                                <option>Daily</option>
+                                                <option>Weekly</option>
+                                                <option>Quartely</option>
+                                                <option>Daily</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>                
+                                <div className="form-11">
+                                    <div className="input">
+                                        <label className='form-1-label'>Start Date</label>
+                                        <input type="date" placeholder="0198604538" 
+                                        ></input>
+                                    </div>
+                                </div>
+                                <div className="form-11">
+                                    <div className="input">
+                                        <label className='form-1-label'>End Date</label>
+                                        <input type="date" 
                                         ></input>
                                     </div>
                                 </div>
