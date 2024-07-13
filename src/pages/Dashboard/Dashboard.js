@@ -90,8 +90,8 @@ const Dashboard = ({
                                 <h2>N50,000,000</h2>
                             </div>
                             <div className="savings">
-                                <p style={{textAlign: "right"}}>Expenses</p>
-                                <h2 style={{textAlign: "right"}}>N1,000,000</h2>
+                                <p style={{textAlign: "right"}}>Savings</p>
+                                <h2 style={{textAlign: "right"}}>N{getprofile?.financialSummary?.totalSavings}</h2>
                             </div>
                             
                         </div>

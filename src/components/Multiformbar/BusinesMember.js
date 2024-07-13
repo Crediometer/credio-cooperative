@@ -27,7 +27,8 @@ const BusinessMember = ({
     kycerror,
     cooperativeInfo,
     setcooperativeInfo,
-    handleSubmit
+    handleSubmit,
+    showerror
 }) => {
     const [nameState, setNameState] = useState({});
     const [formState, setFormState] = useState(null)
@@ -51,7 +52,6 @@ const BusinessMember = ({
     // const [mermat, setmermat] = useState('');
     const [rcNumber, setrcNumber]= useState("");
     const [errorHandler, setErrorHandler] = useState([false, ""]);
-    const [showerror, setshowerror] = useState(false)
     // const options = [{name:'name'},{name:'games'}]
 
     const handlepurpose = (e) => {

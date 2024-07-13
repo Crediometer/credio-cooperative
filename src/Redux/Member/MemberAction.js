@@ -71,7 +71,7 @@ export const addmemberRequest = () => {
     };
   };
 
-  export const getmember = (history, setErrorHandler) => {
+  export const getmember = () => {
     return async (dispatch) => {
       dispatch(memberRequest())
       try {
@@ -86,15 +86,12 @@ export const addmemberRequest = () => {
         );
         const { data } = res;
         if (res.status === 200) {
-          history()
           dispatch(memberSuccess(data));
-
         }
       } catch (error) {
         if (error.response){
           dispatch(memberFaliure(error?.response?.data));
         }
-        setErrorHandler({ hasError: true, message: error?.response?.data?.message });
       }
     };
   };
