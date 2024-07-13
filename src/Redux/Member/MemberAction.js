@@ -78,7 +78,7 @@ export const addmemberRequest = () => {
         let datas = JSON.parse(localStorage.getItem("auth"))
         const headers = {
             "Content-Type": "application/json",
-            authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjkyMjgzYmQ4ZjFjYjA1NjFkYTMyNjUiLCJwaG9uZU51bWJlciI6IisyMzQ5MDY2ODQ3MDI0IiwiYnVzaW5lc3NOYW1lIjoiSUJSQU5DSCBMVEQiLCJpYXQiOjE3MjA4NTQ1ODksImV4cCI6MTcyMDk0MDk4OX0.hVU0VohciEn6Ts36tyofkeh_VpyCu5JVLpKquQ5d5BE`,
+            authorization: `Bearer ${datas?.data?.payload?.token}`,
         };
         const res = await axios.get(
           `${baseUrl}/members?limit=100&page=0`,

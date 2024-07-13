@@ -34,9 +34,9 @@ const MemberList = ({
                     </div>  
                 </div>
                 <MemberTable data={getprofile?.members}/>
-                <Stack style={{marginTop: "10px"}} spacing={2}>
+                {/* <Stack style={{marginTop: "10px"}} spacing={2}>
                  <Pagination count={10} variant="outlined" shape="rounded" />
-                </Stack>
+                </Stack> */}
             </div>
         </div>
     );
