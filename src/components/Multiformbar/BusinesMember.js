@@ -103,9 +103,7 @@ const BusinessMember = ({
     const updateMermat = (filedata) => {
         setFilename2(filedata);
     };
-    const togglemodal = ()=>{
-        setshowerror(!showerror)
-    }
+   
     const togglemodal2 = ()=>{
         setshowkyc(!showkyc)
     }

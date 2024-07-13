@@ -63,6 +63,7 @@ const Personal = ({
             formattedNumber = '+234' + formattedNumber.slice(1);
         }
         setphoneNumber(formattedNumber);
+        console.log(phoneNumber)
         setNameState({ ...nameState, ...{phone: phoneNumber}});
         setphoneState({ ...phoneState, ...{phone: phoneNumber}});
     };

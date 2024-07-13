@@ -27,7 +27,7 @@ const rows = [
 
 ];
 
-export default function MemberTable() {
+export default function MemberTable({data}) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -41,8 +41,7 @@ export default function MemberTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-           
+          {data?.map((row) => (
                 <TableRow
                 key={row.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -51,11 +50,11 @@ export default function MemberTable() {
                         {row.SN}
                     </TableCell>
                     <TableCell  style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} component="th" scope="row"  align="left">
-                        {row.Name}
+                        {row?.personalInfo?.fullname}
                     </TableCell>
-                    <TableCell  style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row.Gender}</TableCell>
-                    <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row.Joined}</TableCell>
-                    <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row.Occupation}</TableCell>
+                    <TableCell  style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row?.personalInfo?.sex}</TableCell>
+                    <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row.createdAt.slice(0,10)}</TableCell>
+                    <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row?.personalInfo?.occupationBusiness}</TableCell>
                     <Link to={`/member-details/${row.Name}`}>  <TableCell><button className='view-button'>View</button></TableCell> </Link>
                 
                 </TableRow>
