@@ -87,7 +87,7 @@ const Dashboard = ({
                         <div className="card-top">
                             <div className="savings">
                                 <p>Account Balance</p>
-                                <h2>N50,000,000</h2>
+                                <h2>N0</h2>
                             </div>
                             <div className="savings">
                                 <p style={{textAlign: "right"}}>Savings</p>
@@ -98,7 +98,7 @@ const Dashboard = ({
                         <div className="card-top">
                             <div className="savings">
                                 <p>Withdrawals</p>
-                                <h2>N220,000</h2>
+                                <h2>N0</h2>
                             </div>
                             <div className="savings">
                                 <p style={{textAlign: "right"}}>Loans</p>
