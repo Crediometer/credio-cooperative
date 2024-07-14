@@ -25,9 +25,9 @@
 .login-inner form{
     margin-top: 20px;
 }
-.login-inner form div{
-    margin-bottom: 20px;
-}
 .login-buttons{
     margin-top: 30px;
+}
+.login-form{
+    margin-bottom: 20px;
 }

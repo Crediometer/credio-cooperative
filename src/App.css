@@ -18,6 +18,10 @@ a{
 }
 .spinner{
   width: 20%;
+  margin-bottom: 0px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .alert-error{
   background-color: #ea6375;

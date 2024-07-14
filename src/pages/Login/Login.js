@@ -1,37 +1,108 @@
+import { useState } from 'react';
 import  './Login.css'
-const Login = () => {
+import { connect } from 'react-redux';
+import { LoginAuthAction } from '../../Redux/Login/LoginAction';
+import { useNavigate } from 'react-router-dom';
+import LottieAnimation from "../../Lotties"
+import loader from "../../Assets/animations/loading.json"
+const Login = ({
+    login,
+    loading,
+    error,
+}) => {
+    const history = useNavigate();
+    const [loginState, setLoginState] = useState({})
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [showerror, setshowerror] = useState(false)
+
+    const handleEmail = (e) =>{
+        const inputValue = e.target.value.trim().toLowerCase();
+        setEmail(inputValue);
+        setLoginState({ ...loginState, ...{email} });
+    }
+
+    const handlePassword = (e) =>{
+        const value = e.target.value
+        setPassword(value)
+        setLoginState({ ...loginState, ...{password} });
+    }
+    const handleSignUp = async (e) => {
+        e.preventDefault();
+        setshowerror(false)
+        try{
+            await login(loginState, ()=>{ 
+                history(`/dashboard`)
+            // setPending(true);
+            }, ()=>{ 
+                setshowerror(true)
+                // setPending(false);
+            });
+        }catch(error){
+        }
+    };
     return ( 
         <div className="admin-outer">
             <div className="login-inner">
                 <h1>Credio Coop</h1>
                 <p>Login</p>
-                <form>
-                    <div className="">
+                <form onSubmit={handleSignUp}>
+                    {showerror && (
+                        <div className="alert-error">
+                            <p>{error}</p>
+                        </div>
+                    )}
+                    <div className="login-form">
                         <div className="input">
-                            <label className='form-1-label'>Email Address / Phone Number</label>
+                            <label className='form-1-label'>Email Address</label>
                             <input 
-                                type="text" 
-                                placeholder="Email / phone"
+                                type="email" 
+                                placeholder="Email"
                                 required
+                                onChange={handleEmail}
+                                onBlur={handleEmail}
                             ></input>
                         </div>
                     </div>
-                    <div className="">
+                    <div className="login-form">
                         <div className="input">
                             <label className='form-1-label'>Password</label>
-                            <input type="text" 
-                            placeholder="*********"
-                            required
+                            <input 
+                                type="password" 
+                                placeholder="*********"
+                                required
+                                onChange={handlePassword}
+                                onBlur={handlePassword}
                             ></input>
                         </div>
                     </div>
                     <div className="buttons login-buttons">
-                    `   <button>Login</button> 
+                        <button>
+                            {loading ? (
+                                <LottieAnimation data={loader}/>
+                            ):"Login"} 
+                        </button> 
                     </div>
                 </form>
             </div>
         </div>
     );
 }
- 
-export default Login;
+
+const mapStateToProps = state => {
+    return{
+        error:state?.login?.error?.error,
+        loading: state?.login?.dataAdded,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return{
+        login: (loginState, history, setErrorHandler) => {
+            dispatch(LoginAuthAction(loginState, history, setErrorHandler));
+        },
+        // fetchgetprofile: () => dispatch(fetchgetprofile()),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

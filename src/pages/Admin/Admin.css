@@ -26,7 +26,11 @@
     margin-top: 30px;
 }
 .buttons button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
+    height: 50px;
     padding: 1rem;
     color: #F9FAFB;
     font-family: 'Inter';
