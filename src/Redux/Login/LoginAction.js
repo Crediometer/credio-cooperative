@@ -14,13 +14,13 @@ const AuthActionType = {
     LOGIN_FAIL: "LOGIN_FAIL",
 };
 
-const baseUrl = "https://crediopay-5894689bc7ed.herokuapp.com/api/v1/school"
+const baseUrl = "https://cooperative-be.onrender.com/api/v1"
 let autoLogoutTimer;
 const LoginAuthAction = (loginState, history, setErrorHandler) => {
     return async (dispatch) => {
       dispatch({type: AuthActionType.LOGIN_START})
       try {
-        const res = await axios.post(`${baseUrl}/auth/login`, loginState);
+        const res = await axios.post(`${baseUrl}/login`, loginState);
         const { data } = res;
        
         dispatch({ type: AuthActionType.LOGIN_SUCCESS, payload: data });
