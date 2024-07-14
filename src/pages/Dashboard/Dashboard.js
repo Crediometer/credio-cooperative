@@ -121,14 +121,14 @@ const Dashboard = ({
                         </div>
                     </div>
                     <div className="dashboard-navigate">
-                        <Link to="/payment">
+                        {/* <Link to="/payment">
                             <Box
                                 color="rgba(5, 139, 65, 0.123)"
                                 icons={<HiOutlinePlusSm/>}
                                 text="Payments"
                                 
                             />
-                        </Link>
+                        </Link> */}
                         <Link to="/saving">
                             <Box
                                 color="rgba(255, 19, 19, 0.128)"
@@ -137,8 +137,6 @@ const Dashboard = ({
                         
                             />
                         </Link>
-                    </div>
-                    <div className="dashboard-navigate">
                         <Link to='/withdraw'>
                             <Box
                                 color="rgba(18, 15, 199, 0.123)"
@@ -147,13 +145,16 @@ const Dashboard = ({
                             
                             />
                         </Link>
-                        <Link to='/dashboard'>
+                    </div>
+                    <div className="dashboard-navigate">
+                        
+                        {/* <Link to='/dashboard'>
                             <Box
                                 color="rgba(210, 193, 43, 0.123)"
                                 icons={<HiOutlinePlusSm/>}
                                 text="Expenses"
                             />
-                        </Link>
+                        </Link> */}
                     </div>
                     <div className="dashboard-navigate">
                         <Link to="/loans">
