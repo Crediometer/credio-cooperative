@@ -5,6 +5,8 @@ import { LoginAuthAction } from '../../Redux/Login/LoginAction';
 import { useNavigate } from 'react-router-dom';
 import LottieAnimation from "../../Lotties"
 import loader from "../../Assets/animations/loading.json"
+import JSEncrypt from 'jsencrypt';
+import consts from "./keys/const"; 
 const Login = ({
     login,
     loading,
@@ -24,7 +26,10 @@ const Login = ({
 
     const handlePassword = (e) =>{
         const value = e.target.value
-        setPassword(value)
+        var encrypt = new JSEncrypt();
+        encrypt.setPublicKey(`${consts.pub_key}`);
+        var encrypted = encrypt.encrypt(value);
+        setPassword(encrypted)
         setLoginState({ ...loginState, ...{password} });
     }
     const handleSignUp = async (e) => {
