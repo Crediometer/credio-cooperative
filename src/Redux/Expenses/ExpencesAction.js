@@ -1,79 +1,79 @@
 import axios from "axios";
-import { ADD_MEMBER_FAILURE, ADD_MEMBER_REQUEST, ADD_MEMBER_SUCCESS, MEMBER_FAILURE, MEMBER_REQUEST, MEMBER_SUCCESS } from "./MemberType";
+import { EXPENSE_FAILURE, EXPENSE_REQUEST, EXPENSE_SUCCESS, POST_EXPENSE_FAILURE, POST_EXPENSE_REQUEST, POST_EXPENSE_SUCCESS } from "./ExpencesType";
 
-export const addmemberRequest = () => {
+export const postexpenseRequest = () => {
     return {
-      type: ADD_MEMBER_REQUEST,
+      type: POST_EXPENSE_REQUEST,
     };
   };
-  export const addmemberSuccess = (register) => {
+  export const postexpensesSuccess = (register) => {
     return {
-      type: ADD_MEMBER_SUCCESS,
+      type: POST_EXPENSE_SUCCESS,
       payload: register,
     };
   };
   
-  export const addmemberFaliure = (error) => {
+  export const postexpensesFaliure = (error) => {
     return {
-      type: ADD_MEMBER_FAILURE,
+      type: POST_EXPENSE_FAILURE,
       payload: error,
     };
   };
 
 
-  export const memberRequest = () => {
+  export const expensesRequest = () => {
     return {
-      type: MEMBER_REQUEST,
+      type: EXPENSE_REQUEST,
     };
   };
-  export const memberSuccess = (register) => {
+  export const expensesSuccess = (register) => {
     return {
-      type: MEMBER_SUCCESS,
+      type: EXPENSE_SUCCESS,
       payload: register,
     };
   };
   
-  export const memberFaliure = (error) => {
+  export const expensesFaliure = (error) => {
     return {
-      type: MEMBER_FAILURE,
+      type: EXPENSE_FAILURE,
       payload: error,
     };
   };
 
 
   const baseUrl = "https://cooperative-be.onrender.com/api/v1"
-  export const postmember = (registerState, history, setErrorHandler) => {
+  export const getExpences = (registerState, history, setErrorHandler) => {
     return async (dispatch) => {
-      dispatch(addmemberRequest())
+      dispatch(postexpenseRequest())
       try {
         let datas = JSON.parse(localStorage.getItem("auth"))
         const headers = {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
             authorization: `Bearer ${datas?.data?.payload?.token}`,
         };
         const res = await axios.post(
-          `${baseUrl}/cooperative/addMember`,
+          `${baseUrl}/expense/retriveExpenses`,
           registerState,
           { headers: headers }
         );
         const { data } = res;
         if (res.status === 200) {
           history()
-          dispatch(addmemberSuccess(data));
+          dispatch(postexpensesSuccess(data));
         //   dispatch(transferData(registerState))
         }
       } catch (error) {
         if (error.response){
-          dispatch(addmemberFaliure(error?.response?.data));
+          dispatch(postexpensesFaliure(error?.response?.data));
         }
         setErrorHandler({ hasError: true, message: error?.response?.data?.message });
       }
     };
   };
 
-  export const getmember = () => {
+  export const createexpenses = () => {
     return async (dispatch) => {
-      dispatch(memberRequest())
+      dispatch(postexpenseRequest())
       try {
         let datas = JSON.parse(localStorage.getItem("auth"))
         const headers = {
@@ -81,16 +81,16 @@ export const addmemberRequest = () => {
             authorization: `Bearer ${datas?.data?.payload?.token}`,
         };
         const res = await axios.get(
-          `${baseUrl}/members?limit=100&page=0`,
+          `${baseUrl}/expense/create`,
           { headers: headers }
         );
         const { data } = res;
         if (res.status === 200) {
-          dispatch(memberSuccess(data));
+          dispatch(postexpensesSuccess(data));
         }
       } catch (error) {
         if (error.response){
-          dispatch(memberFaliure(error?.response?.data));
+          dispatch(postexpensesFaliure(error?.response?.data));
         }
       }
     };

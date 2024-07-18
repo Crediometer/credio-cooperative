@@ -5,6 +5,8 @@ import { otpverifyReducer, registerReducer } from './Registration/RegistrationRe
 import { addmemberReducer, memberReducer } from './Member/MemberReducer';
 import { profileReducer } from './Profile/ProfileReducer';
 import authReducer from './Login/LoginReducer';
+import { createexpenses, getExpences } from './Expenses/ExpencesAction';
+import { loantransactionReducer, savingtransactionReducer } from './Transactions/TransactionReducer';
 const rootReducer = combineReducers({
     login: authReducer,
     card: cardReducer,
@@ -13,7 +15,11 @@ const rootReducer = combineReducers({
     verifyotp: otpverifyReducer,
     addMember: addmemberReducer,
     member: memberReducer,
-    profile: profileReducer
+    profile: profileReducer,
+    loantrans: loantransactionReducer,
+    savingtrans: savingtransactionReducer,
+    createexpenses: createexpenses,
+    expenses: getExpences,
 })
 
 export default rootReducer;

@@ -1,0 +1,48 @@
+.expenses{
+    position: relative;
+}
+.expense-nav-outer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.expense-top-nav{
+    width: 70%;
+    display: flex;
+}
+.expense-top-nav p{
+    width: 50%;
+    text-align: center;
+    font-size: 1.2rem;
+}
+.nav-box{
+    width: 50%;
+}
+.expense-body{
+    margin-top: 40px;
+    height: 70vh;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.expense-body .expense{
+    width: 80%;
+}
+.add-button{
+    position: absolute;
+    bottom: 6rem;
+    right: 9rem;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #B11226;
+}
+.add-button svg{
+    font-size: 1.8rem;
+    color: white;
+}

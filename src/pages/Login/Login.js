@@ -7,6 +7,7 @@ import LottieAnimation from "../../Lotties"
 import loader from "../../Assets/animations/loading.json"
 import JSEncrypt from 'jsencrypt';
 import consts from "./keys/const"; 
+// import crypto from 'crypto-browserify';
 const Login = ({
     login,
     loading,
@@ -29,6 +30,8 @@ const Login = ({
         var encrypt = new JSEncrypt();
         encrypt.setPublicKey(`${consts.pub_key}`);
         var encrypted = encrypt.encrypt(value);
+        // const buffer = Buffer.from(password, 'utf8');
+        // const encrypted = crypto.publicEncrypt(consts, value );
         setPassword(encrypted)
         setLoginState({ ...loginState, ...{password} });
     }
@@ -49,7 +52,7 @@ const Login = ({
     return ( 
         <div className="admin-outer">
             <div className="login-inner">
-                <h1>Credio Coop</h1>
+                <h1>Credio Coop</h1 >
                 <p>Login</p>
                 <form onSubmit={handleSignUp}>
                     {showerror && (

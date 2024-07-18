@@ -40,6 +40,7 @@ import ActiveDetailsSavings from './pages/Savings/ActiveDetails';
 import ClosedDetailsSaving from './pages/Savings/ClosedDetails';
 import Login from './pages/Login/Login';
 import { Provider } from 'react-redux';
+import Expenses from './pages/Expenses/Expenses';
 
 function App() {
   return (
@@ -88,6 +89,7 @@ function App() {
           <Route path='/saving-closed-details' element={<ClosedDetailsSaving/>}/>
           <Route path='/loan-active-details' element={<ActiveDetails/>}/>
           <Route path='/saving-active-details' element={<ActiveDetailsSavings/>}/>
+          <Route path='/expenses' element={<Expenses/>}/>
         </Routes>
       </Provider>
     </div>

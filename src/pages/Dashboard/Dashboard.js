@@ -137,22 +137,23 @@ const Dashboard = ({
                         
                             />
                         </Link>
-                        <Link to='/withdraw'>
+                        <Link to='/expenses'>
+                            <Box
+                                color="rgba(210, 193, 43, 0.123)"
+                                icons={<HiOutlinePlusSm/>}
+                                text="Expenses"
+                            />
+                        </Link>
+                        
+                    </div>
+                    <div className="dashboard-navigate">
+                        
+                        {/* <Link to='/withdraw'>
                             <Box
                                 color="rgba(18, 15, 199, 0.123)"
                                 icons={<HiOutlinePlusSm/>}
                                 text="Withdrawals"
                             
-                            />
-                        </Link>
-                    </div>
-                    <div className="dashboard-navigate">
-                        
-                        {/* <Link to='/dashboard'>
-                            <Box
-                                color="rgba(210, 193, 43, 0.123)"
-                                icons={<HiOutlinePlusSm/>}
-                                text="Expenses"
                             />
                         </Link> */}
                     </div>

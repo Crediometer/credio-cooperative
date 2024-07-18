@@ -41,11 +41,31 @@ const ActivateMember = ({
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const formData = new FormData();
+        formData.append('fullname ', nameState.fullname);
+        formData.append('phone', nameState.phone);
+        formData.append('email', nameState.email);
+        formData.append('sex', nameState.sex);
+        formData.append('homeAddress', nameState.homeAddress);
+        formData.append('age', nameState.age);
+        formData.append('townCity', nameState.townCity);
+        formData.append('originState', nameState.originState);
+        formData.append('religion', nameState. religion);
+        formData.append('occupationBusiness', nameState.occupationBusiness);
+        formData.append('occupationBusinessAddress', nameState.occupationBusinessAddress);
+        formData.append('image', nameState.image);
+        formData.append('purposeJoining', cooperativeInfo.purposeJoining);
+        formData.append('referralName', cooperativeInfo.referralName);
+        formData.append('referralPhone', cooperativeInfo.referralPhone);
+        formData.append('belongedToCooperative', cooperativeInfo.belongedToCooperative);
+        formData.append('reasonForLeaving', cooperativeInfo.reasonForLeaving);
+        formData.append('nextOfKin', cooperativeInfo.nextOfKin);
+        formData.append('nextOfKinAddress', cooperativeInfo.nextOfKinAddress);
+        formData.append('nextOfKinRelationship', cooperativeInfo.nextOfKinRelationship);
         try{
             await postmember(
                 {
-                    personalInfo:nameState, 
-                    cooperativeInfo,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+                    formData,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
                 }, ()=>{ 
                 nextButton()
             }, ()=>{ 

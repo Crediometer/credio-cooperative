@@ -30,14 +30,6 @@ const BusinessMember = ({
     handleSubmit,
     showerror
 }) => {
-    const [nameState, setNameState] = useState({});
-    const [formState, setFormState] = useState(null)
-    const [postState, setPostState] = useState({});
-    const[filename, setFilename] = useState('')
-    const [file, setFile] = useState(null);
-    const[image, setImage] = useState(null)
-    const[filename2, setFilename2] = useState('')
-    const[image2, setImage2] = useState(null)
     const [purposeJoining, setpurposeJoining] = useState("");
     const [referralName, setreferralName] = useState("");
     const [referralPhone, setreferralPhone] = useState('');
@@ -47,13 +39,6 @@ const BusinessMember = ({
     const [nextOfKinAddress, setnextOfKinAddress] = useState("")
     const [nextOfKinRelationship, setnextOfKinRelationship] = useState("")
     const [show, setShow] = useState(false)
-    const [showkyc, setshowkyc]= useState(false)
-    const [websiteLink, setwebsiteLink] = useState("")
-    // const [mermat, setmermat] = useState('');
-    const [rcNumber, setrcNumber]= useState("");
-    const [errorHandler, setErrorHandler] = useState([false, ""]);
-    // const options = [{name:'name'},{name:'games'}]
-
     const handlepurpose = (e) => {
         const value = e.target.value;
         setpurposeJoining(value);
@@ -95,18 +80,6 @@ const BusinessMember = ({
         setnextOfKinRelationship(value);
         setcooperativeInfo({ ...cooperativeInfo, ...{ nextOfKinRelationship } });
     };
-    const handleWebsite = (e) => {
-        const value = e.target.value;
-        setwebsiteLink(value);
-        setNameState({ ...nameState, ...{ websiteLink } });
-    };
-    const updateMermat = (filedata) => {
-        setFilename2(filedata);
-    };
-   
-    const togglemodal2 = ()=>{
-        setshowkyc(!showkyc)
-    }
     const handleshow = () =>{
         setShow(!show)
     }
@@ -243,19 +216,6 @@ const BusinessMember = ({
                 )}
             </div>
            {show && (<TermsModal togglemodal={handleshow}/>)}
-            {/* <button onClick={handleSubmit} className={styles3.activateButton}>
-                {loading ? (
-                    <FontAwesomeIcon
-                        className="spinner"
-                        icon={faSpinner}
-                    ></FontAwesomeIcon>
-                    ): ( 
-                    <span>Save</span>
-                        )} 
-            </button> */}
-            {/* {kycload && (<LoadingModal/>)}
-            {showkyc&& (<Errormodal error={kycerror} togglemodal={togglemodal2}/>)}
-            {showerror && (<Errormodal error={error} togglemodal={togglemodal}/>)} */}
         </form>
     );
 }
