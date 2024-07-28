@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ADD_MEMBER_FAILURE, ADD_MEMBER_REQUEST, ADD_MEMBER_SUCCESS, MEMBER_FAILURE, MEMBER_REQUEST, MEMBER_SUCCESS } from "./MemberType";
+import { ADD_MEMBER_FAILURE, ADD_MEMBER_REQUEST, ADD_MEMBER_SUCCESS, MEMBER_FAILURE, MEMBER_REQUEST, MEMBER_SUCCESS, SINGLE_MEMBER_FAILURE, SINGLE_MEMBER_REQUEST, SINGLE_MEMBER_SUCCESS } from "./MemberType";
 
 export const addmemberRequest = () => {
     return {
@@ -40,6 +40,24 @@ export const addmemberRequest = () => {
     };
   };
 
+  export const singlememberRequest = () => {
+    return {
+      type: SINGLE_MEMBER_REQUEST,
+    };
+  };
+  export const singlememberSuccess = (register) => {
+    return {
+      type: SINGLE_MEMBER_SUCCESS,
+      payload: register,
+    };
+  };
+  
+  export const singlememberFaliure = (error) => {
+    return {
+      type: SINGLE_MEMBER_FAILURE,
+      payload: error,
+    };
+  };
 
   const baseUrl = "https://cooperative-be.onrender.com/api/v1"
   export const postmember = (registerState, history, setErrorHandler) => {
@@ -49,7 +67,7 @@ export const addmemberRequest = () => {
         let datas = JSON.parse(localStorage.getItem("auth"))
         const headers = {
             "Content-Type": "multipart/form-data",
-            authorization: `Bearer ${datas?.data?.payload?.token}`,
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
         };
         const res = await axios.post(
           `${baseUrl}/cooperative/addMember`,
@@ -71,17 +89,17 @@ export const addmemberRequest = () => {
     };
   };
 
-  export const getmember = () => {
+  export const getmember = (limit, page) => {
     return async (dispatch) => {
       dispatch(memberRequest())
       try {
         let datas = JSON.parse(localStorage.getItem("auth"))
         const headers = {
             "Content-Type": "application/json",
-            authorization: `Bearer ${datas?.data?.payload?.token}`,
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
         };
         const res = await axios.get(
-          `${baseUrl}/members?limit=100&page=0`,
+          `${baseUrl}/members?limit=${limit}&page=${page}`,
           { headers: headers }
         );
         const { data } = res;
@@ -91,6 +109,31 @@ export const addmemberRequest = () => {
       } catch (error) {
         if (error.response){
           dispatch(memberFaliure(error?.response?.data));
+        }
+      }
+    };
+  };
+
+  export const getsinglemember = (id) => {
+    return async (dispatch) => {
+      dispatch(singlememberRequest())
+      try {
+        let datas = JSON.parse(localStorage.getItem("auth"))
+        const headers = {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
+        };
+        const res = await axios.get(
+          `${baseUrl}/members/${id}`,
+          { headers: headers }
+        );
+        const { data } = res;
+        if (res.status === 200) {
+          dispatch(singlememberSuccess(data));
+        }
+      } catch (error) {
+        if (error.response){
+          dispatch(singlememberFaliure(error?.response?.data));
         }
       }
     };

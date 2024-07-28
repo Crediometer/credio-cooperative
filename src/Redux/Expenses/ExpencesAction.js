@@ -42,17 +42,17 @@ export const postexpenseRequest = () => {
 
 
   const baseUrl = "https://cooperative-be.onrender.com/api/v1"
-  export const getExpences = (registerState, history, setErrorHandler) => {
+  export const createexpenses = (registerState, history, setErrorHandler) => {
     return async (dispatch) => {
       dispatch(postexpenseRequest())
       try {
         let datas = JSON.parse(localStorage.getItem("auth"))
         const headers = {
             "Content-Type": "application/json",
-            authorization: `Bearer ${datas?.data?.payload?.token}`,
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
         };
         const res = await axios.post(
-          `${baseUrl}/expense/retriveExpenses`,
+          `${baseUrl}/expense/create`,
           registerState,
           { headers: headers }
         );
@@ -66,31 +66,30 @@ export const postexpenseRequest = () => {
         if (error.response){
           dispatch(postexpensesFaliure(error?.response?.data));
         }
-        setErrorHandler({ hasError: true, message: error?.response?.data?.message });
       }
     };
   };
 
-  export const createexpenses = () => {
+  export const getExpences = () => {
     return async (dispatch) => {
-      dispatch(postexpenseRequest())
+      dispatch(expensesRequest())
       try {
         let datas = JSON.parse(localStorage.getItem("auth"))
         const headers = {
             "Content-Type": "application/json",
-            authorization: `Bearer ${datas?.data?.payload?.token}`,
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
         };
         const res = await axios.get(
-          `${baseUrl}/expense/create`,
+          `${baseUrl}/expense/retriveExpenses`,
           { headers: headers }
         );
         const { data } = res;
         if (res.status === 200) {
-          dispatch(postexpensesSuccess(data));
+          dispatch(expensesSuccess(data));
         }
       } catch (error) {
         if (error.response){
-          dispatch(postexpensesFaliure(error?.response?.data));
+          dispatch(expensesFaliure(error?.response?.data));
         }
       }
     };

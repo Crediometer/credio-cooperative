@@ -57,7 +57,7 @@ export const fetchprofile = () => {
         let datas = JSON.parse(localStorage.getItem("auth"))
         const headers = {
             "Content-Type": "application/json",
-            authorization: `Bearer ${datas?.data?.payload?.token}`,
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
         };
         // let datas = JSON.parse(localStorage.getItem("auth"))
         axios.get(`${baseUrl}/cooperative/getProfile`, { headers: headers })

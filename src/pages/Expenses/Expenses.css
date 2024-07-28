@@ -24,7 +24,7 @@
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
 }
 .expense-body .expense{
@@ -43,6 +43,22 @@
     background-color: #B11226;
 }
 .add-button svg{
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     color: white;
+}
+@media (max-width: 1000px) {
+    .add-button{
+        position: absolute;
+        bottom: 4rem;
+        right: 4rem;
+        width: 50px;
+        height: 50px;
+    }
+    .add-button svg{
+        font-size: 1rem;
+        color: white;
+    }
+    .expense-top-nav p{
+        font-size: 1rem;
+    }
 }

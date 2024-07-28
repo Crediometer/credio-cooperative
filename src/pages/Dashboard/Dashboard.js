@@ -29,7 +29,7 @@ const Dashboard = ({
     }
     useEffect(()=>{
         fetchprofile();
-        vaultprofile();
+        // vaultprofile();
     }, [])
     return ( 
         <>
@@ -147,17 +147,6 @@ const Dashboard = ({
                         
                     </div>
                     <div className="dashboard-navigate">
-                        
-                        {/* <Link to='/withdraw'>
-                            <Box
-                                color="rgba(18, 15, 199, 0.123)"
-                                icons={<HiOutlinePlusSm/>}
-                                text="Withdrawals"
-                            
-                            />
-                        </Link> */}
-                    </div>
-                    <div className="dashboard-navigate">
                         <Link to="/loans">
                             <Box
                                 color="rgba(184, 102, 67, 0.123)"
@@ -171,6 +160,16 @@ const Dashboard = ({
                                 color="rgba(67, 176, 184, 0.128)"
                                 icons={<HiOutlinePlusSm/>}
                                 text="Members"
+                            />
+                        </Link>
+                    </div>
+                    <div className="dashboard-navigate">
+                        <Link to='/group'>
+                            <Box
+                                color="rgba(18, 15, 199, 0.123)"
+                                icons={<HiOutlinePlusSm/>}
+                                text="Group"
+                            
                             />
                         </Link>
                     </div>
@@ -307,7 +306,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return{
         fetchprofile: () => dispatch(fetchprofile()),
-        vaultprofile: () => dispatch(vaultprofile()),
+        // vaultprofile: () => dispatch(vaultprofile()),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);   

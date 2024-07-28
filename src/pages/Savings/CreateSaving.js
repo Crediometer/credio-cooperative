@@ -1,16 +1,32 @@
 import { useState } from "react";
 import LoanModal from "../../components/Modal/LoanModal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiChevronLeft } from "react-icons/bi";
-
-const CreateSaving = () => {
+import { createSaving } from "../../Redux/Saving/SavingAction";
+import { connect } from "react-redux";
+import LottieAnimation from "../../Lotties";
+import loader from "../../Assets/animations/loading.json"
+const CreateSaving = ({
+    loading,
+    error,
+    data,
+    createSaving
+}) => {
+    const history = useNavigate();
     const members = ['John Doe', 'Jane Smith', 'Michael Johnson', 'Alice Williams', 'David Brown'];
-    // State to hold the search input and the filtered members
     const [searchInput, setSearchInput] = useState('');
     const [searchUser, setSearchUser] = useState('');
     const [show, setShow] = useState(false);
     const [filteredMembers, setFilteredMembers] = useState(members);
-
+    const [memberId, setMemberId] = useState('')
+    const [amount, setAmount] = useState('')
+    const [interval, setInterval] = useState("")
+    const [interestRate, setInterestRate] = useState("")
+    const [purpose, setPurpose] = useState("")
+    const [startDate, setStartDate] = useState("")
+    const [endDate, setEndDate] = useState("")
+    const [monthlyPayment, setmonthlyPayment] = useState("")
+    const [postState, setPostState] = useState({})
     const togglemodal=()=>{
         setShow(!show)
     }
@@ -33,13 +49,67 @@ const CreateSaving = () => {
         setSearchInput("")
         setFilteredMembers([]);
     };
+    const handleamount = (e)=>{
+        const value = e.target.value
+        setAmount(value)
+        setPostState({...postState, ...{amount}})
+    }
+    const handleInterval = (e)=>{
+        const value = e.target.value
+        setInterval(value)
+        setPostState({...postState, ...{interval}})
+    }
+    const handleInterestRate = (e)=>{
+        const value = e.target.value
+        setInterestRate(value)
+        setPostState({...postState, ...{interestRate}})
+    }
+    const handlePurpose = (e)=>{
+        const value = e.target.value
+        setPurpose(value)
+        setPostState({...postState, ...{purpose}})
+    }
+    const handleMonthlyPayment = (e)=>{
+        const value = e.target.value
+        setmonthlyPayment(value)
+        setPostState({...postState, ...{monthlyPayment}})
+    }
+    const handleStartDate = (e)=>{
+        const value = e.target.value
+        setStartDate(value)
+        setPostState({...postState, ...{startDate}})
+    }
+    const handleEndDate = (e)=>{
+        const value = e.target.value
+        setEndDate(value)
+        setPostState({...postState, ...{endDate}})
+    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try{
+            await createSaving(
+                postState , ()=>{ 
+                history(`/expenses`)
+                setPostState({})
+                setAmount("")
+                setInterval("")
+                setInterestRate("")
+                setPurpose("")
+                setmonthlyPayment("")
+            }, ()=>{ 
+                window.scrollTo(0, 0);
+            });
+        }catch(error){
+            // setPending(false);
+        }
+    };
     return ( 
         <div className="saving createloan">
             <div className="back">
                 <Link to='/saving'><BiChevronLeft/></Link>
                 <p className="title">Create Saving</p>
             </div>
-            <div className="top-search">
+            {/* <div className="top-search">
                 <div className="form-11" style={{ width: '100%' }}>
                     <div className="input">
                         <input 
@@ -83,19 +153,18 @@ const CreateSaving = () => {
             )}
             <div className="selected-user">
                 <h4 className="form-head">{searchUser}</h4>
-            </div>
+            </div> */}
             <div className="card-body">
-                <div className="card-field">
+                <form onSubmit={handleSubmit} className="card-field">
                     <div className="form-2"  style={{width: "100%"}}>
                         <div className="input input-4">
                             <label>Amount</label>
                             <input type="text" 
-                            placeholder="Enter Amount"
-                            // value={formattedAmount}
-                            // onBlur={handleAmount}
-                            // onChange={handleAmount}
-                            required
-                            // disabled = {(business.length === 0 || !personal) ? (true) : (false)}
+                                placeholder="Enter Amount"
+                                // value={formattedAmount}
+                                onBlur={handleamount}
+                                onChange={handleamount}
+                                required
                             ></input>
                         </div>
                     </div>
@@ -104,11 +173,9 @@ const CreateSaving = () => {
                             <label>Interest Rate</label>
                             <input type="text" 
                             placeholder="Enter Interest Rate"
-                            // value={formattedAmount}
-                            // onBlur={handleAmount}
-                            // onChange={handleAmount}
+                            onBlur={handleInterestRate}
+                            onChange={handleInterestRate}
                             required
-                            // disabled = {(business.length === 0 || !personal) ? (true) : (false)}
                             ></input>
                         </div>
                     </div>
@@ -117,25 +184,28 @@ const CreateSaving = () => {
                             <label>Monthly Payment</label>
                             <input type="text" 
                             placeholder="Enter Monthly Payment"
-                            // value={formattedAmount}
-                            // onBlur={handleAmount}
-                            // onChange={handleAmount}
+                            onBlur={handleMonthlyPayment}
+                            onChange={handleMonthlyPayment}
                             required
-                            // disabled = {(business.length === 0 || !personal) ? (true) : (false)}
                             ></input>
                         </div>
                     </div>
                     <div className="form-2"  style={{width: "100%"}}>
                         <div className="input input-4">
-                            <label>Duration</label>
-                            <input type="text" 
-                            placeholder="Enter Duration"
-                            // value={formattedAmount}
-                            // onBlur={handleAmount}
-                            // onChange={handleAmount}
-                            required
-                            // disabled = {(business.length === 0 || !personal) ? (true) : (false)}
-                            ></input>
+                            <label>Interval</label>
+                            <select
+                                onChange={handleInterval}
+                                onBlur={handleInterval}
+                                required
+                            >
+                                <optgroup>
+                                    <option>--Select Option--</option>
+                                    <option value={5}>5 Days</option>
+                                    <option value={7}>7 Days</option>
+                                    <option value={15}>BiWeekly</option>
+                                    <option value={30}>Monthly</option>
+                                </optgroup>
+                            </select>
                         </div>
                     </div>
                     <div className="form-2"  style={{width: "100%"}}>
@@ -143,11 +213,9 @@ const CreateSaving = () => {
                             <label>Start Date</label>
                             <input type="date" 
                             placeholder="Enter Interest Rate"
-                            // value={formattedAmount}
-                            // onBlur={handleAmount}
-                            // onChange={handleAmount}
+                            onBlur={handleStartDate}
+                            onChange={handleStartDate}
                             required
-                            // disabled = {(business.length === 0 || !personal) ? (true) : (false)}
                             ></input>
                         </div>
                     </div>
@@ -156,11 +224,9 @@ const CreateSaving = () => {
                             <label>End Date</label>
                             <input type="date" 
                             placeholder="Enter Interest Rate"
-                            // value={formattedAmount}
-                            // onBlur={handleAmount}
-                            // onChange={handleAmount}
+                            onBlur={handleEndDate}
+                            onChange={handleEndDate}
                             required
-                            // disabled = {(business.length === 0 || !personal) ? (true) : (false)}
                             ></input>
                         </div>
                     </div>
@@ -169,22 +235,41 @@ const CreateSaving = () => {
                             <label>Purpose</label>
                             <input type="text" 
                             placeholder="Purpose of Loan"
-                            // value={formattedAmount}
-                            // onBlur={handleAmount}
-                            // onChange={handleAmount}
+                            onBlur={handlePurpose}
+                            onChange={handlePurpose}
                             required
-                            // disabled = {(business.length === 0 || !personal) ? (true) : (false)}
                             ></input>
                         </div>
                     </div>
                     <div className="form-button">
-                        <button onClick={setShow} className='transfer-button'>Create Loan Profile</button>
+                        <button className='transfer-button'>
+                            {loading ? (
+                                <LottieAnimation data={loader}/>
+                            ):"Create"} 
+                        </button>
                     </div>
-                </div>
+                </form>
                 {show && <LoanModal/>}
             </div>
         </div>
     );
 }
- 
-export default CreateSaving;
+
+const mapStateToProps = state => {
+    console.log(state)
+    return{
+        error:state?.saving?.error,
+        loading: state?.saving?.loading,
+        data: state?.saving?.data?.payload?.expenses  ,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return{
+        createSaving: (postdata, history, error) => {
+            dispatch(createSaving(postdata, history, error));
+        },
+    }
+}
+
+export default  connect(mapStateToProps, mapDispatchToProps)(CreateSaving);

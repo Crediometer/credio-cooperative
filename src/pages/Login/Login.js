@@ -32,7 +32,7 @@ const Login = ({
         var encrypted = encrypt.encrypt(value);
         // const buffer = Buffer.from(password, 'utf8');
         // const encrypted = crypto.publicEncrypt(consts, value );
-        setPassword(encrypted)
+        setPassword(value)
         setLoginState({ ...loginState, ...{password} });
     }
     const handleSignUp = async (e) => {

@@ -48,8 +48,7 @@ export const loantransactionRequest = () => {
       try {
         let datas = JSON.parse(localStorage.getItem("auth"))
         const headers = {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${datas?.data?.payload?.token}`,
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
         };
         const res = await axios.get(
           `${baseUrl}/transactions/loans/${id}?limit=${limit}&&page=${page}`,
@@ -57,7 +56,7 @@ export const loantransactionRequest = () => {
         );
         const { data } = res;
         if (res.status === 200) {
-          dispatch(savingtransactionSuccess(data));
+          dispatch(loantransactionSuccess(data));
         }
       } catch (error) {
         if (error.response){
@@ -74,7 +73,7 @@ export const loantransactionRequest = () => {
         let datas = JSON.parse(localStorage.getItem("auth"))
         const headers = {
             "Content-Type": "application/json",
-            authorization: `Bearer ${datas?.data?.payload?.token}`,
+            authorization: `Bearer ${datas?.token?.payload?.token }`,
         };
         const res = await axios.get(
           `${baseUrl}/transactions/savings/${id}?limit=${limit}&page=${page}`,

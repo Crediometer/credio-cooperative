@@ -2,9 +2,18 @@ import { BiChevronLeft } from "react-icons/bi";
 import { FaExclamation, FaExclamationCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import styles from '../Loan/Payment.module.css';
-import { useState } from "react";
-
-const ActiveSavings = () => {
+import { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { getActiveSaving } from "../../Redux/Saving/SavingAction";
+import LottieAnimation from "../../Lotties";
+import preloader from "../../Assets/animations/preloader.json"
+import { Stack, TablePagination } from "@mui/material";
+const ActiveSavings = ({
+    getActiveSaving,
+    loading,
+    error,
+    data
+}) => {
     const circleWidth = 50
     const percentage = (70/100) * 100 ;
     const radius = 20
@@ -16,7 +25,16 @@ const ActiveSavings = () => {
     const [searchUser, setSearchUser] = useState('');
     const [show, setShow] = useState(false);
     const [filteredMembers, setFilteredMembers] = useState(members);
-
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(100);
+  
+    const handleChangePage = (event, newPage) => {
+      setPage(newPage);
+    };
+    const handleChangeRowsPerPage = (event) => {
+      setRowsPerPage(parseInt(event.target.value, 10));
+      setPage(0);
+    };
     const togglemodal=()=>{
         setShow(!show)
     }
@@ -39,6 +57,9 @@ const ActiveSavings = () => {
         setSearchInput("")
         setFilteredMembers([]);
     };
+    useEffect(()=>{
+        getActiveSaving(rowsPerPage, page)
+    },[page, rowsPerPage])
     return ( 
         <div className="saving">
             <div className="back">
@@ -91,7 +112,12 @@ const ActiveSavings = () => {
                 <h4 className="form-head">{searchUser}</h4>
             </div>
             <div className="active-loan-body">
-                <Link to="/saving-active-details">
+                {loading ? (
+                    <div className="preloader">
+                        <LottieAnimation data={preloader}/>
+                    </div>
+                ):(
+                    <Link to="/saving-active-details">
                     <div className="active-card">
                         <div className="active-top">
                             <div className="active-status">
@@ -154,266 +180,36 @@ const ActiveSavings = () => {
                             </div>
                         </div>
                     </div>
-                </Link>
-                <Link to="/saving-active-details">
-                    <div className="active-card">
-                        <div className="active-top">
-                            <div className="active-status">
-                                <p>ACTIVE</p>
-                            </div>
-                            <div className={styles.paymentCircleInner}>
-                                <svg
-                                width={circleWidth}
-                                height={circleWidth}
-                                viewBox={`0 0 ${circleWidth} ${circleWidth}`}
-                                >
-                                <circle
-                                    cx={circleWidth / 2}
-                                    cy={circleWidth / 2}
-                                    strokeWidth="10px"
-                                    r={radius}
-                                    className={styles.circleBackground}
-                                />
-                                <circle
-                                    cx={circleWidth / 2}
-                                    cy={circleWidth / 2}
-                                    strokeWidth="10px"
-                                    r={radius}
-                                    className={styles.circleProgress}
-                                    style={{
-                                        strokeDasharray: dashArray,
-                                        strokeDashoffset: dashOffset
-                                    }}
-                                    transform={`rotate(-90 ${circleWidth / 2} ${circleWidth / 2})`}
-                                />
-                                    {" "}
-                                    <text 
-                                        x='50%' 
-                                        y="50%" 
-                                        dy='0.3em' 
-                                        textAnchor='middle'
-                                        className={styles.circleText}
-                                    >
-                                        80%
-                                    </text>
-                                    {/* <text 
-                                        x='50%' 
-                                        y="50%" 
-                                        dy='0.3em' 
-                                        textAnchor='middle'
-                                        className={styles.circleText}
-                                    >
-                                        NGN378,032
-                                    </text> */}
-                                </svg>
-                            </div>
-                        </div>
-                        <div className="active-body">
-                            <p className="loan-for">Akunle Samson</p>
-                            <h3>N800,000</h3>
-                            <p className="loan-details">Your saving request has been approved and disbursed</p>
-                            <div className="active-warning">
-                                <FaExclamationCircle/>
-                                <p>Tap here to more details </p>
-                            </div>
-                        </div>
-                    </div>
-                </Link>
-                <Link to="/saving-active-details">
-                    <div className="active-card">
-                        <div className="active-top">
-                            <div className="active-status">
-                                <p>ACTIVE</p>
-                            </div>
-                            <div className={styles.paymentCircleInner}>
-                                <svg
-                                width={circleWidth}
-                                height={circleWidth}
-                                viewBox={`0 0 ${circleWidth} ${circleWidth}`}
-                                >
-                                <circle
-                                    cx={circleWidth / 2}
-                                    cy={circleWidth / 2}
-                                    strokeWidth="10px"
-                                    r={radius}
-                                    className={styles.circleBackground}
-                                />
-                                <circle
-                                    cx={circleWidth / 2}
-                                    cy={circleWidth / 2}
-                                    strokeWidth="10px"
-                                    r={radius}
-                                    className={styles.circleProgress}
-                                    style={{
-                                        strokeDasharray: dashArray,
-                                        strokeDashoffset: dashOffset
-                                    }}
-                                    transform={`rotate(-90 ${circleWidth / 2} ${circleWidth / 2})`}
-                                />
-                                    {" "}
-                                    <text 
-                                        x='50%' 
-                                        y="50%" 
-                                        dy='0.3em' 
-                                        textAnchor='middle'
-                                        className={styles.circleText}
-                                    >
-                                        80%
-                                    </text>
-                                    {/* <text 
-                                        x='50%' 
-                                        y="50%" 
-                                        dy='0.3em' 
-                                        textAnchor='middle'
-                                        className={styles.circleText}
-                                    >
-                                        NGN378,032
-                                    </text> */}
-                                </svg>
-                            </div>
-                        </div>
-                        <div className="active-body">
-                            <p className="loan-for">Akunle Samson</p>
-                            <h3>N800,000</h3>
-                            <p className="loan-details">Your saving request has been approved and disbursed</p>
-                            <div className="active-warning">
-                                <FaExclamationCircle/>
-                                <p>Tap here to more details </p>
-                            </div>
-                        </div>
-                    </div>
-                </Link>
-                <Link to="/saving-active-details">
-                    <div className="active-card">
-                        <div className="active-top">
-                            <div className="active-status">
-                                <p>ACTIVE</p>
-                            </div>
-                            <div className={styles.paymentCircleInner}>
-                                <svg
-                                width={circleWidth}
-                                height={circleWidth}
-                                viewBox={`0 0 ${circleWidth} ${circleWidth}`}
-                                >
-                                <circle
-                                    cx={circleWidth / 2}
-                                    cy={circleWidth / 2}
-                                    strokeWidth="10px"
-                                    r={radius}
-                                    className={styles.circleBackground}
-                                />
-                                <circle
-                                    cx={circleWidth / 2}
-                                    cy={circleWidth / 2}
-                                    strokeWidth="10px"
-                                    r={radius}
-                                    className={styles.circleProgress}
-                                    style={{
-                                        strokeDasharray: dashArray,
-                                        strokeDashoffset: dashOffset
-                                    }}
-                                    transform={`rotate(-90 ${circleWidth / 2} ${circleWidth / 2})`}
-                                />
-                                    {" "}
-                                    <text 
-                                        x='50%' 
-                                        y="50%" 
-                                        dy='0.3em' 
-                                        textAnchor='middle'
-                                        className={styles.circleText}
-                                    >
-                                        80%
-                                    </text>
-                                    {/* <text 
-                                        x='50%' 
-                                        y="50%" 
-                                        dy='0.3em' 
-                                        textAnchor='middle'
-                                        className={styles.circleText}
-                                    >
-                                        NGN378,032
-                                    </text> */}
-                                </svg>
-                            </div>
-                        </div>
-                        <div className="active-body">
-                            <p className="loan-for">Akunle Samson</p>
-                            <h3>N800,000</h3>
-                            <p className="loan-details">Your saving request has been approved and disbursed</p>
-                            <div className="active-warning">
-                                <FaExclamationCircle/>
-                                <p>Tap here to more details </p>
-                            </div>
-                        </div>
-                    </div>
-                </Link>
-                <Link to="/saving-active-details">
-                    <div className="active-card">
-                        <div className="active-top">
-                            <div className="active-status">
-                                <p>ACTIVE</p>
-                            </div>
-                            <div className={styles.paymentCircleInner}>
-                                <svg
-                                width={circleWidth}
-                                height={circleWidth}
-                                viewBox={`0 0 ${circleWidth} ${circleWidth}`}
-                                >
-                                <circle
-                                    cx={circleWidth / 2}
-                                    cy={circleWidth / 2}
-                                    strokeWidth="10px"
-                                    r={radius}
-                                    className={styles.circleBackground}
-                                />
-                                <circle
-                                    cx={circleWidth / 2}
-                                    cy={circleWidth / 2}
-                                    strokeWidth="10px"
-                                    r={radius}
-                                    className={styles.circleProgress}
-                                    style={{
-                                        strokeDasharray: dashArray,
-                                        strokeDashoffset: dashOffset
-                                    }}
-                                    transform={`rotate(-90 ${circleWidth / 2} ${circleWidth / 2})`}
-                                />
-                                    {" "}
-                                    <text 
-                                        x='50%' 
-                                        y="50%" 
-                                        dy='0.3em' 
-                                        textAnchor='middle'
-                                        className={styles.circleText}
-                                    >
-                                        80%
-                                    </text>
-                                    {/* <text 
-                                        x='50%' 
-                                        y="50%" 
-                                        dy='0.3em' 
-                                        textAnchor='middle'
-                                        className={styles.circleText}
-                                    >
-                                        NGN378,032
-                                    </text> */}
-                                </svg>
-                            </div>
-                        </div>
-                        <div className="active-body">
-                            <p className="loan-for">Akunle Samson</p>
-                            <h3>N800,000</h3>
-                            <p className="loan-details">Your saving request has been approved and disbursed</p>
-                            <div className="active-warning">
-                                <FaExclamationCircle/>
-                                <p>Tap here to more details </p>
-                            </div>
-                        </div>
-                    </div>
-                </Link>
+                    </Link>
+                )}
             </div>
+            <Stack style={{marginTop: "10px"}} spacing={2}>
+                <TablePagination
+                    component="div"
+                    count={data?.limit}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    rowsPerPage={rowsPerPage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+            </Stack>
         </div>
     );
 }
- 
-export default ActiveSavings;
+
+const mapStateToProps = state => {
+    console.log(state)
+    return{
+        error:state?.saving?.error,
+        loading: state?.saving?.loading,
+        data: state?.saving?.activedata?.payload,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return{
+        getActiveSaving: (limit, page) => dispatch(getActiveSaving(limit, page)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ActiveSavings);

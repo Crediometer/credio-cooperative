@@ -30,6 +30,7 @@ const ActivateMember = ({
     // }
     const [nameState, setNameState] = useState({});
     const [cooperativeInfo, setcooperativeInfo] = useState({})
+    const [imageState, setImageState] = useState("")
     const [index, setIndex] = useState(initialCount)
     const [errorHandler, setErrorHandler] = useState([false, ""]);
     const [showerror, setshowerror] = useState(false)
@@ -41,32 +42,15 @@ const ActivateMember = ({
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("nameState:", imageState);
+        console.log("cooperativeInfo:", cooperativeInfo);
         const formData = new FormData();
-        formData.append('fullname ', nameState.fullname);
-        formData.append('phone', nameState.phone);
-        formData.append('email', nameState.email);
-        formData.append('sex', nameState.sex);
-        formData.append('homeAddress', nameState.homeAddress);
-        formData.append('age', nameState.age);
-        formData.append('townCity', nameState.townCity);
-        formData.append('originState', nameState.originState);
-        formData.append('religion', nameState. religion);
-        formData.append('occupationBusiness', nameState.occupationBusiness);
-        formData.append('occupationBusinessAddress', nameState.occupationBusinessAddress);
-        formData.append('image', nameState.image);
-        formData.append('purposeJoining', cooperativeInfo.purposeJoining);
-        formData.append('referralName', cooperativeInfo.referralName);
-        formData.append('referralPhone', cooperativeInfo.referralPhone);
-        formData.append('belongedToCooperative', cooperativeInfo.belongedToCooperative);
-        formData.append('reasonForLeaving', cooperativeInfo.reasonForLeaving);
-        formData.append('nextOfKin', cooperativeInfo.nextOfKin);
-        formData.append('nextOfKinAddress', cooperativeInfo.nextOfKinAddress);
-        formData.append('nextOfKinRelationship', cooperativeInfo.nextOfKinRelationship);
+        formData.append('personalInfo', JSON.stringify(nameState));
+        formData.append('cooperativeInfo', JSON.stringify(cooperativeInfo));
+        formData.append('image', imageState);
         try{
             await postmember(
-                {
-                    formData,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
-                }, ()=>{ 
+                formData , ()=>{ 
                 nextButton()
             }, ()=>{ 
                 window.scrollTo(0, 0);
@@ -88,12 +72,16 @@ const ActivateMember = ({
                         </div>
                         <div className={styles.activateFormOuter}>
                             <div className={styles.activateForm}>
-                                {index===1 && (<PersonalMember 
-                                    next={nextButton}
-                                    setNameState={setNameState}
-                                    nameState={nameState} 
-                                    handleSubmit={handleSubmit} 
-                                />)}
+                                {index===1 && (
+                                    <PersonalMember 
+                                        next={nextButton}
+                                        setNameState={setNameState}
+                                        setImageState={setImageState}
+                                        nameState={nameState} 
+                                        imageState={imageState} 
+                                        handleSubmit={handleSubmit} 
+                                    />
+                                )}
                                 {index===2 && (
                                     <BusinessMember 
                                         next={nextButton}
@@ -103,7 +91,8 @@ const ActivateMember = ({
                                         showerror={showerror}
                                         loading={loading}
                                         error={error}
-                                    />)}
+                                    />
+                                )}
                                 {index===3 && (<PayoutMember next={nextButton} name={getprofile?.personalInfo?.organizationName}/>)}
                                 {/* {index===4 && (<LoginMember next={nextButton} />)} */}
                             </div>

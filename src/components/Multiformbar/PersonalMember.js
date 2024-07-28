@@ -18,7 +18,9 @@
         error, 
         loading, 
         nameState, 
-        setNameState
+        setNameState,
+        imageState, 
+        setImageState
     }) => {
         const [fullname, setfullname] = useState("");
         const [phone, setphone] = useState("")
@@ -166,12 +168,11 @@
                                             const data =new FileReader()
                                             data.addEventListener('load',()=>{
                                                 setImage2(data.result)
-                                                setNameState({ ...nameState, ...{ image: files[0]} });
+                                                setImageState(files[0]);
                                             }) 
                                             data.readAsDataURL(files[0])
                                             if(files){
-                                                setImage2(URL.createObjectURL(files[0]))
-                                                
+                                                setImage2(URL.createObjectURL(files[0])) 
                                             }
                                         }}
                                         // onBlur={handlemermat}
@@ -341,7 +342,7 @@
                         <div>
                         
                             <button className={styles3.activateButton}><span>PROCEED</span></button>
-                 b       
+                       
                         </div>
                     </form>
                 </div>

@@ -10,24 +10,20 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { Link } from 'react-router-dom';
 
-function createData(SN, Name, Gender, Joined, Occupation) {
-  return {SN,Name, Gender, Joined, Occupation};
+function createData(SN, Name,Joined) {
+  return {SN,Name,Joined};
 }
 
 const rows = [
-  createData("1",'Ademola John', "Male", "Jam 10th 2024", "Teacher"),
-  createData("2",'Oyekunle Taiwo', "Female", "Jan 10th 2024", "Banker"),
-  createData("3",'Idowu Tobi', "Male", "Jan 10th 2024", "Farmer"),
-  createData("4",'Ademola John', "Male", "Jan 10th 2024", "Teacher"),
-  createData("5",'Ademola John', "Male", "Jan 10th 2024", "Teacher"),
-  createData("7",'Idowu Tobi', "Male", "Jan 10th 2024", "Farmer"),
-  createData("8",'Ademola John', "Male", "Jan 10th 2024", "Teacher"),
-  createData("9",'Ademola John', "Male", "Jan 11  th 2024", "Teacher"),
+  createData("1",'Ayo Group', "Jam 10th 2024"),
+  createData("2",'Teachers Community', "Jan 10th 2024"),
+  createData("3",'Arewa Group', "Jan 10th 2024"),
+  createData("4",'NURT Group', "Jan 10th 2024"),
  
 
 ];
 
-export default function MemberTable({data}) {
+export default function GroupTable({data}) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -35,13 +31,11 @@ export default function MemberTable({data}) {
           <TableRow>
           <TableCell style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1.2rem", fontWeight:"700"}} align="left">S/N</TableCell>
             <TableCell style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1.2rem", fontWeight:"700"}} align="left">Name</TableCell>
-            <TableCell  style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1.2rem", fontWeight:"700"}} align="left">Gender</TableCell>
-            <TableCell  style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1.2rem", fontWeight:"700"}} align="left">Date Joined</TableCell>
-            <TableCell  style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1.2rem", fontWeight:"700"}} align="left">Occupation</TableCell>
+            <TableCell  style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1.2rem", fontWeight:"700"}} align="left">Date Created</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data?.map((row,index) => (
+          {rows?.map((row,index) => (
                 <TableRow
                 key={row.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -50,11 +44,9 @@ export default function MemberTable({data}) {
                         {row.SN}
                     </TableCell>
                     <TableCell  style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} component="th" scope="row"  align="left">
-                        {row?.personalInfo?.fullname}
+                        {row?.Name}
                     </TableCell>
-                    <TableCell  style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row?.personalInfo?.sex}</TableCell>
-                    <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row.createdAt.slice(0,10)}</TableCell>
-                    <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row?.personalInfo?.occupationBusiness}</TableCell>
+                    <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row?.Joined}</TableCell>
                     <Link to={`/member-details/${row._id}`}>  <TableCell><button className='view-button'>View</button></TableCell> </Link>
                 </TableRow>
            

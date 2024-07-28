@@ -1,5 +1,7 @@
 .loan-approval-body, .active-loan-body{
     margin-top: 45px;
+    height: 73vh;
+    overflow: scroll;
 }
 .approval-card{
     margin-bottom: 41px;

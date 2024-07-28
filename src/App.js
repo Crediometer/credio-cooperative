@@ -41,6 +41,8 @@ import ClosedDetailsSaving from './pages/Savings/ClosedDetails';
 import Login from './pages/Login/Login';
 import { Provider } from 'react-redux';
 import Expenses from './pages/Expenses/Expenses';
+import Group from './pages/Group/Group';
+import ActivateGroup from './pages/Activate/ActivateGroup';
 
 function App() {
   return (
@@ -54,12 +56,14 @@ function App() {
           <Route path='/join-list' element={<List/>}/>
           <Route path='/register-admin' element={<Activate/>}/>
           <Route path='/register-member' element={<ActivateMember/>}/>
+          <Route path='/register-group' element={<ActivateGroup/>}/>
           <Route path='/dashboard' element={<Dashboard  />}/>
           {/* <Route path='/saving' element={<Saving/>}/> */}
           <Route path='/saving' element={<Newsavings/>}/>
           <Route path='/saving-details' element={<SavingDetails/>}/>
           <Route path='/withdraw' element={<Withdrawal/>}/>
           <Route path='/member' element={<MemberList/>}/>
+          <Route path='/group' element={<Group/>}/>
           <Route path='/newmember' element={<NewMemberList/>}/>
           <Route path='/member-details/:id' element={<MemberDetails/>}/>
           <Route path='/payment' element={<Payment/>}/>

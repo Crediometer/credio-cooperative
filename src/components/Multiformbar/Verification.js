@@ -10,7 +10,7 @@ const Verification = ({next, data}) => {
     const options = [{name:'name'},{name:'games'}]
     return ( 
         <form>
-            <p className="businessHead">Note: Here is your login in details into modex cooperative, please keep safe and secure </p>
+            <p className="businessHead">Note: Here is your login in details into your cooperative, please keep safe and secure </p>
             <div className="login-details">
                 <p className="login-head">Username: </p>
                 <p className="login-body">{data?.email}</p>

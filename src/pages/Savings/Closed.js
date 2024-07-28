@@ -1,16 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiChevronLeft } from "react-icons/bi";
 import { FaExclamationCircle } from "react-icons/fa";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
-const ClosedSaving = () => {
+import { getClosedSaving } from "../../Redux/Saving/SavingAction";
+import LottieAnimation from "../../Lotties";
+import preloader from "../../Assets/animations/preloader.json"
+import { Stack, TablePagination } from "@mui/material";
+const ClosedSaving = ({
+    getClosedSaving,
+    loading,
+    error,
+    data
+}) => {
     const members = ['John Doe', 'Jane Smith', 'Michael Johnson', 'Alice Williams', 'David Brown'];
     // State to hold the search input and the filtered members
     const [searchInput, setSearchInput] = useState('');
     const [searchUser, setSearchUser] = useState('');
     const [show, setShow] = useState(false);
     const [filteredMembers, setFilteredMembers] = useState(members);
-
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(100);
+  
+    const handleChangePage = (event, newPage) => {
+      setPage(newPage);
+    };
+    const handleChangeRowsPerPage = (event) => {
+      setRowsPerPage(parseInt(event.target.value, 10));
+      setPage(0);
+    };
     const togglemodal=()=>{
         setShow(!show)
     }
@@ -33,6 +51,9 @@ const ClosedSaving = () => {
         setSearchInput("")
         setFilteredMembers([]);
     };
+    useEffect(()=>{
+        getClosedSaving(rowsPerPage, page)
+    },[page, rowsPerPage])
     return ( 
         <div className="saving">
              <div className="back">
@@ -85,51 +106,61 @@ const ClosedSaving = () => {
                 <h4 className="form-head">{searchUser}</h4>
             </div>
             <div className="active-loan-body">
-                <Link to="/saving-closed-details">
-                    <div className="active-card">
-                        <div className="active-top">
-                            <div className="active-status active-status-red">
-                                <p>closed</p>
-                            </div>
-                            {/* <div className="card-range">
-                                <input type="range"></input>
-                            </div> */}
-                        </div>
-                        <div className="active-body">
-                            <p className="loan-for">Car Saving</p>
-                            <h3>N400,000</h3>
-                            <p className="loan-details">Your saving request has been approved and disbursed</p>
-                            <div className="active-warning">
-                                <FaExclamationCircle/>
-                                <p>Tap here to moere details </p>
-                            </div>
-                        </div>
+                {loading ? (
+                    <div className="preloader">
+                        <LottieAnimation data={preloader}/>
                     </div>
-                </Link>
-                <Link to="/saving-closed-details">
-                    <div className="active-card">
-                        <div className="active-top">
-                            <div className="active-status active-status-red">
-                                <p>closed</p>
+                ):(
+                    <Link to="/saving-closed-details">
+                        <div className="active-card">
+                            <div className="active-top">
+                                <div className="active-status active-status-red">
+                                    <p>closed</p>
+                                </div>
+                                {/* <div className="card-range">
+                                    <input type="range"></input>
+                                </div> */}
                             </div>
-                            {/* <div className="card-range">
-                                <input type="range"></input>
-                            </div> */}
-                        </div>
-                        <div className="active-body">
-                            <p className="loan-for">Car Saving</p>
-                            <h3>N300,000</h3>
-                            <p className="loan-details">Your saving request has been approved and disbursed</p>
-                            <div className="active-warning">
-                                <FaExclamationCircle/>
-                                <p>Tap here to moere details </p>
+                            <div className="active-body">
+                                <p className="loan-for">Car Saving</p>
+                                <h3>N400,000</h3>
+                                <p className="loan-details">Your saving request has been approved and disbursed</p>
+                                <div className="active-warning">
+                                    <FaExclamationCircle/>
+                                    <p>Tap here to moere details </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </Link>
+                    </Link>
+                )}
             </div>
+            <Stack style={{marginTop: "10px"}} spacing={2}>
+                <TablePagination
+                    component="div"
+                    count={data?.limit}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    rowsPerPage={rowsPerPage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+            </Stack>
         </div>
     );
 }
- 
-export default ClosedSaving;
+
+const mapStateToProps = state => {
+    console.log(state)
+    return{
+        error:state?.saving?.error,
+        loading: state?.saving?.loading,
+        data: state?.saving?.closeData?.payload,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return{
+        getClosedSaving: (limit, page) => dispatch(getClosedSaving(limit, page)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClosedSaving);
