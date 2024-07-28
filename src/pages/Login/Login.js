@@ -62,6 +62,17 @@ const Login = ({
                     )}
                     <div className="login-form">
                         <div className="input">
+                            <label className='form-1-label'>Role</label>
+                            <select>
+                                <optgroup>
+                                    <option>Admin</option>
+                                    <option>Member</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="login-form">
+                        <div className="input">
                             <label className='form-1-label'>Email Address</label>
                             <input 
                                 type="email" 
