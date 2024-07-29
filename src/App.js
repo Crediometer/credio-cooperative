@@ -43,6 +43,7 @@ import { Provider } from 'react-redux';
 import Expenses from './pages/Expenses/Expenses';
 import Group from './pages/Group/Group';
 import ActivateGroup from './pages/Activate/ActivateGroup';
+import DashboardMember from './pages/Dashboard/DashboardMember';
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
           <Route path='/register-member' element={<ActivateMember/>}/>
           <Route path='/register-group' element={<ActivateGroup/>}/>
           <Route path='/dashboard' element={<Dashboard  />}/>
+          <Route path='/dashboard-member' element={<DashboardMember/>}/>
           {/* <Route path='/saving' element={<Saving/>}/> */}
           <Route path='/saving' element={<Newsavings/>}/>
           <Route path='/saving-details' element={<SavingDetails/>}/>

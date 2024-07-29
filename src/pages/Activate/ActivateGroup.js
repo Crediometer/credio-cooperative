@@ -102,18 +102,7 @@ const Activate = ({
                                         setphoneState={setphoneState}
                                     />
                                 )}
-                                {index===3 && (
-                                    <Complete 
-                                        value={otp}
-                                        next={handleSubmit}
-                                        showerror={showerror}
-                                        error={error}
-                                        handleOtp={handleOtp}
-                                        loading={loading}
-                                    />
-                                )}
-                                {index===4 && (<Payout next={nextButton}/>)}
-                                {index===5 && (<Verification  next={nextButton} />)}
+                                {index===2 && (<Verification  next={nextButton} />)}
                             </div>
                             {/* <button onClick={nextButton} className={styles.activateButton}>Save</button> */}
                         </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import  './Login.css'
 import { connect } from 'react-redux';
 import { LoginAuthAction } from '../../Redux/Login/LoginAction';
@@ -49,6 +49,9 @@ const Login = ({
         }catch(error){
         }
     };
+    useEffect(() => {
+        setLoginState({ ...loginState, email, password });
+    }, [email, password]);
     return ( 
         <div className="admin-outer">
             <div className="login-inner">
@@ -66,7 +69,7 @@ const Login = ({
                             <select>
                                 <optgroup>
                                     <option>Admin</option>
-                                    <option>Member</option>
+                                    <option>Group</option>
                                 </optgroup>
                             </select>
                         </div>

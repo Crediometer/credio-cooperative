@@ -47,7 +47,7 @@ export default function GroupTable({data}) {
                         {row?.Name}
                     </TableCell>
                     <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row?.Joined}</TableCell>
-                    <Link to={`/member-details/${row._id}`}>  <TableCell><button className='view-button'>View</button></TableCell> </Link>
+                    <Link to={`/dashboard-member`}>  <TableCell><button className='view-button'>View</button></TableCell> </Link>
                 </TableRow>
            
           ))}

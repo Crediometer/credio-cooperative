@@ -6,7 +6,7 @@ import { FaCheck } from 'react-icons/fa';
 const MultiStepProgressbarGroup = (props) => {
     return ( 
         <ProgressBar
-            percent={((props.step - 1) * 100)/3}
+            percent={((props.step - 1) * 100)/1}
             filledBackground="#E24E61"
             height="2px"
             width='100%'
@@ -22,30 +22,10 @@ const MultiStepProgressbarGroup = (props) => {
             )}
             </Step>
             <Step transition="scale">
-            {({ accomplished, index }) => (
-               <div className='step-outer'>
-                <div className={`step-number ${accomplished ? "completed" : ""}`}>
-                    {accomplished ? (<FaCheck/>) : (<p>2</p>)}
-                </div>
-                <p className={`step-name ${accomplished ? "completed" : ""}`}>Verify Data</p>
-            </div>
-            )}
-            </Step>
-            <Step transition="scale">
-            {({ accomplished, index }) => (
-               <div className='step-outer'>
-                <div className={`step-number ${accomplished ? "completed" : ""}`}>
-                    {accomplished ? (<FaCheck/>) : (<p>3</p>)}
-                </div>
-                <p className={`step-name ${accomplished ? "completed" : ""}`}>Approval</p>
-            </div>
-            )}
-            </Step>
-            <Step transition="scale">
             {({ accomplished, index}) => (
                 <div className='step-outer'>
                     <div className={`step-number ${accomplished ? "completed" : ""}`}>
-                        {accomplished ? (<FaCheck/>) : (<p>4</p>)}
+                        {accomplished ? (<FaCheck/>) : (<p>2</p>)}
                     </div>
                     <p className={`step-name ${accomplished ? "completed" : ""}`}>Done<br></br></p>
                 </div>

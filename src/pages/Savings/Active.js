@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { getActiveSaving } from "../../Redux/Saving/SavingAction";
 import LottieAnimation from "../../Lotties";
 import preloader from "../../Assets/animations/preloader.json"
+import empty from "../../Assets/animations/Empty.json"
 import { Stack, TablePagination } from "@mui/material";
 const ActiveSavings = ({
     getActiveSaving,
@@ -117,70 +118,83 @@ const ActiveSavings = ({
                         <LottieAnimation data={preloader}/>
                     </div>
                 ):(
-                    <Link to="/saving-active-details">
-                    <div className="active-card">
-                        <div className="active-top">
-                            <div className="active-status">
-                                <p>ACTIVE</p>
-                            </div>
-                            <div className={styles.paymentCircleInner}>
-                                <svg
-                                width={circleWidth}
-                                height={circleWidth}
-                                viewBox={`0 0 ${circleWidth} ${circleWidth}`}
-                                >
-                                <circle
-                                    cx={circleWidth / 2}
-                                    cy={circleWidth / 2}
-                                    strokeWidth="10px"
-                                    r={radius}
-                                    className={styles.circleBackground}
-                                />
-                                <circle
-                                    cx={circleWidth / 2}
-                                    cy={circleWidth / 2}
-                                    strokeWidth="10px"
-                                    r={radius}
-                                    className={styles.circleProgress}
-                                    style={{
-                                        strokeDasharray: dashArray,
-                                        strokeDashoffset: dashOffset
-                                    }}
-                                    transform={`rotate(-90 ${circleWidth / 2} ${circleWidth / 2})`}
-                                />
-                                    {" "}
-                                    <text 
-                                        x='50%' 
-                                        y="50%" 
-                                        dy='0.3em' 
-                                        textAnchor='middle'
-                                        className={styles.circleText}
-                                    >
-                                        80%
-                                    </text>
-                                    {/* <text 
-                                        x='50%' 
-                                        y="50%" 
-                                        dy='0.3em' 
-                                        textAnchor='middle'
-                                        className={styles.circleText}
-                                    >
-                                        NGN378,032
-                                    </text> */}
-                                </svg>
-                            </div>
+                    <>
+                    {data?.savings?.length === 0 ? (
+                        <div className="empty-animate">
+                            <LottieAnimation data={empty}/>
+                            <p>No Data Found</p>
                         </div>
-                        <div className="active-body">
-                            <p className="loan-for">Ademola John</p>
-                            <h3>N400,000</h3>
-                            <p className="loan-details">Your saving request has been approved and disbursed</p>
-                            <div className="active-warning">
-                                <FaExclamationCircle/>
-                                <p>Tap here to moere details </p>
-                            </div>
-                        </div>
-                    </div>
-                    </Link>
+                    ):(
+                        <>
+                            {data?.savings?.map((saving) => {
+                                <Link to="/saving-active-details">
+                                    <div className="active-card">
+                                        <div className="active-top">
+                                            <div className="active-status">
+                                                <p>ACTIVE</p>
+                                            </div>
+                                            <div className={styles.paymentCircleInner}>
+                                                <svg
+                                                width={circleWidth}
+                                                height={circleWidth}
+                                                viewBox={`0 0 ${circleWidth} ${circleWidth}`}
+                                                >
+                                                <circle
+                                                    cx={circleWidth / 2}
+                                                    cy={circleWidth / 2}
+                                                    strokeWidth="10px"
+                                                    r={radius}
+                                                    className={styles.circleBackground}
+                                                />
+                                                <circle
+                                                    cx={circleWidth / 2}
+                                                    cy={circleWidth / 2}
+                                                    strokeWidth="10px"
+                                                    r={radius}
+                                                    className={styles.circleProgress}
+                                                    style={{
+                                                        strokeDasharray: dashArray,
+                                                        strokeDashoffset: dashOffset
+                                                    }}
+                                                    transform={`rotate(-90 ${circleWidth / 2} ${circleWidth / 2})`}
+                                                />
+                                                    {" "}
+                                                    <text 
+                                                        x='50%' 
+                                                        y="50%" 
+                                                        dy='0.3em' 
+                                                        textAnchor='middle'
+                                                        className={styles.circleText}
+                                                    >
+                                                        80%
+                                                    </text>
+                                                    {/* <text 
+                                                        x='50%' 
+                                                        y="50%" 
+                                                        dy='0.3em' 
+                                                        textAnchor='middle'
+                                                        className={styles.circleText}
+                                                    >
+                                                        NGN378,032
+                                                    </text> */}
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div className="active-body">
+                                            <p className="loan-for">Ademola John</p>
+                                            <h3>N400,000</h3>
+                                            <p className="loan-details">Your saving request has been approved and disbursed</p>
+                                            <div className="active-warning">
+                                                <FaExclamationCircle/>
+                                                <p>Tap here to moere details </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Link>
+                            })}
+                        </>
+                    )}
+                    </>
                 )}
             </div>
             <Stack style={{marginTop: "10px"}} spacing={2}>

@@ -5,6 +5,7 @@ import { getOverdueSaving } from "../../Redux/Saving/SavingAction";
 import { Stack, TablePagination } from "@mui/material";
 import LottieAnimation from "../../Lotties";
 import preloader from "../../Assets/animations/preloader.json"
+import empty from "../../Assets/animations/Empty.json"
 import { connect } from "react-redux";
 const Overdue = ({
     getOverdueSaving,
@@ -106,52 +107,66 @@ const Overdue = ({
                         <LottieAnimation data={preloader}/>
                     </div>
                 ):(
-                    <div className="overdue-card">
-                        <div className="overdue-card-top">
-                            <div className="overdue-stat">
-                                <h3 className="card-header">Total saving</h3>
-                                <p>N1,000,000</p>
-                            </div>
-                            <div className="overdue-stat">
-                                <h3 className="card-header">Overdue</h3>
-                                <p>N200,00</p>
-                            </div>
-                            <div className="overdue-stat">
-                                <h3 className="card-header">Balance</h3>
-                                <p>N800,000</p>
-                            </div>
+                    <>
+                    {data?.savings?.length === 0 ? (
+                        <div className="empty-animate">
+                            <LottieAnimation data={empty}/>
+                            <p>No Data Found</p>
                         </div>
-                        <div className="personal-section">
-                            <div className="approval-card-top">
-                                <p className="card-header">Personal Information</p>
-                            </div>
-                            <div className="aprroval-information">
-                                <div className="information-inner">
-                                    <p>First Name: <span>Adewunmi</span></p>
-                                    <p style={{textAlign: "right"}}>Email: <span>adewumi@gmail.com</span></p>
+                    ):(
+                        <>
+                            {data?.savings?.map((saving) => {
+                                <div className="overdue-card">
+                                  <div className="overdue-card-top">
+                                      <div className="overdue-stat">
+                                          <h3 className="card-header">Total saving</h3>
+                                          <p>N1,000,000</p>
+                                      </div>
+                                      <div className="overdue-stat">
+                                          <h3 className="card-header">Overdue</h3>
+                                          <p>N200,00</p>
+                                      </div>
+                                      <div className="overdue-stat">
+                                          <h3 className="card-header">Balance</h3>
+                                          <p>N800,000</p>
+                                      </div>
+                                  </div>
+                                  <div className="personal-section">
+                                      <div className="approval-card-top">
+                                          <p className="card-header">Personal Information</p>
+                                      </div>
+                                      <div className="aprroval-information">
+                                          <div className="information-inner">
+                                              <p>First Name: <span>Adewunmi</span></p>
+                                              <p style={{textAlign: "right"}}>Email: <span>adewumi@gmail.com</span></p>
+                                          </div>
+                                          <div className="information-inner">
+                                              <p>Last Name: <span>George</span></p>
+                                              <p style={{textAlign: "right"}}>Phone : <span>09078987678</span></p>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div className="personal-section">
+                                      <div className="approval-card-top">
+                                          <p className="card-header">Financial Information</p>
+                                      </div>
+                                      <div className="aprroval-information">
+                                          <div className="information-inner">
+                                              <p>saving Request: <span>Adewunmi</span></p>
+                                              <p>Total saving: <span>N1,000,000</span></p>
+                                          </div>
+                                          <div className="information-inner">
+                                              <p>Purpose: <span>Car</span></p>
+                                              <p>Monthly Payback: <span>N100,000</span></p>
+                                          </div>
+                                      </div>
+                                  </div>
                                 </div>
-                                <div className="information-inner">
-                                    <p>Last Name: <span>George</span></p>
-                                    <p style={{textAlign: "right"}}>Phone : <span>09078987678</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="personal-section">
-                            <div className="approval-card-top">
-                                <p className="card-header">Financial Information</p>
-                            </div>
-                            <div className="aprroval-information">
-                                <div className="information-inner">
-                                    <p>saving Request: <span>Adewunmi</span></p>
-                                    <p>Total saving: <span>N1,000,000</span></p>
-                                </div>
-                                <div className="information-inner">
-                                    <p>Purpose: <span>Car</span></p>
-                                    <p>Monthly Payback: <span>N100,000</span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            })}
+                        </>
+                    )}
+                    </>
+                
                 )}
             </div>
             <Stack style={{marginTop: "10px"}} spacing={2}>
@@ -173,7 +188,7 @@ const mapStateToProps = state => {
     return{
         error:state?.saving?.error,
         loading: state?.saving?.loading,
-        data: state?.saving?.overduedata?.payload,
+        data: state?.saving?.overdueData?.payload,
     }
 }
 

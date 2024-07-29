@@ -53,7 +53,6 @@ const Dashboard = ({
                                     </div>
                                     <div className="user-name">
                                         <p className='greeting'>Good day</p>
-                                        <p className='name'>{getprofile?.personalInfo?.organizationName}</p>
                                     </div>
                                 </div>
                                 {show && (
@@ -161,18 +160,6 @@ const Dashboard = ({
                                 icons={<HiOutlinePlusSm/>}
                                 text="Members"
                             />
-                        </Link>
-                    </div>
-                    <div className="dashboard-navigate">
-                        <Link to='/group'>
-                            <Box
-                                color="rgba(18, 15, 199, 0.123)"
-                                icons={<HiOutlinePlusSm/>}
-                                text="Group"
-                            
-                            />
-                        </Link>
-                        <Link>
                         </Link>
                     </div>
                     <div className="dashboard-transaction">
