@@ -72,6 +72,28 @@ export const fetchprofile = () => {
     }
 }
 
+export const fetchgroupprofile = () => {
+    return(dispatch) => {
+        dispatch(profileRequest())
+        let datas = JSON.parse(localStorage.getItem("auth"))
+        const headers = {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
+        };
+        // let datas = JSON.parse(localStorage.getItem("auth"))
+        axios.get(`${baseUrl}/groups/group/getProfile`, { headers: headers })
+            .then( response => {
+                const data = response.data
+                dispatch(profileSuccess(data))
+            })
+            .catch(error =>{
+                const errorMsg = error.message
+                dispatch(profileFaliure(errorMsg))
+            })
+    }
+}
+
+
 export const vaultprofile = () => {
     return(dispatch) => {
         dispatch(vaultRequest())

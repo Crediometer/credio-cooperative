@@ -15,12 +15,14 @@ import { fetchprofile, vaultprofile } from "../../Redux/Profile/ProfileAction";
 import { connect } from "react-redux";
 import LottieAnimation from "../../Lotties";
 import preloader from "../../Assets/animations/preloader.json"
+import { getTransaction } from "../../Redux/Transactions/TransactionAction";
 const Dashboard = ({
     loading, 
     error, 
     getprofile,
     fetchprofile,
-    vaultprofile
+    vaultprofile,
+    gettransaction
 }) => {
     const [show, setShow] = useState(false)
 
@@ -29,6 +31,7 @@ const Dashboard = ({
     }
     useEffect(()=>{
         fetchprofile();
+        gettransaction()
         // vaultprofile();
     }, [])
     return ( 
@@ -172,7 +175,12 @@ const Dashboard = ({
                             
                             />
                         </Link>
-                        <Link>
+                        <Link to='/transfer'>
+                            <Box
+                                color="rgba(210, 193, 43, 0.123)"
+                                icons={<HiOutlinePlusSm/>}
+                                text="Transfer to Credio"
+                            />
                         </Link>
                     </div>
                     <div className="dashboard-transaction">
@@ -308,6 +316,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return{
         fetchprofile: () => dispatch(fetchprofile()),
+        gettransaction: () => dispatch(getTransaction()),
         // vaultprofile: () => dispatch(vaultprofile()),
     }
 }

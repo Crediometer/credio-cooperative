@@ -8,9 +8,10 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRef, useState } from "react";
 // import wrong from '../../Assets/animations/Errorr.json'
-const LoanModal = ({data, togglemodal}) => {
+const LoanModal = ({data, togglemodal, type}) => {
     const [downloading, setDownloading] = useState(false); 
     const pdfRef = useRef()
+    console.log(data)
     const downloadPdf = ()=>{
         setDownloading(true)
         const input = pdfRef.current;
@@ -46,57 +47,47 @@ const LoanModal = ({data, togglemodal}) => {
             <div className="modal-background">
                 <div className="receipt-modal" ref={pdfRef} style={{height: "70vh"}}>
                     {/* {isSuccessCode ? ( */}
-                        <div className="receipt-top">
-                            <img src={success}></img>
-                            <p className="credio">Credio</p>
-                            <h3>Ademola John</h3>
-                            <p className="success-text">Loan Profile Created Successfully</p>
-                            <p className="receipt-date-time"></p>
-                        </div>
-                     {/*): (
-                        <div className="receipt-top">
-                            <LottieAnimation data={wrong}/>
-                            <p className="credio">Credio</p>
-                            <h3>NGN{(data.amount/ 100).toFixed(2)}</h3>
-                            <p className="success-text">Successful transaction</p>
-                            <p className="receipt-date-time"></p>
-                        </div>
-                    )} */}
+                    <div className="receipt-top">
+                        <img src={success}></img>
+                        <p className="credio">Credio</p>
+                        <p className="success-text">{type} Profile Created Successfully</p>
+                        <p className="receipt-date-time"></p>
+                    </div>
                     <div className="receipt-body">
                         <div className="receipt-con">
                             <h5 className="con-head">
-                                Loan Info
+                                {type} Info
                             </h5>
                             <div className="receipt-content">
                                 <p className="receipt-title">Interest Rate:</p>
-                                <p className="receip-cont">8%</p>
+                                <p className="receip-cont">{data.interestRate}%</p>
                             </div>
                             <div className="receipt-content">
                                 <p className="receipt-title">Amount:</p>
-                                <p className="receip-cont">N1,000,000</p>
+                                <p className="receip-cont">N{data.amount}</p>
                             </div>
                         </div>
                         <div className="receipt-con">
                             <div className="receipt-content">
                                 <p className="receipt-title">Duration:</p>
-                                <p className="receip-cont">6 Months</p>
+                                <p className="receip-cont">{data.interval} Months</p>
                             </div>
                             <div className="receipt-content">
                                 <p className="receipt-title">Purpose:</p>
-                                <p className="receip-cont">For Tuition</p>
+                                <p className="receip-cont">{data.purpose}</p>
                             </div>
                             <div className="receipt-content">
                                 <p className="receipt-title">Monthly Payment:</p>
-                                <p className="receip-cont">N100,000</p>
+                                <p className="receip-cont">N{data.monthlyPayment}</p>
                             </div>
                         </div>
                     </div>
                     <div className="save-con">
-                        <Link to="/loans" style={{width: "100%"}}>
-                        <button onClick={togglemodal}>
-                            Exit
-                        </button>
-                        </Link>
+                        <div style={{width: "100%"}}>
+                            <button onClick={togglemodal}>
+                                Exit
+                            </button>
+                        </div>
                         {/* <button onClick={downloadPdf} disabled={downloading}>
                             {downloading ? "Downloading..." : "Download"}
                         </button> */}

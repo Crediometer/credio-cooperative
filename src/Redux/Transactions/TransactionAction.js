@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOAN_TRANSACTION_FAILURE, LOAN_TRANSACTION_REQUEST, LOAN_TRANSACTION_SUCCESS, SAVING_TRANSACTION_FAILURE, SAVING_TRANSACTION_REQUEST, SAVING_TRANSACTION_SUCCESS } from "./TransactionType";
+import { LOAN_TRANSACTION_FAILURE, LOAN_TRANSACTION_REQUEST, LOAN_TRANSACTION_SUCCESS, SAVING_TRANSACTION_FAILURE, SAVING_TRANSACTION_REQUEST, SAVING_TRANSACTION_SUCCESS, TRANSACTION_FAILURE, TRANSACTION_REQUEST, TRANSACTION_SUCCESS } from "./TransactionType";
 
 export const loantransactionRequest = () => {
     return {
@@ -40,6 +40,24 @@ export const loantransactionRequest = () => {
     };
   };
 
+  export const transactionRequest = () => {
+    return {
+      type: TRANSACTION_REQUEST,
+    };
+  };
+  export const transactionSuccess = (register) => {
+    return {
+      type: TRANSACTION_SUCCESS,
+      payload: register,
+    };
+  };
+  
+  export const transactionFaliure = (error) => {
+    return {
+      type: TRANSACTION_FAILURE,
+      payload: error,
+    };
+  };
 
   const baseUrl = "https://cooperative-be.onrender.com/api/v1"
   export const getloans = (id, limit, page) => {
@@ -65,7 +83,6 @@ export const loantransactionRequest = () => {
       }
     };
   };
-
   export const getsaving = (id, limit, page) => {
     return async (dispatch) => {
       dispatch(savingtransactionRequest())
@@ -86,6 +103,29 @@ export const loantransactionRequest = () => {
       } catch (error) {
         if (error.response){
           dispatch(savingtransactionFaliure(error?.response?.data));
+        }
+      }
+    };
+  };
+  export const getTransaction = () => {
+    return async (dispatch) => {
+      dispatch(transactionRequest())
+      try {
+        let datas = JSON.parse(localStorage.getItem("auth"))
+        const headers = {
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
+        };
+        const res = await axios.get(
+          `${baseUrl}/cooperative/transactions`,
+          { headers: headers }
+        );
+        const { data } = res;
+        if (res.status === 200) {
+          dispatch(transactionSuccess(data));
+        }
+      } catch (error) {
+        if (error.response){
+          dispatch(transactionFaliure(error?.response?.data));
         }
       }
     };

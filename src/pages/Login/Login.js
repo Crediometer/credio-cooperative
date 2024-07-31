@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import  './Login.css'
 import { connect } from 'react-redux';
-import { LoginAuthAction } from '../../Redux/Login/LoginAction';
+import { LoginAuthAction, LoginGroupAction } from '../../Redux/Login/LoginAction';
 import { useNavigate } from 'react-router-dom';
 import LottieAnimation from "../../Lotties"
 import loader from "../../Assets/animations/loading.json"
@@ -10,6 +10,7 @@ import consts from "./keys/const";
 // import crypto from 'crypto-browserify';
 const Login = ({
     login,
+    grouplogin,
     loading,
     error,
 }) => {
@@ -18,7 +19,7 @@ const Login = ({
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [showerror, setshowerror] = useState(false)
-
+    const [role, setRole] = useState("")
     const handleEmail = (e) =>{
         const inputValue = e.target.value.trim().toLowerCase();
         setEmail(inputValue);
@@ -35,17 +36,26 @@ const Login = ({
         setPassword(value)
         setLoginState({ ...loginState, ...{password} });
     }
+    const handleRoleChange = (e) => {
+        setRole(e.target.value);
+    };
     const handleSignUp = async (e) => {
         e.preventDefault();
         setshowerror(false)
         try{
-            await login(loginState, ()=>{ 
-                history(`/dashboard`)
-            // setPending(true);
-            }, ()=>{ 
-                setshowerror(true)
-                // setPending(false);
-            });
+            if (role === "admin") {
+                await login(loginState, () => {
+                    history(`/dashboard`);
+                }, () => {
+                    setshowerror(true);
+                });
+            } else if (role === "group") {
+                await grouplogin({username: email, password}, () => {
+                    history(`/dashboard-member`);
+                }, () => {
+                    setshowerror(true);
+                });
+            }
         }catch(error){
         }
     };
@@ -66,10 +76,13 @@ const Login = ({
                     <div className="login-form">
                         <div className="input">
                             <label className='form-1-label'>Role</label>
-                            <select>
+                            <select
+                                onChange={handleRoleChange}
+                                onBlur={handleRoleChange}
+                            >
                                 <optgroup>
-                                    <option>Admin</option>
-                                    <option>Group</option>
+                                    <option value="admin" selected>Admin</option>
+                                    <option value='group'>Group</option>
                                 </optgroup>
                             </select>
                         </div>
@@ -122,6 +135,9 @@ const mapDispatchToProps = dispatch => {
     return{
         login: (loginState, history, setErrorHandler) => {
             dispatch(LoginAuthAction(loginState, history, setErrorHandler));
+        },
+        grouplogin: (loginState, history, setErrorHandler) => {
+            dispatch(LoginGroupAction(loginState, history, setErrorHandler));
         },
         // fetchgetprofile: () => dispatch(fetchgetprofile()),
     }

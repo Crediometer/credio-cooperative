@@ -1,4 +1,4 @@
-import { LOAN_TRANSACTION_FAILURE, LOAN_TRANSACTION_REQUEST, LOAN_TRANSACTION_SUCCESS, SAVING_TRANSACTION_FAILURE, SAVING_TRANSACTION_REQUEST, SAVING_TRANSACTION_SUCCESS } from "./TransactionType";
+import { LOAN_TRANSACTION_FAILURE, LOAN_TRANSACTION_REQUEST, LOAN_TRANSACTION_SUCCESS, SAVING_TRANSACTION_FAILURE, SAVING_TRANSACTION_REQUEST, SAVING_TRANSACTION_SUCCESS, TRANSACTION_FAILURE, TRANSACTION_REQUEST, TRANSACTION_SUCCESS } from "./TransactionType";
 
 const initialState = {
     loading: false,
@@ -46,6 +46,30 @@ export const savingtransactionReducer = (state = initialState, action) => {
         error: "",
       };
     case SAVING_TRANSACTION_FAILURE:
+      return {
+        loading: false,
+        data: [],
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+export const transactionReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case TRANSACTION_REQUEST:
+      return {
+        loading: true,
+        data: [],
+        error: "",
+      };
+    case TRANSACTION_SUCCESS:
+      return {
+        loading: false,
+        data: action.payload,
+        error: "",
+      };
+    case TRANSACTION_FAILURE:
       return {
         loading: false,
         data: [],

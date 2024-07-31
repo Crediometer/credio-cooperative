@@ -77,7 +77,7 @@ import { ACTIVE_LOAN_FAILURE, ACTIVE_LOAN_REQUEST, ACTIVE_LOAN_SUCCESS, CLOSED_L
   };
 
   const baseUrl = "https://cooperative-be.onrender.com/api/v1"
-  export const getActiveSaving = (limit, page) => {
+  export const getActiveLoan = (limit, page) => {
     return async (dispatch) => {
       dispatch(activeRequest())
       try {
@@ -102,7 +102,7 @@ import { ACTIVE_LOAN_FAILURE, ACTIVE_LOAN_REQUEST, ACTIVE_LOAN_SUCCESS, CLOSED_L
   };
 
 
-  export const getClosedSaving = (limit, page) => {
+  export const getClosedLoan = (limit, page) => {
     return async (dispatch) => {
       dispatch(closedRequest())
       try {
@@ -126,7 +126,7 @@ import { ACTIVE_LOAN_FAILURE, ACTIVE_LOAN_REQUEST, ACTIVE_LOAN_SUCCESS, CLOSED_L
     };
   };
 
-  export const getOverdueSaving = (limit, page) => {
+  export const getOverdueLoan = (limit, page) => {
     return async (dispatch) => {
       dispatch(overdueRequest())
       try {
@@ -150,7 +150,7 @@ import { ACTIVE_LOAN_FAILURE, ACTIVE_LOAN_REQUEST, ACTIVE_LOAN_SUCCESS, CLOSED_L
     };
   };
 
-  export const createLoan = (registerState, history, setErrorHandler) => {
+  export const createloan = (registerState, history, setErrorHandler) => {
     return async (dispatch) => {
       dispatch(createRequest())
       try {
@@ -161,6 +161,61 @@ import { ACTIVE_LOAN_FAILURE, ACTIVE_LOAN_REQUEST, ACTIVE_LOAN_SUCCESS, CLOSED_L
         };
         const res = await axios.post(
           `${baseUrl}/loans/create`,
+          registerState,
+          { headers: headers }
+        );
+        const { data } = res;
+        if (res.status === 200) {
+          history()
+          dispatch(createSuccess(data));
+        }
+      } catch (error) {
+        if (error.response){
+          dispatch(createFaliure(error?.response?.data));
+        }
+      }
+    };
+  };
+  
+  export const creategrouploan = (registerState, history, setErrorHandler) => {
+    return async (dispatch) => {
+      dispatch(createRequest())
+      try {
+        let datas = JSON.parse(localStorage.getItem("auth"))
+        const headers = {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
+        };
+        const res = await axios.post(
+          `${baseUrl}/loans/create-group`,
+          registerState,
+          { headers: headers }
+        );
+        const { data } = res;
+        if (res.status === 200) {
+          history()
+          dispatch(createSuccess(data));
+        }
+      } catch (error) {
+        if (error.response){
+          dispatch(createFaliure(error?.response?.data));
+        }
+      }
+    };
+  };
+
+
+  export const createloanGroup = (registerState, history, setErrorHandler) => {
+    return async (dispatch) => {
+      dispatch(createRequest())
+      try {
+        let datas = JSON.parse(localStorage.getItem("auth"))
+        const headers = {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
+        };
+        const res = await axios.post(
+          `${baseUrl}/groups/loans/create`,
           registerState,
           { headers: headers }
         );

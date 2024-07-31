@@ -9,7 +9,8 @@ const ExpenseModal = ({
     togglemodal,
     loading,
     error,
-    createexpenses, 
+    createexpenses,
+    getexpenses, 
     data
 }) => {
     const history = useNavigate();
@@ -59,6 +60,8 @@ const ExpenseModal = ({
                 setType("")
                 setPurpose("")
                 setSource("")
+                togglemodal()
+                getexpenses()
             }, ()=>{ 
                 window.scrollTo(0, 0);
                 setshowerror(true)

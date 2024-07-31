@@ -46,8 +46,8 @@ export default function MemberTable({data}) {
                 key={row.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell  style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} component="th" scope="row"  align="left">
-                        {row.SN}
+                    <TableCell  style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} component="th" scope="row"  align="left">
+                      {index + 1}
                     </TableCell>
                     <TableCell  style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} component="th" scope="row"  align="left">
                         {row?.personalInfo?.fullname}

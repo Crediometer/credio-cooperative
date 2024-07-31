@@ -8,30 +8,35 @@ import {AiOutlineFile} from 'react-icons/ai'
 import './MultiStepProgressBar.css'
 import Inputfield from '../Formfield/Inputfield';
 import Selectfield from '../Formfield/Selectfield';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles4 from '../../pages/Activate/Activate.module.css'
+import LoadingModal from '../Modal/LoadingModal';
+import LottieAnimation from '../../Lotties';
+import loader from "../../Assets/animations/loading.json"
 // import Errormodal from "../Modal/Errormodal";
 // import ErrorBoundary from "../../ErrorBoundary";
 const PersonalGroup = ({
     next, 
-    personal, 
     error, 
     loading, 
     nameState, 
     setNameState,
-    phoneState,
-    setphoneState
+    accountState,
+    account,
+    setAccountState,
+    getAccount,
+    member,
+    accountloading,
+    showerror,
 }) => {
     // const [nameState, setNameState] = useState({});
     const [name, setName] = useState("");
     const [phoneNumber, setphoneNumber] = useState("")
-    const [fullName, setFullName] = useState("")
     const [username, setUsername] = useState("")
     const [credioAccountNumber, setCredioAccountNumber] = useState("")
     const [address, setaddress] = useState("")
     const [purposeJoining, setpurposeJoining] = useState("");
-    const [errorHandler, setErrorHandler] = useState([false, ""]);
-    const [showerror, setshowerror] = useState(false)
+    const [groupLeaderId, setgroupLeaderId] = useState("");
     const handleName = (e) => {
         const value = e.target.value;
         setName(value);
@@ -46,9 +51,7 @@ const PersonalGroup = ({
             formattedNumber = '+234' + formattedNumber.slice(1);
         }
         setphoneNumber(formattedNumber);
-        console.log(phoneNumber)
-        setNameState({ ...nameState, ...{phone: phoneNumber}});
-        setphoneState({ ...phoneState, ...{phone: phoneNumber}});
+        setNameState({ ...nameState, ...{phoneNumber: phoneNumber}});
     };
     const handleUsername = (e) => {
         const value = e.target.value;
@@ -65,39 +68,31 @@ const PersonalGroup = ({
         setaddress(value);
         setNameState({ ...nameState,...{address}});
     };
+    const handlemember = (e) => {
+        const value = e.target.value;
+        setgroupLeaderId(value);
+        setNameState({ ...nameState, ...{ groupLeaderId: value } }); 
+    };
     const handleCredio = (e) => {
         const value = e.target.value;
         setCredioAccountNumber(value);
         setNameState({ ...nameState,...{credioAccountNumber}});
+        setAccountState({ ...accountState,...{phoneNumber:value}});
     };
-    const togglemodal = ()=>{
-        setshowerror(!showerror)
-    }
-    const handelClick = ()=>{
-        next()
-    }
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        
-        try{
-            await personal(nameState, ()=>{ 
-            next();
-            // setPending(true);
-            }, ()=>{ 
-                setErrorHandler(error)
-                setshowerror(true)
-                // setPending(false);
-            });
-        }catch(error){
-            // setPending(false);
+    console.log(error, showerror)
+    useEffect(()=>{
+        if(credioAccountNumber.length >= 10){
+            getAccount()
         }
-    };
-
-
-
+    },[credioAccountNumber])
     return ( 
             <div>
-              <form onSubmit={handelClick} method='post'>
+              <form onSubmit={next} method='post'>
+                    {showerror && (
+                        <div className="alert-error alert-danger" role="alert">
+                            {error}
+                        </div>
+                    )}
                     <div className={styles.form2}>
                         <div className={styles2.field}>
                             <label className={styles2.fieldlabel}>Full Name<span>*</span></label>
@@ -123,6 +118,24 @@ const PersonalGroup = ({
                                 onBlur={handleNumber}
                             >
                             </input>
+                        </div>
+                    </div>
+                    <div className={styles.form2}>
+                        <div className={styles2.field}>
+                            <label className={styles2.fieldlabel}>Group Leader<span>*</span></label>
+                            <select
+                            className={styles2.fieldinput}
+                            onChange={handlemember}
+                            onBlur={handlemember}
+                            >
+                                <optgroup>
+                                    {member?.map(((member)=>{
+                                        return(
+                                            <option value={member?._id}>{member?.personalInfo?.fullname}</option>
+                                        )       
+                                    }))}
+                                </optgroup>
+                            </select>
                         </div>
                     </div>
                     <div className={styles.form2}>
@@ -162,10 +175,12 @@ const PersonalGroup = ({
                                 placeholder="Enter your Credio Account Number"
                                 required
                                 onChange={handleCredio}
+                                maxLength={10}
                                 onBlur={handleCredio}
                             >
                             </input>
                         </div>
+                        <p className='account-name'>{account?.data?.businessName}</p>
                     </div>
                     <div className={styles.form2}>
                         <div className={styles2.field}>
@@ -180,14 +195,16 @@ const PersonalGroup = ({
                             >
                             </input>
                         </div>
-                    </div>            
+                    </div> 
+                    {accountloading && (<LoadingModal/>)}           
                     <div>
-                        {/* {loading ? (
+                        {loading ? (
                             <button className={styles3.activateButton} disabled>
                                 <LottieAnimation data={loader}/>
                             </button>
-                        ) : ( */}
-                            <button className={styles3.activateButton}><span>PROCEED</span></button>                   
+                        ) : (
+                            <button className={styles3.activateButton}><span>PROCEED</span></button>    
+                        )}               
                     </div>
                 
                     {/* <button onClick={handleSubmit} className={styles3.activateButton}>
@@ -209,6 +226,5 @@ const PersonalGroup = ({
     
     );
 }
-
 
 export default PersonalGroup;

@@ -75,7 +75,7 @@ const Expenses = ({
             <div className="add-button" onClick={handleShow}>
                 <FaPlus/>
             </div>
-            {show && <ExpenseModal togglemodal= {handleShow}/>}
+            {show && <ExpenseModal togglemodal= {handleShow} getexpenses={getexpenses}/> }
         </div>
     );
 }

@@ -2,8 +2,17 @@ import { BiChevronLeft } from "react-icons/bi";
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import GroupTable from "../../components/Table/GroupTable";
+import { connect } from "react-redux";
+import { getGroup } from "../../Redux/Group/GroupAction";
+import { useEffect } from "react";
 
-const Group = () => {
+const Group = ({
+    group,
+    getgroup
+}) => {
+    useEffect(()=>{
+        getgroup();
+    },[])
     return ( 
         <div className="saving">
             <div className="back">
@@ -21,7 +30,7 @@ const Group = () => {
                         ></input>
                     </div>  
                 </div>
-                <GroupTable/>
+                <GroupTable data={group}/>
                 {/* <Stack style={{marginTop: "10px"}} spacing={2}>
                 <TablePagination
                     component="div"
@@ -36,5 +45,16 @@ const Group = () => {
         </div>
      );
 }
- 
-export default Group;
+const mapStateToProps = state => {
+    return{
+        group:state?.groups?.data?.payload,
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return{
+        getgroup: () => {
+            dispatch(getGroup());
+        },
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Group);

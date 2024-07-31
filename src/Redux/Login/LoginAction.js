@@ -44,6 +44,34 @@ const LoginAuthAction = (loginState, history, setErrorHandler) => {
       }
     };
 };
+const LoginGroupAction = (loginState, history, setErrorHandler) => {
+  return async (dispatch) => {
+    dispatch({type: AuthActionType.LOGIN_START})
+    try {
+      const res = await axios.post(`${baseUrl}/groups/login`, loginState);
+      const { data } = res;
+     
+      dispatch({ type: AuthActionType.LOGIN_SUCCESS, payload: data });
+      // fetchgetprofile()
+      if(res.status===200){
+          // autoLogoutTimer = setTimeout(() => {
+          //   dispatch(LogOutAuthAction(history));
+          // }, 10000);
+          // getprofile()
+          history();        
+      }
+    } catch (error) {
+      if (error.response) {
+        dispatch({
+          type: AuthActionType.LOGIN_FAIL,
+          payload: error.response.data,
+        });
+        setErrorHandler({ hasError: true, message: error.response.data.error });
+      }
+      setErrorHandler({ hasError: true, message: error?.response?.data?.error });
+    }
+  };
+};
 const LogOutAuthAction = (history) => {
   // logout();
   // clearTimeout(autoLogoutTimer)
@@ -71,4 +99,5 @@ export {
     AuthActionType,
     LogOutAuthAction,
     LoginAuthAction,
+    LoginGroupAction
 };

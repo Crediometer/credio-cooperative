@@ -94,3 +94,57 @@ export const postexpenseRequest = () => {
       }
     };
   };
+
+
+  export const createexpensesgroup = (registerState, history, setErrorHandler) => {
+    return async (dispatch) => {
+      dispatch(postexpenseRequest())
+      try {
+        let datas = JSON.parse(localStorage.getItem("auth"))
+        const headers = {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
+        };
+        const res = await axios.post(
+          `${baseUrl}/groups/expense/create`,
+          registerState,
+          { headers: headers }
+        );
+        const { data } = res;
+        if (res.status === 200) {
+          history()
+          dispatch(postexpensesSuccess(data));
+        //   dispatch(transferData(registerState))
+        }
+      } catch (error) {
+        if (error.response){
+          dispatch(postexpensesFaliure(error?.response?.data));
+        }
+      }
+    };
+  };
+
+  export const getExpencesGroup = () => {
+    return async (dispatch) => {
+      dispatch(expensesRequest())
+      try {
+        let datas = JSON.parse(localStorage.getItem("auth"))
+        const headers = {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
+        };
+        const res = await axios.get(
+          `${baseUrl}/groups/expense/retriveExpenses`,
+          { headers: headers }
+        );
+        const { data } = res;
+        if (res.status === 200) {
+          dispatch(expensesSuccess(data));
+        }
+      } catch (error) {
+        if (error.response){
+          dispatch(expensesFaliure(error?.response?.data));
+        }
+      }
+    };
+  };

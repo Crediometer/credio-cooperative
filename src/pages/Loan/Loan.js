@@ -44,12 +44,11 @@ const Loan = () => {
                         
                     />
                 </Link>
-                <Link to="/loan-approval">
+                <Link to="/loan-group-create">
                     <Box
                         color="rgba(5, 139, 65, 0.123)"
                         icons={<HiOutlinePlusSm/>}
-                        text="Loan Approved"
-                        
+                        text="Create Loan Group"   
                     />
                 </Link>
             </div>
@@ -79,7 +78,14 @@ const Loan = () => {
                         text="Closed Loans"
                       
                     />
-                </Link>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+                </Link>    
+                <Link to="/loan-approval">
+                    <Box
+                        color="rgba(5, 139, 65, 0.123)"
+                        icons={<HiOutlinePlusSm/>}
+                        text="Loan Approved"   
+                    />
+                </Link>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
             </div>
         </div>
     

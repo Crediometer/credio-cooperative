@@ -11,7 +11,7 @@ import { RiAdminFill } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
 import { MdOutlinePermContactCalendar } from "react-icons/md";
 import { useEffect, useState } from "react";
-import { fetchprofile, vaultprofile } from "../../Redux/Profile/ProfileAction";
+import { fetchgroupprofile, fetchprofile, vaultprofile } from "../../Redux/Profile/ProfileAction";
 import { connect } from "react-redux";
 import LottieAnimation from "../../Lotties";
 import preloader from "../../Assets/animations/preloader.json"
@@ -53,6 +53,7 @@ const Dashboard = ({
                                     </div>
                                     <div className="user-name">
                                         <p className='greeting'>Good day</p>
+                                        <p className='name'>{getprofile?.groupInfo?.name}</p>
                                     </div>
                                 </div>
                                 {show && (
@@ -128,7 +129,7 @@ const Dashboard = ({
                                 
                             />
                         </Link> */}
-                        <Link to="/saving">
+                        <Link to="/saving-group">
                             <Box
                                 color="rgba(255, 19, 19, 0.128)"
                                 icons={<HiOutlinePlusSm/>}
@@ -136,7 +137,7 @@ const Dashboard = ({
                         
                             />
                         </Link>
-                        <Link to='/expenses'>
+                        <Link to='/expenses-group'>
                             <Box
                                 color="rgba(210, 193, 43, 0.123)"
                                 icons={<HiOutlinePlusSm/>}
@@ -146,7 +147,7 @@ const Dashboard = ({
                         
                     </div>
                     <div className="dashboard-navigate">
-                        <Link to="/loans">
+                        <Link to="/loans-group">
                             <Box
                                 color="rgba(184, 102, 67, 0.123)"
                                 icons={<HiOutlinePlusSm/>}
@@ -154,7 +155,7 @@ const Dashboard = ({
                             
                             />
                         </Link>
-                        <Link to="/member">
+                        <Link to="/member-group">
                             <Box
                                 color="rgba(67, 176, 184, 0.128)"
                                 icons={<HiOutlinePlusSm/>}
@@ -294,7 +295,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        fetchprofile: () => dispatch(fetchprofile()),
+        fetchprofile: () => dispatch(fetchgroupprofile()),
         // vaultprofile: () => dispatch(vaultprofile()),
     }
 }

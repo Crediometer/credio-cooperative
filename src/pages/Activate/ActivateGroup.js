@@ -10,43 +10,33 @@ import { otpverifyData, registerData } from '../../Redux/Registration/Registrati
 import Complete from '../../components/Multiformbar/Complete';
 import PersonalGroup from '../../components/Multiformbar/PersonalGroup';
 import MultiStepProgressbarGroup from '../../components/Multiformbar/MultiStepProgressbarGroup';
+import { creategroup, getAccount } from '../../Redux/Group/GroupAction';
+import { getmember } from '../../Redux/Member/MemberAction';
+import VerificationGroup from '../../components/Multiformbar/VerificationGroup';
 const Activate = ({
     loading,
     error,
     data,
-    otploading,
-    otpdata,
-    otperror,
-    otpverifyData,
-    registerData
+    accountdata,
+    createGroup,
+    getAccount,
+    getmember,
+    member,
+    accountloading,
 }) => {
     let initialCount = 1;
-    const [nameState, setNameState] = useState({});
-    const [phoneState, setphoneState] = useState({});
-    const [pinId, setPinid]=useState(otpdata?.pinId);
-    const [organizationName, setorganizationName]=useState(otpdata?.businessName);
-    const [otp, setotp]=useState("")
-    const [institutionState, setinstitutionState] = useState({});
+    const [groupInfo, setgroupinfo] = useState({});
+    const [accountState, setaccountState] = useState({})
     const [errorHandler, setErrorHandler] = useState([false, ""]);
-    const [showerror, setshowerror] = useState(false)
+    const [showError, setshowerror] = useState(false)
     const [showerror1, setshowerror1] = useState(false)
     const [index, setIndex] = useState(initialCount)
-    const handleOtp = (e) =>{
-        const value = e.target.value;
-        setotp(e.target.value)
-    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
-            await registerData(
+            await createGroup(
                 {
-                    personalInfo:{
-                        ...nameState,
-                        organizationName // Add organization name to personalInfo
-                    }, 
-                    institutionInfo:institutionState,
-                    pinId,
-                    otp
+                    groupInfo:groupInfo,
                 }, ()=>{ 
                 nextButton()
             }, ()=>{ 
@@ -57,11 +47,10 @@ const Activate = ({
             // setPending(false);
         }
     };
-    const handleverifyOtp = async (e) => {
-        e.preventDefault();
+    const handleAccount = async () => {
         try{
-            await otpverifyData(phoneState, ()=>{ 
-                nextButton()
+            await getAccount(accountState, ()=>{ 
+                // nextButton()
             }, ()=>{ 
                 window.scrollTo(0, 0);
                 setshowerror1(true)
@@ -77,13 +66,11 @@ const Activate = ({
         } 
     }
     useEffect(() => {
-        setPinid(otpdata?.pinId)
-        setorganizationName(otpdata?.businessName)
-    }, [otpdata]);
+        getmember()
+    }, []);
 
     return (
         <div className="test">
-
             <div className="right">
                 <div className="content">
                     <div className={styles.activate}>
@@ -95,14 +82,21 @@ const Activate = ({
                             <div className={styles.activateForm}>
                                 {index===1 && (
                                     <PersonalGroup
-                                        next={nextButton} 
-                                        nameState={nameState} 
-                                        setNameState={setNameState}
-                                        phoneState={phoneState} 
-                                        setphoneState={setphoneState}
+                                        next={handleSubmit} 
+                                        showerror = {showError}
+                                        accountState={accountState}
+                                        setAccountState = {setaccountState}
+                                        getAccount={handleAccount}
+                                        nameState={groupInfo} 
+                                        setNameState={setgroupinfo}
+                                        member={member}
+                                        account={accountdata}
+                                        accountloading={accountloading}
+                                        loading={loading}
+                                        error = {error}
                                     />
                                 )}
-                                {index===2 && (<Verification  next={nextButton} />)}
+                                {index===2 && (<VerificationGroup  next={nextButton}/>)}
                             </div>
                             {/* <button onClick={nextButton} className={styles.activateButton}>Save</button> */}
                         </div>
@@ -116,23 +110,24 @@ const Activate = ({
 const mapStateToProps = state => {
     console.log(state)
     return{
-        loading:state.register.loading,
-        error:state?.register?.error?.message,
-        data: state.register.data,
-        otploading:state.verifyotp.loading,
-        otperror:state?.verifyotp?.error?.message,
-        otpdata: state?.verifyotp?.data?.payload,
+        loading:state.group.loading,
+        error:state?.group?.error?.message,
+        data: state.group.data,
+        accountdata: state?.account?.accountData,
+        accountloading: state?.account?.loading,
+        member: state?.member?.data?.payload?.members,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return{
-        registerData: (postdata, history, error) => {
-            dispatch(registerData(postdata, history, error));
+        createGroup: (postdata, history, error) => {
+            dispatch(creategroup(postdata, history, error));
         },
-        otpverifyData: (postdata, history, error) => {
-            dispatch(otpverifyData(postdata, history, error));
+        getAccount: (postdata, history, error) => {
+            dispatch(getAccount(postdata, history, error));
         },
+        getmember: (limit, page) => dispatch(getmember(limit, page)),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Activate);

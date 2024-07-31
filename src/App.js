@@ -41,9 +41,18 @@ import ClosedDetailsSaving from './pages/Savings/ClosedDetails';
 import Login from './pages/Login/Login';
 import { Provider } from 'react-redux';
 import Expenses from './pages/Expenses/Expenses';
+import ExpensesGroup from "./pages/ExpensesGroup/Expenses"
 import Group from './pages/Group/Group';
 import ActivateGroup from './pages/Activate/ActivateGroup';
 import DashboardMember from './pages/Dashboard/DashboardMember';
+import ActivateMemberGroup from './pages/Activate/ActivateMemberGroup';
+import MemberListGroup from './pages/Members/MemberListGroup';
+import CreateLoanGroup from './pages/Loan/CreateLoanGroup';
+import NewsavingGroup from './pages/SavingGroup/Newsaving';
+import LoanGroup from './pages/LoanGroup/Loan';
+import Transfer from './pages/Transfer/Transfer';
+import GroupLoan from './pages/Loan/GroupLoan';
+import CreateSavingGroup from './pages/SavingGroup/CreateSavingGroup';
 
 function App() {
   return (
@@ -57,14 +66,18 @@ function App() {
           <Route path='/join-list' element={<List/>}/>
           <Route path='/register-admin' element={<Activate/>}/>
           <Route path='/register-member' element={<ActivateMember/>}/>
+          <Route path='/register-member-group' element={<ActivateMemberGroup/>}/>
           <Route path='/register-group' element={<ActivateGroup/>}/>
           <Route path='/dashboard' element={<Dashboard  />}/>
           <Route path='/dashboard-member' element={<DashboardMember/>}/>
+          <Route path='/transfer' element={<Transfer/>}/>
           {/* <Route path='/saving' element={<Saving/>}/> */}
           <Route path='/saving' element={<Newsavings/>}/>
+          <Route path='/saving-group' element={<NewsavingGroup/>}/>
           <Route path='/saving-details' element={<SavingDetails/>}/>
           <Route path='/withdraw' element={<Withdrawal/>}/>
           <Route path='/member' element={<MemberList/>}/>
+          <Route path='/member-group' element={<MemberListGroup/>}/>
           <Route path='/group' element={<Group/>}/>
           <Route path='/newmember' element={<NewMemberList/>}/>
           <Route path='/member-details/:id' element={<MemberDetails/>}/>
@@ -80,13 +93,17 @@ function App() {
           <Route path='/cash-payment/:id' element={<CashPayment/>}/>
           <Route path='/member-profile' element={<Profile/>}/>
           <Route path='/loans' element={<Loan/>}/>
+          <Route path='/loans-group' element={<LoanGroup/>}/>
+          <Route path='/loan-group-create' element={<GroupLoan/>}/>
           <Route path='/admin-profile' element={<AdminProfile/>}/>
           <Route path='/loan-approval' element={<Approval/>}/>
           <Route path='/loan-overdue' element={<Overdue/>}/>
           <Route path='/saving-overdue' element={<OverdueSaving/>}/>
           <Route path='/loan-lender' element={<Lenders/>}/>
           <Route path='/loan-create' element={<CreateLoan/>}/>
+          <Route path='/loan-create-group' element={<CreateLoanGroup/>}/>
           <Route path='/loan-saving' element={<CreateSaving/>}/>
+          <Route path='/loan-saving-group' element={<CreateSavingGroup/>}/>
           <Route path='/loan-active' element={<Active/>}/>
           <Route path='/saving-active' element={<ActiveSavings/>}/>
           <Route path='/loan-closed' element={<Closed/>}/>
@@ -96,6 +113,7 @@ function App() {
           <Route path='/loan-active-details' element={<ActiveDetails/>}/>
           <Route path='/saving-active-details' element={<ActiveDetailsSavings/>}/>
           <Route path='/expenses' element={<Expenses/>}/>
+          <Route path='/expenses-group' element={<ExpensesGroup/>}/>
         </Routes>
       </Provider>
     </div>

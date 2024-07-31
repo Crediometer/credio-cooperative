@@ -19,7 +19,7 @@ const Verification = ({next, data}) => {
                 <p className="login-head">Password: </p>
                 <p className="login-body">{data?.password}</p>
             </div>
-            <Link to='/dashboard'>
+            <Link to='/login'>
                 <button className={styles3.activateButton}>
                     DONE
                 </button>

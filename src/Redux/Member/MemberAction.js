@@ -89,6 +89,35 @@ export const addmemberRequest = () => {
     };
   };
 
+  export const postgroupmember = (registerState, history, setErrorHandler) => {
+    return async (dispatch) => {
+      dispatch(addmemberRequest())
+      try {
+        let datas = JSON.parse(localStorage.getItem("auth"))
+        const headers = {
+            "Content-Type": "multipart/form-data",
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
+        };
+        const res = await axios.post(
+          `${baseUrl}/groups/group/addMember`,
+          registerState,
+          { headers: headers }
+        );
+        const { data } = res;
+        if (res.status === 200) {
+          history()
+          dispatch(addmemberSuccess(data));
+        //   dispatch(transferData(registerState))
+        }
+      } catch (error) {
+        if (error.response){
+          dispatch(addmemberFaliure(error?.response?.data));
+        }
+        setErrorHandler({ hasError: true, message: error?.response?.data?.message });
+      }
+    };
+  };
+
   export const getmember = (limit, page) => {
     return async (dispatch) => {
       dispatch(memberRequest())

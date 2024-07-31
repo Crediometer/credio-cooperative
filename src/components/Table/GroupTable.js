@@ -35,18 +35,18 @@ export default function GroupTable({data}) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows?.map((row,index) => (
+          {data?.map((row,index) => (
                 <TableRow
                 key={row.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell  style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} component="th" scope="row"  align="left">
-                        {row.SN}
+                        {index + 1}
                     </TableCell>
                     <TableCell  style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} component="th" scope="row"  align="left">
-                        {row?.Name}
+                    {row?.groupInfo?.name}
                     </TableCell>
-                    <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row?.Joined}</TableCell>
+                    <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row.createdAt.slice(0,10)}</TableCell>
                     <Link to={`/dashboard-member`}>  <TableCell><button className='view-button'>View</button></TableCell> </Link>
                 </TableRow>
            

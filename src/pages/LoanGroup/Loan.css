@@ -1,0 +1,335 @@
+.loan-approval-body, .active-loan-body{
+    margin-top: 45px;
+    height: 73vh;
+    overflow: scroll;
+}
+.approval-card{
+    margin-bottom: 41px;
+    border-radius: 5px;
+    -webkit-box-shadow: 2px 2px 4px 1px rgba(0,0,0,0.075);
+    -moz-box-shadow: 2px 2px 4px 1px rgba(0,0,0,0.075);
+    box-shadow: 2px 2px 4px 1px rgba(0,0,0,0.075);
+}
+.personal-section{
+    padding: 1rem;
+    border-bottom: 1px solid #f5f5f5;
+}
+.approval-card-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.card-header{
+    color: #B11226;
+    font-weight: 600;
+    font-size: 0.875rem;
+    font-family: "Poppins";
+}
+.status{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #058B42;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+.status-red{
+    background-color: #B11226;
+}
+.top-search{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 16px;
+}
+.statement-date-2{
+    padding: 1rem;
+}
+.status p, .status svg{
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.625rem;
+    font-family: "Poppins";
+}
+.aprroval-information{
+    margin-top: 17px;
+}
+.information-inner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.note{
+    margin-top: 17px;
+    padding: 1rem;
+}
+.note textarea{
+    width: 100%;
+    padding: 0.5rem;
+    height: 50px;
+    color: #000;
+    font-weight: 600;
+    font-size: 0.75rem;
+    font-family: "Poppins";
+}
+.note textarea::placeholder{
+    color: #B11226;
+    font-weight: 600;
+    font-size: 0.75rem;
+    font-family: "Poppins";
+}
+.qualify{
+    padding: 1rem;
+    margin-top: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.qualify h3{
+    color:#000;
+    font-weight: 600;
+    font-size: 0.875rem;
+    font-family: "Poppins";
+}
+.qualify-button{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.qualify-button button{
+    padding: 0.5rem 1.3rem;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.75rem;
+    font-family: "Poppins";
+}
+.approve{
+    background-color: #B11226;
+}
+.reject{
+    background-color: #496ABF;
+}
+.overdue-card{
+    background-color: #FEE9E9;
+    border-radius: 5px;
+    margin-bottom: 40px;
+    -webkit-box-shadow: 2px 2px 4px 1px rgba(0,0,0,0.075);
+    -moz-box-shadow: 2px 2px 4px 1px rgba(0,0,0,0.075);
+    box-shadow: 2px 2px 4px 1px rgba(0,0,0,0.075);
+}
+.overdue-card-top{
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.overdue-stat p{
+    color: #000;
+    font-weight: 600;
+    font-size: 0.75rem;
+    font-family: "Poppins";
+}
+.active-card{
+    padding: 1rem;
+    border-radius: 5px;
+    -webkit-box-shadow: 2px 2px 4px 1px rgba(0,0,0,0.075);
+    -moz-box-shadow: 2px 2px 4px 1px rgba(0,0,0,0.075);
+    box-shadow: 2px 2px 4px 1px rgba(0,0,0,0.075);
+}
+.active-status{
+    padding: 0.5rem;
+    border: 1px solid #058B42;
+    border-radius: 8px;
+}
+.active-status p{
+    color: #058B42;
+    font-weight: 600;
+    font-size: 0.875rem;
+    font-family: "Poppins";
+}
+.active-status-red{
+    border: 1px solid #B11226;
+}
+.active-status-red p{
+    color: #B11226;
+}
+.active-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.loan-for{
+    color: #000;
+    font-weight: 600;
+    font-size: 0.75rem;
+    font-family: "Poppins";
+}
+.active-card{
+    margin-bottom: 30px;
+}
+.active-body{
+    margin-top: 10px;
+}
+.active-body h3{
+    margin-top: 10px;
+    color: #000;
+    font-weight: 600;
+    font-size: 0.875rem;
+    font-family: "Poppins";
+}
+.loan-details{
+    margin-top: 10px;
+    color: #2B2B2B;
+    font-weight: 600;
+    font-size: 0.625rem;
+    font-family: "Poppins";
+}
+.active-warning{
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.active-warning svg{
+    color: #000;
+    font-weight: 600;
+    font-size: 0.625rem;
+    font-family: "Poppins";
+}
+.active-warning p{
+    color: #000;
+    font-weight: 600;
+    font-size: 0.625rem;
+    font-family: "Poppins";
+}
+.active-details-card{
+    padding: 1.5rem;
+    background-color: #B11226;
+    border-radius: 8px;
+}
+.active-details-inner{
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.details h3{
+    color: #FFD4D4;
+    font-weight: 600;
+    font-size: 0.875rem;
+    font-family: "Poppins";
+}
+.details p{
+    color: #FFf;
+    font-weight: 600;
+    font-size: 1rem;
+    font-family: "Poppins";
+}
+.schedule{
+    margin-top: 36px;
+}
+.schedule-header{
+    color: #000;
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+.schedule-inner{
+    margin-top: 41px;
+}
+.schedule-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.schedule-top p{
+    color: #000;
+    font-weight: 600;
+    font-size: 0.875rem;
+    font-family: "Poppins";
+}
+.schedule-status{
+    padding: 0.4rem;
+    background-color: #4CAF50;
+    border-radius: 5px;
+} 
+.schedule-status p{
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.625rem;
+    font-family: "Poppins";
+}
+.schedule-inner-body{
+    margin-top: 15px;
+    padding: 0.8rem;
+    border-radius: 8px; 
+    -webkit-box-shadow: 2px 2px 4px 1px rgba(0,0,0,0.075);
+    -moz-box-shadow: 2px 2px 4px 1px rgba(0,0,0,0.075);
+    box-shadow: 2px 2px 4px 1px rgba(0,0,0,0.075);
+}
+.schedule-inner-detail{
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.schedule-inner-detail p{
+    color: rgba(61, 61, 61, 0.79);
+    font-weight: 600;
+    font-size: 0.875rem;
+    font-family: "Poppins";
+}
+.schedule-inner-detail h3{
+    color: #000;
+    font-weight: 600;
+    font-size: 1rem;
+    font-family: "Poppins";
+}
+@media (min-width: 1280px) {
+    .loan-approval-body{
+        padding: 0rem 8rem;
+    }
+    .active-loan-body{
+        padding: 0rem 10rem;
+    }
+    .active-status p{
+        font-size: 1rem;
+    }
+    .loan-for{
+        font-size: 1rem;
+        font-family: "Poppins";
+    }
+    .active-body h3{
+        margin-top: 10px;
+        font-size: 1.2rem;
+        font-family: "Poppins";
+    }
+    .loan-details{
+        font-size: 0.825rem;
+        font-family: "Poppins";
+    }
+    .active-warning svg{
+        font-size: 0.875rem;
+        font-family: "Poppins";
+    }
+    .active-warning p{
+        font-size: 0.875rem;
+        font-family: "Poppins";
+    }
+}
+@media (max-width: 800px){
+    .card-header{
+        color: #B11226;
+        font-weight: 600;
+        font-size: 0.675rem;
+        font-family: "Poppins";
+    }
+    .approval-card-top p{
+        font-size: 0.675rem;
+    }
+    .information-inner p{
+        font-size: 0.675rem;
+    }
+}

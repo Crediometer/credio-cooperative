@@ -21,7 +21,7 @@ const Activate = ({
     let initialCount = 1;
     const [nameState, setNameState] = useState({});
     const [phoneState, setphoneState] = useState({});
-    const [pinId, setPinid]=useState(otpdata?.pinId);
+    const [pinId, setPinid]=useState(otpdata?.pin_id);
     const [organizationName, setorganizationName]=useState(otpdata?.businessName);
     const [otp, setotp]=useState("")
     const [institutionState, setinstitutionState] = useState({});
@@ -75,10 +75,10 @@ const Activate = ({
         } 
     }
     useEffect(() => {
-        setPinid(otpdata?.pinId)
+        setPinid(otpdata?.pin_id)
         setorganizationName(otpdata?.businessName)
     }, [otpdata]);
-
+    console.log(otpdata)
     return (
         <div className="test">
 

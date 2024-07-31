@@ -178,3 +178,30 @@ import { ACTIVE_SAVING_FAILURE, ACTIVE_SAVING_REQUEST, ACTIVE_SAVING_SUCCESS, CL
       }
     };
   };
+
+  export const createSavingGroup = (registerState, history, setErrorHandler) => {
+    return async (dispatch) => {
+      dispatch(createRequest())
+      try {
+        let datas = JSON.parse(localStorage.getItem("auth"))
+        const headers = {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
+        };
+        const res = await axios.post(
+          `${baseUrl}/groups/savings/create`,
+          registerState,
+          { headers: headers }
+        );
+        const { data } = res;
+        if (res.status === 200) {
+          history()
+          dispatch(createSuccess(data));
+        }
+      } catch (error) {
+        if (error.response){
+          dispatch(createFaliure(error?.response?.data));
+        }
+      }
+    };
+  };
