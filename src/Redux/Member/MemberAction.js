@@ -143,6 +143,31 @@ export const addmemberRequest = () => {
     };
   };
 
+  export const getgroupmember = (limit, page) => {
+    return async (dispatch) => {
+      dispatch(memberRequest())
+      try {
+        let datas = JSON.parse(localStorage.getItem("auth"))
+        const headers = {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
+        };
+        const res = await axios.get(
+          `${baseUrl}/groups/members?limit=${limit}&page=${page}`,
+          { headers: headers }
+        );
+        const { data } = res;
+        if (res.status === 200) {
+          dispatch(memberSuccess(data));
+        }
+      } catch (error) {
+        if (error.response){
+          dispatch(memberFaliure(error?.response?.data));
+        }
+      }
+    };
+  };
+
   export const getsinglemember = (id) => {
     return async (dispatch) => {
       dispatch(singlememberRequest())
@@ -154,6 +179,31 @@ export const addmemberRequest = () => {
         };
         const res = await axios.get(
           `${baseUrl}/members/${id}`,
+          { headers: headers }
+        );
+        const { data } = res;
+        if (res.status === 200) {
+          dispatch(singlememberSuccess(data));
+        }
+      } catch (error) {
+        if (error.response){
+          dispatch(singlememberFaliure(error?.response?.data));
+        }
+      }
+    };
+  };
+
+  export const getsinglegroupmember = (id) => {
+    return async (dispatch) => {
+      dispatch(singlememberRequest())
+      try {
+        let datas = JSON.parse(localStorage.getItem("auth"))
+        const headers = {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
+        };
+        const res = await axios.get(
+          `${baseUrl}/groups/members/${id}`,
           { headers: headers }
         );
         const { data } = res;

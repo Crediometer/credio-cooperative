@@ -5,12 +5,12 @@ import { Link, useParams } from 'react-router-dom';
 import { BiChevronLeft } from "react-icons/bi";
 import { connect } from "react-redux";
 import { buttonScan, DisConnect, getQPosInfo, init, sendPIN, startTrade } from "../../Redux/Card/CardScript";
-import { depositData, singledepositData } from "../../Redux/Deposit/DepositAction";
+import { depositData, groupsingledepositData, singledepositData } from "../../Redux/Deposit/DepositAction";
 import LottieAnimation from "../../Lotties";
 import loader from "../../Assets/animations/loading.json"
 import LoadingModal from "../../components/Modal/LoadingModal";
 import { getLoan } from "../../Redux/Loan/LaonAction";
-const CardPayment = ({
+const CardPaymentGroup = ({
     buttonScan, 
     cardData, 
     disconnect,
@@ -48,6 +48,9 @@ const CardPayment = ({
         setTransactionType(value)
         setpostState({ ...postState, ...{type: transactionType} }); 
     }
+    const toggleModal = ()=>{
+        setnext(2)
+    }
     const handletypeId = (e)=>{
         const value = e.target.value
         setTypeId(value)
@@ -56,9 +59,6 @@ const CardPayment = ({
         }else if(transactionType == 1){
             setpostState({...postState, ...{loanId: typeid}})
         }
-    }
-    const toggleModal = ()=>{
-        setnext(1)
     }
     const handletotal =(e)=>{
         const value = e.target.value
@@ -223,7 +223,7 @@ const CardPayment = ({
     return ( 
         <div className="saving">
             <div className="back">
-                <Link to={`/payment/${id}`}><BiChevronLeft/></Link>
+                <Link to={`/payment-group/${id}`}><BiChevronLeft/></Link>
                 <p className="title">Card Payments</p>
             </div>
             <div className="card-body">
@@ -403,12 +403,11 @@ const CardPayment = ({
 
 
 const mapStoreToProps = (state) => {
-    console.log(state)
     return {
         cardData: state?.card,
         connected: state?.card?.connected,
         loading: state.deposit.loading,
-        data: state.deposit.deposit,
+        data: state.deposit?.deposit,
         error: state.deposit.error,
         plan: state?.loanlist?.data?.payload?.memberActionList
     };  
@@ -432,7 +431,7 @@ const mapStoreToProps = (state) => {
             dispatch(sendPIN(pin));
         },
         Deposit: (postdata, history, error) => {
-            dispatch(singledepositData(postdata, history, error));
+            dispatch(groupsingledepositData(postdata, history, error));
         },
         getloans: (id, type) => {
             dispatch(getLoan(id, type));
@@ -440,4 +439,4 @@ const mapStoreToProps = (state) => {
     };
   };
   
-export default connect(mapStoreToProps, mapDispatchToProps)(CardPayment);
+export default connect(mapStoreToProps, mapDispatchToProps)(CardPaymentGroup);

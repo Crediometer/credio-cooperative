@@ -9,10 +9,10 @@ import { BiChevronLeft } from 'react-icons/bi';
 import { debitPayment, getBank, nameEnquiry } from '../../Redux/Payment/PaymentAction';
 import { connect } from 'react-redux';
 import LottieAnimation from '../../Lotties';
-import loader from '../../Assets/animations/loading.json'
+import loader from '../../Assets/animations/preloader.json'
 import { getLoan } from '../../Redux/Loan/LaonAction';
 import TransferSuccessModal from '../../components/Modal/TransferSuccessModal';
-const BankTransfer = (
+const BankTransferGroup = (
     {
         debitloading,
         debitData,
@@ -123,7 +123,7 @@ const BankTransfer = (
         {/* {(num % 2 == 0) ? ( */}
             <div className="transfer">
             <div className="back">
-                <Link to='/payment'><BiChevronLeft/></Link>
+                <Link to='/payment-group'><BiChevronLeft/></Link>
                 <p className="title">Direct Bank Debit</p>
             </div>
             <div className="transfer-body">
@@ -330,7 +330,7 @@ const BankTransfer = (
                             </div>
                         </form>
                     </div>
-                    {show && <TransferSuccessModal message={debitData?.data?.responseDescription}/>}
+                    {show && <TransferSuccessModal message={debitData}/>}
                     {/* {show && <Pinconfirm togglemodal={handleModal2}/>} */}
                 </div>
             </div>
@@ -351,7 +351,7 @@ const mapStateToProps = state => {
     console.log(state)
     return {
         debitloading: state?.debit?.loading,
-        debitData: state?.debit?.data,
+        debitData: state?.debit?.data?.data?.responseDescription,
         debiterror: state?.debit?.error,
         loading:state?.bank?.loading,
         data: state?.bank?.data?.data,
@@ -379,4 +379,4 @@ const mapDispatchToProps = dispatch => {
     }
 } 
  
-export default connect(mapStateToProps, mapDispatchToProps)(BankTransfer);
+export default connect(mapStateToProps, mapDispatchToProps)(BankTransferGroup);

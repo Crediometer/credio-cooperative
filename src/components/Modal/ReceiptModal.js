@@ -49,7 +49,7 @@ const ReceiptModal = ({data, togglemodal}) => {
                         <div className="receipt-top">
                             <img src={success}></img>
                             <p className="credio">Credio</p>
-                            <h3>NGN{(5000000/ 100).toFixed(2)}</h3>
+                            <h3>NGN{(data.amount/ 100).toFixed(2)}</h3>
                             <p className="success-text">Successful transaction</p>
                             <p className="receipt-date-time"></p>
                         </div>
@@ -69,11 +69,11 @@ const ReceiptModal = ({data, togglemodal}) => {
                             </h5>
                             <div className="receipt-content">
                                 <p className="receipt-title">maskPan:</p>
-                                <p className="receip-cont">09089</p>
+                                <p className="receip-cont">{data.maskedPan}</p>
                             </div>
                             <div className="receipt-content">
-                                <p className="receipt-title">Card Type:</p>
-                                <p className="receip-cont">Verve</p>
+                                <p className="receipt-title">MerchantId:</p>
+                                <p className="receip-cont">{data.merchantId}</p>
                             </div>
                         </div>
                         <div className="receipt-con">
@@ -81,16 +81,16 @@ const ReceiptModal = ({data, togglemodal}) => {
                                 Recipient
                             </h5>
                             <div className="receipt-content">
-                                <p className="receipt-title">Account Num:</p>
-                                <p className="receip-cont">938377xxxxx</p>
+                                <p className="receipt-title">Merchant Address:</p>
+                                <p className="receip-cont">{data.merchantAddress}</p>
                             </div>
                             <div className="receipt-content">
                                 <p className="receipt-title">Merchant Name :</p>
-                                <p className="receip-cont">AdemolA John</p>
+                                <p className="receip-cont">{data.merchantName}</p>
                             </div>
                             <div className="receipt-content">
                                 <p className="receipt-title">TerminalId:</p>
-                                <p className="receip-cont">8987gh789ji</p>
+                                <p className="receip-cont">{data.terminalId}</p>
                             </div>
                         </div>
                         <div className="receipt-con">
@@ -103,15 +103,15 @@ const ReceiptModal = ({data, togglemodal}) => {
                             </div>
                             <div className="receipt-content">
                                 <p className="receipt-title">Auth Code:</p>
-                                <p className="receip-cont">01222</p>
+                                <p className="receip-cont">{data.authCode}</p>
                             </div>
                             <div className="receipt-content">
                                 <p className="receipt-title">Response Code</p>
-                                <p className="receip-cont">00</p>
+                                <p className="receip-cont">{data.responseCode}</p>
                             </div>
                             <div className="receipt-content">
                                 <p className="receipt-title">STAN</p>
-                                <p className="receip-cont">00011</p>
+                                <p className="receip-cont">{data.STAN}</p>
                             </div>
                             <div className="receipt-content">
                                 <p className="receipt-title">Message</p>

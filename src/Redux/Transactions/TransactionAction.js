@@ -130,3 +130,26 @@ export const loantransactionRequest = () => {
       }
     };
   };
+  export const getGroupTransaction = () => {
+    return async (dispatch) => {
+      dispatch(transactionRequest())
+      try {
+        let datas = JSON.parse(localStorage.getItem("auth"))
+        const headers = {
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
+        };
+        const res = await axios.get(
+          `${baseUrl}/cooperative/groups/transactions`,
+          { headers: headers }
+        );
+        const { data } = res;
+        if (res.status === 200) {
+          dispatch(transactionSuccess(data));
+        }
+      } catch (error) {
+        if (error.response){
+          dispatch(transactionFaliure(error?.response?.data));
+        }
+      }
+    };
+  };

@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 import styles from '../Loan/Payment.module.css';
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { getActiveSaving } from "../../Redux/Saving/SavingAction";
+import { getActiveSaving, getGroupActiveSaving } from "../../Redux/Saving/SavingAction";
 import LottieAnimation from "../../Lotties";
 import preloader from "../../Assets/animations/preloader.json"
 import empty from "../../Assets/animations/Empty.json"
 import { Stack, TablePagination } from "@mui/material";
-const ActiveSavings = ({
+const ActiveSavingsGroup = ({
     getActiveSaving,
     loading,
     error,
@@ -64,7 +64,7 @@ const ActiveSavings = ({
     return ( 
         <div className="saving">
             <div className="back">
-                <Link to='/saving'><BiChevronLeft/></Link>
+                <Link to='/saving-group'><BiChevronLeft/></Link>
                 <p className="title">Active Saving</p>
             </div>
             <div className="top-search">
@@ -222,8 +222,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        getActiveSaving: (limit, page) => dispatch(getActiveSaving(limit, page)),
+        getActiveSaving: (limit, page) => dispatch(getGroupActiveSaving(limit, page)),
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ActiveSavings);
+export default connect(mapStateToProps, mapDispatchToProps)(ActiveSavingsGroup);

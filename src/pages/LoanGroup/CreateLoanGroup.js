@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoanModal from "../../components/Modal/LoanModal";
 import { BiChevronLeft } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,11 +6,14 @@ import { createloan, createloanGroup } from "../../Redux/Loan/LaonAction";
 import { connect } from "react-redux";
 import LottieAnimation from "../../Lotties";
 import loader from "../../Assets/animations/loading.json"
+import { getgroupmember } from "../../Redux/Member/MemberAction";
 const CreateLoanGroup = ({
     loading,
     error,
     data,
     createloan,
+    getmember,
+    member,
     profile
 }) => {
     const history = useNavigate();
@@ -29,28 +32,11 @@ const CreateLoanGroup = ({
     const [endDate, setEndDate] = useState("")
     const [monthlyPayment, setmonthlyPayment] = useState("")
     const [postState, setPostState] = useState({})
+    const [interestType, setInterestType] = useState('');
+    const [paymentPerInterval, setPaymentPerInterval] = useState(0);
     const togglemodal=()=>{
         setShow(!show)
     }
-    const handleInputChange = (e) => {
-        const value = e.target.value;
-        setSearchInput(value);
-        
-        // Filter members based on input value
-        if (value) {
-            const filtered = members.filter(member => 
-                member.toLowerCase().includes(value.toLowerCase())
-            );
-            setFilteredMembers(filtered);
-        } else {
-            setFilteredMembers([]);
-        }
-    };
-    const handleMemberClick = (member) => {
-        setSearchUser(member);
-        setSearchInput("")
-        setFilteredMembers([]);
-    };
     const handleamount = (e)=>{
         const value = e.target.value
         setAmount(value)
@@ -74,6 +60,10 @@ const CreateLoanGroup = ({
         setPurpose(value)
         setPostState({...postState, ...{purpose}})
     }
+    const handleInterestType = (e)=>{
+        const value = e.target.value
+        setInterestType(value)
+    }
     const handleMonthlyPayment = (e)=>{
         const value = e.target.value
         setmonthlyPayment(value)
@@ -92,19 +82,87 @@ const CreateLoanGroup = ({
         const newvalue = parseInt(value)
         setPostState({...postState, ...{endDate:newvalue}})
     }
-    console.log(profile)
+    const handlemember = (e) => {
+        const value = e.target.value;
+        setMemberId(value);
+    };
+    const calculateCompoundInterest = (principal, rate, time) => {
+        const interest = principal * Math.pow((1 + rate / 100), time) - principal;
+        return principal + interest;
+    };
+    const calculateSimpleInterest = (principal, rate, time) => {
+        const interest = (principal * rate) / 100;
+        return principal + interest;
+    };
+    const calculatePaymentPerInterval = (totalRepayment, intervalCount) => {
+        return totalRepayment / intervalCount;
+    };
+    useEffect(() => {
+        if (amount && startDate && endDate && interval) {
+            const principal = parseFloat(amount);
+            const rate = parseFloat(interestRate);
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const timeInYears = (end - start) / (1000 * 60 * 60 * 24 * 365);
+            
+            let totalRepayment = 0;
+
+            if (interestType === 'Compound Interest') {
+                totalRepayment = calculateCompoundInterest(principal, rate, timeInYears);
+                console.log(totalRepayment)
+            } else if (interestType === 'Single Line Interest') {
+                totalRepayment = calculateSimpleInterest(principal, rate, timeInYears);
+                console.log(totalRepayment)
+            }
+            const intervalDays = parseInt(interval);
+            const intervalCount = Math.floor((end - start) / (intervalDays * 24 * 60 * 60 * 1000));
+            const paymentPerIntervalValue = calculatePaymentPerInterval(totalRepayment, intervalCount).toFixed(2);
+            setmonthlyPayment(paymentPerIntervalValue);
+            setPostState({...postState, ...{monthlyPayment:parseFloat(paymentPerIntervalValue)}})
+        }
+    }, [amount, interestType, startDate, endDate, interval, startDate]);
+    useEffect(()=>{
+        getmember()
+    },[])
+    // useEffect(() => {
+    //     if (amount && monthlyPayment && interval) {
+    //         const days = {
+    //             5: 5,
+    //             7: 7,
+    //             15: 15,
+    //             30: 30
+    //         };
+
+    //         const repeatDays = days[interval];
+    //         const units = parseInt(amount) / parseInt(monthlyPayment);
+    //         const endDateValue = new Date(startDate);
+    //         endDateValue.setDate(endDateValue.getDate() + (units * repeatDays));
+    //         setEndDate(formatDate(endDateValue));
+    //         // setpostState({ ...postState, ...{startdate: startDate} });
+    //         // setpostState({ ...postState, ...{endDate: endDate} });  
+    //     }
+    // }, [amount, monthlyPayment, interval, startDate]);
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
             await createloan(
-                {loansProfileData:postState, memberId: profile} , ()=>{ 
-                history(`/loans`)
-                setPostState({})
-                setAmount("")
-                setInterval("")
-                setInterestRate("")
-                setPurpose("")
-                setmonthlyPayment("")
+                {loansProfileData:postState, memberId} , ()=>{ 
+                    setShow(true)
+                    setEndDate("")
+                    setStartDate("")
+                    setAmount("")
+                    setInterval("")
+                    setInterestRate("")
+                    setPurpose("")
+                    setInterestType("")
+                    setMemberId("")
+                    setmonthlyPayment("")
             }, ()=>{ 
                 window.scrollTo(0, 0);
             });
@@ -115,61 +173,38 @@ const CreateLoanGroup = ({
     return ( 
         <div className="saving createloan">
              <div className="back">
-                <Link to='/loans'><BiChevronLeft/></Link>
+                <Link to='/loans-group'><BiChevronLeft/></Link>
                 <p className="title">Create Loan</p>
             </div>
-            {/* <div className="top-search">
-                <div className="form-11" style={{ width: '100%' }}>
-                    <div className="input">
-                        <input 
-                            type="text" 
-                            placeholder="SEARCH FOR MEMBER"
-                            value={searchInput}
-                            onChange={handleInputChange}
-                            required
-                        ></input>
-                    </div>
-                </div>
-                <div className="statement-date statement-date-2">
-                    <input
-                        type='text'
-                        placeholder='Start Date'
-                        className='transferfield'
-                        onFocus={(e) => (e.target.type = "date")}
-                        onBlur={(e) => {(e.target.type = "text");}}
-                        // onChange={handlestartdate}
-                        required
-                    ></input>
-                </div>
-            </div>
-            {searchInput && (
-                <div className="member-list">
-                    {filteredMembers.length > 0 ? (
-                        filteredMembers.map((member, index) => (
-                            <div    
-                                onClick={() => handleMemberClick(member)}
-                                style={{ cursor: 'pointer' }} 
-                                key={index} 
-                                className="member-item"
-                            >
-                                {member}
-                            </div>
-                        ))
-                    ) : (
-                        <div>No members found</div>
-                    )}
-                </div>
-            )}
-            <div className="selected-user">
-                <h4 className="form-head">{searchUser}</h4>
-            </div> */}
+          
             <div className="card-body">
+
                 <form onSubmit={handleSubmit} className="card-field">
+                <div className="form-2"  style={{width: "100%"}}>
+                        <div className="input input-4">
+                            <label>Member</label>
+                            <select
+                                onChange={handlemember}
+                                onBlur={handlemember}
+                                value={memberId}
+                            >
+                                <optgroup>
+                                    <option>--Select Member--</option>
+                                    {member?.map(((member)=>{
+                                        return(
+                                            <option value={member?._id}>{member?.personalInfo?.fullname}</option>
+                                        )       
+                                    }))}
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div> 
                     <div className="form-2"  style={{width: "100%"}}>
                         <div className="input input-4">
                             <label>Amount</label>
                             <input type="text" 
                                 placeholder="Enter Amount"
+                                value={amount}
                                 // value={formattedAmount}
                                 onBlur={handleamount}
                                 onChange={handleamount}
@@ -179,8 +214,23 @@ const CreateLoanGroup = ({
                     </div>
                     <div className="form-2"  style={{width: "100%"}}>
                         <div className="input input-4">
+                            <label>Interest Type</label>
+                            <select
+                                value={interestType}
+                                onChange={handleInterestType}
+                                onBlur={handleInterestType}
+                            >
+                                <option>-- Select Interest Type --</option>
+                               <option value="Compound Interest">Compound Interest</option>
+                               <option value="Single Line Interest">Single Line Interest</option>
+                            </select>
+                        </div>
+                    </div>  
+                    <div className="form-2"  style={{width: "100%"}}>
+                        <div className="input input-4">
                             <label>Interest Rate</label>
                             <input type="text" 
+                            value={interestRate}
                             placeholder="Enter Interest Rate"
                             onBlur={handleInterestRate}
                             onChange={handleInterestRate}
@@ -190,12 +240,13 @@ const CreateLoanGroup = ({
                     </div>
                     <div className="form-2"  style={{width: "100%"}}>
                         <div className="input input-4">
-                            <label>Monthly Payment</label>
-                            <input type="text" 
-                            placeholder="Enter Monthly Payment"
-                            onBlur={handleMonthlyPayment}
-                            onChange={handleMonthlyPayment}
-                            required
+                            <label>Repayment</label>
+                            <input 
+                                type="text" 
+                                value={monthlyPayment}
+                                disabled
+                                placeholder="Amount for Repayment"
+                                required
                             ></input>
                         </div>
                     </div>
@@ -203,6 +254,7 @@ const CreateLoanGroup = ({
                         <div className="input input-4">
                             <label>Interval</label>
                             <select
+                                value={interval}
                                 onChange={handleInterval}
                                 onBlur={handleInterval}
                                 required
@@ -221,6 +273,7 @@ const CreateLoanGroup = ({
                         <div className="input input-4">
                             <label>Start Date</label>
                             <input type="date" 
+                            value={startDate}
                             placeholder="Enter Interest Rate"
                             onBlur={handleStartDate}
                             onChange={handleStartDate}
@@ -231,11 +284,12 @@ const CreateLoanGroup = ({
                     <div className="form-2"  style={{width: "100%"}}>
                         <div className="input input-4">
                             <label>End Date</label>
-                            <input type="date" 
-                            placeholder="Enter Interest Rate"
-                            onBlur={handleEndDate}
-                            onChange={handleEndDate}
-                            required
+                            <input 
+                                type="date" 
+                                value={endDate} 
+                                onBlur={handleEndDate}
+                                onChange={handleEndDate}
+                                required
                             ></input>
                         </div>
                     </div>
@@ -251,14 +305,18 @@ const CreateLoanGroup = ({
                         </div>
                     </div>
                     <div className="form-button">
-                        <button className='transfer-button'>
+                        <button disabled={loading} className='transfer-button'>
                             {loading ? (
                                 <LottieAnimation data={loader}/>
                             ):"Create"} 
                         </button>
                     </div>
                 </form>
-                {show && <LoanModal/>}
+                {show && <LoanModal
+                    type='Loan'
+                    togglemodal={togglemodal}
+                    data={postState}
+                />}
             </div>
         </div>
     );
@@ -267,9 +325,10 @@ const mapStateToProps = state => {
     console.log(state)
     return{
         error:state?.loan?.error,
-        loading: state?.laon?.loading,
+        loading: state?.loan?.loading,
         profile: state?.profile?.data?.payload?._id,
         data: state?.loan?.data?.payload?.expenses  ,
+        member: state?.member?.data?.payload?.members,
     }
 }
 
@@ -278,6 +337,7 @@ const mapDispatchToProps = dispatch => {
         createloan: (postdata, history, error) => {
             dispatch(createloanGroup(postdata, history, error));
         },
+        getmember: (limit, page) => dispatch(getgroupmember(limit, page)),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CreateLoanGroup);

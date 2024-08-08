@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiChevronLeft } from "react-icons/bi";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { getOverdueLoan } from "../../Redux/Loan/LaonAction";
+import { getGroupOverdueLoan, getOverdueLoan } from "../../Redux/Loan/LaonAction";
 import LottieAnimation from "../../Lotties";
 import preloader from "../../Assets/animations/preloader.json"
 import empty from "../../Assets/animations/Empty.json"
 import { Stack, TablePagination } from "@mui/material";
-const OverdueSaving = ({
+const OverdueGroup = ({
     getOverdueLoan,
     loading,
     error,
@@ -47,10 +47,13 @@ const OverdueSaving = ({
         setSearchInput("")
         setFilteredMembers([]);
     };
+    useEffect(()=>{
+        getOverdueLoan(rowsPerPage, page)
+    },[page, rowsPerPage])
     return ( 
         <div className="saving overdue">
             <div className="back">
-                <Link to='/saving'><BiChevronLeft/></Link>
+                <Link to='/loans-group'><BiChevronLeft/></Link>
                 <p className="title">Overdue Loan</p>
             </div>
             <div className="top-search">
@@ -190,8 +193,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        getOverdueLoan: (limit, page) => dispatch(getOverdueLoan(limit, page)),
+        getOverdueLoan: (limit, page) => dispatch(getGroupOverdueLoan(limit, page)),
     }
 }
  
-export default connect(mapStateToProps, mapDispatchToProps)(OverdueSaving);
+export default connect(mapStateToProps, mapDispatchToProps)(OverdueGroup);

@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiChevronLeft } from "react-icons/bi";
 import { FaExclamationCircle } from "react-icons/fa";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { getClosedLoan } from "../../Redux/Loan/LaonAction";
+import { getClosedLoan, getGroupClosedLoan } from "../../Redux/Loan/LaonAction";
 import LottieAnimation from "../../Lotties";
 import preloader from "../../Assets/animations/preloader.json"
 import empty from "../../Assets/animations/Empty.json"
 import { Stack, TablePagination } from "@mui/material";
-const Closed = ({
+const ClosedGroup = ({
     getClosedLoan,
     loading,
     error,
@@ -52,10 +52,13 @@ const Closed = ({
         setSearchInput("")
         setFilteredMembers([]);
     };
+    useEffect(()=>{
+        getClosedLoan(rowsPerPage, page)
+    },[page, rowsPerPage])
     return ( 
         <div className="saving">
                 <div className="back">
-                <Link to='/loans'><BiChevronLeft/></Link>
+                <Link to='/loans-group'><BiChevronLeft/></Link>
                 <p className="title">Closed Loan</p>
             </div>
             <div className="top-search">
@@ -169,8 +172,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        getClosedLoan: (limit, page) => dispatch(getClosedLoan(limit, page)),
+        getClosedLoan: (limit, page) => dispatch(getGroupClosedLoan(limit, page)),
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Closed);
+export default connect(mapStateToProps, mapDispatchToProps)(ClosedGroup);

@@ -79,9 +79,11 @@ const Login = ({
                             <select
                                 onChange={handleRoleChange}
                                 onBlur={handleRoleChange}
+                                required
                             >
                                 <optgroup>
-                                    <option value="admin" selected>Admin</option>
+                                    <option value="admin">--Select Your Role</option>
+                                    <option value="admin">Admin</option>
                                     <option value='group'>Group</option>
                                 </optgroup>
                             </select>

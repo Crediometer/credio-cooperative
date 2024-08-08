@@ -1,6 +1,23 @@
 import axios from "axios";
-import { ACTIVE_SAVING_FAILURE, ACTIVE_SAVING_REQUEST, ACTIVE_SAVING_SUCCESS, CLOSED_SAVING_FAILURE, CLOSED_SAVING_REQUEST, CLOSED_SAVING_SUCCESS, CREATE_SAVING_FAILURE, CREATE_SAVING_REQUEST, CREATE_SAVING_SUCCESS, OVERDUE_SAVING_FAILURE, OVERDUE_SAVING_REQUEST, OVERDUE_SAVING_SUCCESS } from "./SavingType";
+import { ACTIVE_SAVING_FAILURE, ACTIVE_SAVING_REQUEST, ACTIVE_SAVING_SUCCESS, CLOSED_SAVING_FAILURE, CLOSED_SAVING_REQUEST, CLOSED_SAVING_SUCCESS, CREATE_SAVING_FAILURE, CREATE_SAVING_REQUEST, CREATE_SAVING_SUCCESS, OVERDUE_SAVING_FAILURE, OVERDUE_SAVING_REQUEST, OVERDUE_SAVING_SUCCESS, SAVING_FAILURE, SAVING_REQUEST, SAVING_SUCCESS } from "./SavingType";
+export const savingRequest = () => {
+  return {
+    type: SAVING_REQUEST,
+  };
+};
+export const savingSuccess = (register) => {
+  return {
+    type: SAVING_SUCCESS,
+    payload: register,
+  };
+};
 
+export const savingFaliure = (error) => {
+  return {
+    type: SAVING_FAILURE,
+    payload: error,
+  };
+};
 
   export const activeRequest = () => {
     return {
@@ -79,6 +96,31 @@ import { ACTIVE_SAVING_FAILURE, ACTIVE_SAVING_REQUEST, ACTIVE_SAVING_SUCCESS, CL
   };
 
   const baseUrl = "https://cooperative-be.onrender.com/api/v1"
+  
+  export const getsaving = (limit, page) => {
+    return async (dispatch) => {
+      dispatch(savingRequest())
+      try {
+        let datas = JSON.parse(localStorage.getItem("auth"))
+        const headers = {
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
+        };
+        const res = await axios.get(
+          `${baseUrl}/loans/active?limit=${limit}&page=${page}`,
+          { headers: headers }
+        );
+        const { data } = res;
+        if (res.status === 200) {
+          dispatch(savingSuccess(data));
+        }
+      } catch (error) {
+        if (error.response){
+          dispatch(savingFaliure(error?.response?.data));
+        }
+      }
+    };
+  };
+  
   export const getActiveSaving = (limit, page) => {
     return async (dispatch) => {
       dispatch(activeRequest())
@@ -103,6 +145,29 @@ import { ACTIVE_SAVING_FAILURE, ACTIVE_SAVING_REQUEST, ACTIVE_SAVING_SUCCESS, CL
     };
   };
 
+  export const getGroupActiveSaving = (limit, page) => {
+    return async (dispatch) => {
+      dispatch(activeRequest())
+      try {
+        let datas = JSON.parse(localStorage.getItem("auth"))
+        const headers = {
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
+        };
+        const res = await axios.get(
+          `${baseUrl}/groups/savings/active?limit=${limit}&page=${page}`,
+          { headers: headers }
+        );
+        const { data } = res;
+        if (res.status === 200) {
+          dispatch(activeSuccess(data));
+        }
+      } catch (error) {
+        if (error.response){
+          dispatch(activeFaliure(error?.response?.data));
+        }
+      }
+    };
+  };
 
   export const getClosedSaving = (limit, page) => {
     return async (dispatch) => {
@@ -128,6 +193,30 @@ import { ACTIVE_SAVING_FAILURE, ACTIVE_SAVING_REQUEST, ACTIVE_SAVING_SUCCESS, CL
     };
   };
 
+  export const getGroupClosedSaving = (limit, page) => {
+    return async (dispatch) => {
+      dispatch(closedRequest())
+      try {
+        let datas = JSON.parse(localStorage.getItem("auth"))
+        const headers = {
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
+        };
+        const res = await axios.get(
+          `${baseUrl}/groups/savings/closed?limit=${limit}&page=${page}`,
+          { headers: headers }
+        );
+        const { data } = res;
+        if (res.status === 200) {
+          dispatch(closedSuccess(data));
+        }
+      } catch (error) {
+        if (error.response){
+          dispatch(closedFaliure(error?.response?.data));
+        }
+      }
+    };
+  };
+
   export const getOverdueSaving = (limit, page) => {
     return async (dispatch) => {
       dispatch(overdueRequest())
@@ -138,6 +227,30 @@ import { ACTIVE_SAVING_FAILURE, ACTIVE_SAVING_REQUEST, ACTIVE_SAVING_SUCCESS, CL
         };
         const res = await axios.get(
           `${baseUrl}/savings/overdue?limit=${limit}&page=${page}`,
+          { headers: headers }
+        );
+        const { data } = res;
+        if (res.status === 200) {
+          dispatch(overdueSuccess(data));
+        }
+      } catch (error) {
+        if (error.response){
+          dispatch(overdueFaliure(error?.response?.data));
+        }
+      }
+    };
+  };
+
+  export const getGroupOverdueSaving = (limit, page) => {
+    return async (dispatch) => {
+      dispatch(overdueRequest())
+      try {
+        let datas = JSON.parse(localStorage.getItem("auth"))
+        const headers = {
+            authorization: `Bearer ${datas?.token?.payload?.token}`,
+        };
+        const res = await axios.get(
+          `${baseUrl}/groups/savings/overdue?limit=${limit}&page=${page}`,
           { headers: headers }
         );
         const { data } = res;

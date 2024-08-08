@@ -3,13 +3,12 @@ import ReceiptModal from "../../components/Modal/ReceiptModal";
 import { Link, useParams } from "react-router-dom";
 import { BiChevronLeft } from "react-icons/bi";
 import { connect } from "react-redux";
-import { cashPayment } from "../../Redux/Payment/PaymentAction";
+import { cashPayment, groupcashPayment } from "../../Redux/Payment/PaymentAction";
 import LottieAnimation from "../../Lotties";
 import loader from "../../Assets/animations/loading.json"
 import { getLoan } from "../../Redux/Loan/LaonAction";
 import SuccessModal from "../../components/Modal/SuccessModal";
-
-const CashPayment = (
+const CashPaymentGroup = (
     {
         loading, 
         data,
@@ -79,8 +78,8 @@ const CashPayment = (
         await postPayment(postState, ()=>{
             setShow(true)
             setAmount("")
-            setType("")
             setTypeId("")
+            setType("")
         }, ()=>{ 
            setshowError(true)
         });
@@ -92,7 +91,7 @@ const CashPayment = (
     return ( 
         <div className="saving">
         <div className="back">
-            <Link to={`/payment/${id}`}><BiChevronLeft/></Link>
+            <Link to={`/payment-group/${id}`}><BiChevronLeft/></Link>
             <p className="title">Cash Payments</p>
         </div>
         <div className="card-body">
@@ -140,8 +139,8 @@ const CashPayment = (
                             <select
                                 onChange={handletypeId}
                                 onBlur={handletypeId}
-                                required
                                 value={typeid}
+                                required
                             >
                                 <optgroup>
                                 <option>--Select a Loan Plan---</option>
@@ -207,11 +206,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return{
         postPayment: (postdata, history, error) => {
-            dispatch(cashPayment(postdata, history, error));
+            dispatch(groupcashPayment(postdata, history, error));
         },
         getloans: (id, type) => {
             dispatch(getLoan(id, type));
         },
     }
 } 
-export default connect(mapStateToProps, mapDispatchToProps)(CashPayment);
+export default connect(mapStateToProps, mapDispatchToProps)(CashPaymentGroup);

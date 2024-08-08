@@ -4,9 +4,10 @@ import LottieAnimation from "../../Lotties";
 import loader from "../../Assets/animations/loading.json"
 import { useState } from "react";
 import { connect } from "react-redux";
-import { postPayment } from "../../Redux/Payment/PaymentAction";
 import JSEncrypt from "jsencrypt";
 import consts from '../../pages/Login/keys/const'
+import SuccessModal from "../../components/Modal/SuccessModal";
+import { postPayment } from "../../Redux/Wallet/WalletAction";
 const Transfer = (
     {
         loading, 
@@ -93,6 +94,7 @@ const Transfer = (
                         </button>
                     </div>
                 </form>
+                {resetsuccess && (<SuccessModal message={data.message} togglemodal={togglemodal}/>)}
             </div>
         </div>
     );
@@ -101,9 +103,9 @@ const Transfer = (
 const mapStateToProps = state => {
     console.log(state)
     return {
-        loading:state?.payment?.loading,
-        data: state?.payment?.data,
-        errors: state?.payment?.error,
+        loading:state?.wallet?.loading,
+        data: state?.wallet?.data,
+        errors: state?.wallet?.error,
     };
 }
 

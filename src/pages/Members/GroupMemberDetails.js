@@ -13,9 +13,9 @@ import { getloans, getsaving } from '../../Redux/Transactions/TransactionAction'
 import LottieAnimation from '../../Lotties';
 import preloader from "../../Assets/animations/preloader.json"
 import empty from "../../Assets/animations/Empty.json"
-import { getsinglemember } from '../../Redux/Member/MemberAction';
+import { getsinglegroupmember, getsinglemember } from '../../Redux/Member/MemberAction';
 import { FormattedNumber, IntlProvider } from 'react-intl';
-const MemberDetails = ({
+const GroupMemberDetails = ({
     getloans,
     getsaving,
     loading,
@@ -113,7 +113,7 @@ const MemberDetails = ({
                             />
                         </div>
                         <div>
-                            <Link to={`/payment/${id}`}>
+                            <Link to={`/payment-group/${id}`}>
                                 <Box
                                     color="rgba(5, 139, 65, 0.123)"
                                     icons={<HiOutlinePlusSm/>}
@@ -261,7 +261,7 @@ const mapDispatchToProps = dispatch => {
     return{
         getloans: (id, limit, page) => dispatch(getloans(id, limit, page)),
         getsaving: (id, limit, page) => dispatch(getsaving(id, limit, page)),
-        getsinglemember: (id) => dispatch(getsinglemember(id)),
+        getsinglemember: (id) => dispatch(getsinglegroupmember(id)),
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(MemberDetails);   
+export default connect(mapStateToProps, mapDispatchToProps)(GroupMemberDetails);   

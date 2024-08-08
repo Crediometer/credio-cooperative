@@ -1,16 +1,21 @@
+import { FaChevronDown, FaSearch, FaTimes } from "react-icons/fa";
+// import {connect} from 'react-redux'
+import credio from "../../Assets/logo.png"
+import {Select, Switch} from 'antd'
 import { useEffect, useRef, useState } from "react";
-import { FaWifi } from "react-icons/fa6";
+import { BsBank2 } from "react-icons/bs";
+import { Link, useParams } from "react-router-dom";
 import ReceiptModal from "../../components/Modal/ReceiptModal";
-import { Link, useParams } from 'react-router-dom';
 import { BiChevronLeft } from "react-icons/bi";
 import { connect } from "react-redux";
 import { buttonScan, DisConnect, getQPosInfo, init, sendPIN, startTrade } from "../../Redux/Card/CardScript";
-import { depositData, singledepositData } from "../../Redux/Deposit/DepositAction";
 import LottieAnimation from "../../Lotties";
 import loader from "../../Assets/animations/loading.json"
+import { depositData, depositRepayment } from "../../Redux/Deposit/DepositAction";
 import LoadingModal from "../../components/Modal/LoadingModal";
 import { getLoan } from "../../Redux/Loan/LaonAction";
-const CardPayment = ({
+import { getgroupmember, getsinglemember } from "../../Redux/Member/MemberAction";
+const Repayment = ({
     buttonScan, 
     cardData, 
     disconnect,
@@ -19,60 +24,42 @@ const CardPayment = ({
     sendPin,
     Deposit,
     loading,
+    getloans,
     error, 
     data,
-    getloans,
-    plan
+    plan,
+    memberdata,
+    membererror,
+    memberloading,
+    getmember
 }) => {
-    const {id} = useParams()
-    const members = ['John Doe', 'Jane Smith', 'Michael Johnson', 'Alice Williams', 'David Brown'];
-    // State to hold the search input and the filtered members
-    const [searchInput, setSearchInput] = useState('');
-    const [searchUser, setSearchUser] = useState('');
-    const [filteredMembers, setFilteredMembers] = useState(members);
-    const [next, setnext] = useState(1)
-    const [pin, setPin] = useState("");
-    const [amount, setAmount] = useState("")
-    const [transactionType, setTransactionType] = useState(null)
-    const [typeid, setTypeId] = useState("")
-    const [accountType, setAccountType] = useState("")
+    const [show1, setShow1] = useState(false)
+    const [showBank, setShowBank] = useState(false);
+    const [showerror,  setShowError] = useState(false)
+    const [selectBank, setSelectBank]  = useState("Select a Bank")
+    const [memberName, setmemberName] = useState("")
+    const [memberId, setmemberId] = useState("")
+    const [memberEmail, setmemberEmail] = useState("")
+    const [memberPhoneNumber, setmemberPhoneNumber] = useState("")
+    const [transactionType, setTransactionType] = useState("")
+    const [message, setMessage] = useState("")
+    const [totalAmount, setTotalAmount] = useState('');
+    const [amountPerUnit, setAmountPerUnit] = useState('');
+    const [repeatEvery, setRepeatEvery] = useState('');
     const [postState, setpostState] = useState({});
+    const [typeid, setTypeId] = useState("")
+    const [keyState, setKeyState] = useState({})
+    const [number, setNumber] = useState(1);
+    const [success2,  setSuccess2] = useState(false)
+    const [next, setnext] = useState(1)
+    const {id} = useParams()
+    const [accountType, setAccounttype] = useState()
+    const [pin, setPin] = useState("");
     const [showPin, setShowPin] = useState(false);
     const [showPin1, setShowPin1] = useState(false);
     const [showPin2, setShowPin2] = useState(false);
     const [showPin3, setShowPin3] = useState(false);
     const [success,  setSuccess] = useState(false);
-    const [success2,  setSuccess2] = useState(false);
-    const handletransactiontype =(e)=>{
-        const value = e.target.value
-        setTransactionType(value)
-        setpostState({ ...postState, ...{type: transactionType} }); 
-    }
-    const handletypeId = (e)=>{
-        const value = e.target.value
-        setTypeId(value)
-        if(transactionType == 0){
-            setpostState({...postState, ...{savingsId: typeid}})
-        }else if(transactionType == 1){
-            setpostState({...postState, ...{loanId: typeid}})
-        }
-    }
-    const toggleModal = ()=>{
-        setnext(1)
-    }
-    const handletotal =(e)=>{
-        const value = e.target.value
-        setAmount(value)
-        const newvalue = parseFloat(value)
-        setpostState({ ...postState, ...{amount: newvalue, memberId: id } });
-    }
-
-    const handleAccount=(e)=>{
-        const value = e.target.value
-        setAccountType(value);
-        const newvalue = parseInt(value, 10)
-        setpostState({ ...postState, ...{accountType: newvalue} }); 
-    }
     const atmpin = useRef(null);
     useEffect(()=>{
         if(pin.length === 1){
@@ -126,25 +113,41 @@ const CardPayment = ({
     const onChangepin4 = (e) => {
         setPin3(e.target.value)
     }
-    const handleInputChange = (e) => {
-        const value = e.target.value;
-        setSearchInput(value);
-        
-        // Filter members based on input value
-        if (value) {
-            const filtered = members.filter(member => 
-                member.toLowerCase().includes(value.toLowerCase())
-            );
-            setFilteredMembers(filtered);
-        } else {
-            setFilteredMembers([]);
+    const toggleModal = ()=>{
+        setnext(1)
+    }
+    const handletotal =(e)=>{
+        const value = e.target.value
+        setTotalAmount(value)
+        const newvalue = parseFloat(value)
+        setpostState({ ...postState, ...{amount: newvalue} });
+    }
+    const handleMember =(e)=>{
+        const value = e.target.value
+        setmemberId(value)
+        setpostState({ ...postState, ...{
+            memberId: memberdata?.members[value]?._id, 
+            memberName: memberdata?.members[value]?.personalInfo?.fullname, 
+            memberNumber:"09098987876",   
+            productId: id
+        } }); 
+    }
+    const handleAccount=(e)=>{
+        const value = e.target.value
+        setAccounttype(value);
+        const newvalue = parseInt(value, 10)
+        setpostState({ ...postState, ...{accountType: newvalue} }); 
+    }
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+        try{
+            doTrade(amountPerUnit)
+        }catch{
         }
-    };
-    const handleMemberClick = (member) => {
-        setSearchUser(member);
-        setSearchInput("")
-        setFilteredMembers([]);
-    };
+    }       
+    const togglemodal = ()=>{
+        setShow1(!show1)
+    }
     const handlenext = () =>{
         setnext(next+1)
     }
@@ -154,16 +157,9 @@ const CardPayment = ({
             init();
             buttonScan();
         } else {
-            // togglemodal()
+            togglemodal()
         }
     }
-    const handleSubmit=(e)=>{
-        e.preventDefault();
-        try{
-            doTrade(amount)
-        }catch{
-        }
-    }  
     const handlePin = () => {
         // e.preventDefault();
         if (pin && pin1 && pin2 && pin3) {
@@ -180,7 +176,7 @@ const CardPayment = ({
                 () => {
                     setSuccess2(true)
                     setpostState({})
-                    setnext(5)
+                    setnext(4)
                     // On Success
                 },
                 () => {
@@ -208,108 +204,81 @@ const CardPayment = ({
             //     }
             // }
         }
-    }, [cardData.posinfo, connected]); 
+    }, [cardData.posinfo, connected]);
     useEffect(()=>{
         if(cardData.pinRequest ){
             setnext(3)
         }
     },[cardData])
     useEffect(()=>{
-        getloans(id, transactionType)
-    },[id,transactionType]) 
-    // useEffect(()=>{
-    //     if(next === 3)
-    // },[next])
+        getmember()
+    },[])
     return ( 
-        <div className="saving">
+        <div className="payment saving">
             <div className="back">
-                <Link to={`/payment/${id}`}><BiChevronLeft/></Link>
-                <p className="title">Card Payments</p>
+                <Link to={`/group-payment/${id}`}><BiChevronLeft/></Link>
+                <p className="title">Recurring Payments</p>
             </div>
             <div className="card-body">
-              {/* { next===1 && <div className="connect-reader">
-                    <FaWifi />
-                    <p>Connect Credio Reader</p>
-                    <button onClick={connectreader}>Connect</button>
-                </div>} */}
-               {/* { next===1 &&  */}
-                    <div className="card-field">
-                        <form onSubmit={handleSubmit}>
-                            <div className="form-2"  style={{width: "100%"}}>
-                                <div className="input input-4">
-                                    <label>Amount</label>
-                                    <input type="text" 
-                                    placeholder="Enter Amount"
-                                    // value={formattedAmount}
-                                    disabled={next==3}
-                                    onBlur={handletotal}
-                                    onChange={handletotal}
-                                    required
-                                    // disabled = {(business.length === 0 || !personal) ? (true) : (false)}
-                                    ></input>
-                                </div>
-                            </div>
-                            <div className="form-2"  style={{width: "100%"}}>
-                                <div className="input input-4">
-                                    <label>Transaction Type</label>
-                                    <select disabled={next==3} required onChange={handletransactiontype} onBlur={handletransactiontype}>
-                                        <optgroup>
-                                            <option>--Transaction Type--</option>
-                                            <option value={0}>Savings</option>
-                                            <option value={1}>Loan</option>
-                                        
-                                        </optgroup>
-                                    </select>
-                                </div>
-                            </div>
-                            {transactionType == 1 && (
-                                <div className="form-2"  style={{width: "100%"}}>
-                                    <div className="input input-4">
-                                        <label>Loan Plan</label>
-                                        <select
-                                            disabled={next==3}
-                                            onChange={handletypeId}
-                                            onBlur={handletypeId}
-                                            required
-                                        >
-                                            <optgroup>
-                                            <option>--Select a Loan Plan---</option>
-                                                {plan?.map(plan => {
-                                                    return(
-                                                        <option value={plan._id}>{plan.purpose} ||  {plan.amount}</option>
-                                                    )
-                                                })}
-                                            </optgroup>
-                                        </select>
-                                    </div>
-                                </div>
-                            )}
-                            {transactionType == 0 && (
-                                    <div className="form-2"  style={{width: "100%"}}>
-                                        <div className="input input-4">
-                                            <label>Saving Plan</label>
-                                            <select
-                                                disabled={next==3}
-                                                onChange={handletypeId}
-                                                onBlur={handletypeId}
-                                                required
-                                            >
+                {next===1 && (
+                    <form style={{ width: '100%', marginTop:"-2 0px" }} onSubmit={connectreader}>
+                        <div className="invoice-body">
+                            <div className="invoice-period"  style={{ width: '100%' }} >
+                                <div className="payment-form">
+                                    <div className="form-1">
+                                        <label>Member<span>*</span></label>
+                                        <div className="select-field">
+                                            <select required onChange={handleMember} onBlur={handleMember}>
                                                 <optgroup>
-                                                    <option>--Select a Saving Plan---</option>
-                                                    {plan?.map(plan => {
+                                                    <option>--Select Member--</option>
+                                                    {memberdata?.members?.map((member,index)=>{
                                                         return(
-                                                            <option value={plan._id}>{plan.purpose} ||  {plan.amount}</option>
+                                                            <option value={index}>{member?.personalInfo?.fullname}</option>
                                                         )
                                                     })}
                                                 </optgroup>
                                             </select>
                                         </div>
                                     </div>
-                            )}
-                            <div className="form-2"  style={{width: "100%"}}>
+                                    <div className="form-1">
+                                        <label>Enter Total Amount<span>*</span></label>
+                                        <div className="input-search-name">
+                                            <input type="text" required onChange={handletotal} onBlur={handletotal}></input>
+                                        </div>
+                                    </div>
+                                   {/*  <div className="form-1">
+                                        <label>Enter Amount per unit<span>*</span></label>
+                                        <div className="input-search-name">
+                                            <input type="text" required onChange={handleunit} onBlur={handleunit}></input>
+                                        </div>
+                                    </div>
+                                    <div className="form-1">
+                                        <label>Start Date<span>*</span></label>
+                                        <div className="input-search-name">
+                                            <input type="date" required value={startDate} disabled></input>
+                            
+                                        </div>
+                                    </div>
+                                    <div className="form-1">
+                                        <label>End Date<span>*</span></label>
+                                        <div className="input-search-name">
+                                            <input type="date" required value={endDate} disabled ></input>
+                                        </div>
+                                    </div> */}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="save-con save-con-4">
+                            <button>Connect to Credio Reader</button>
+                        </div>
+                    </form>
+                )}
+                { next===2 && <div className="card-field">
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-2"  style={{width: "100%"}}>
                                 <div className="input input-4">
                                     <label>Account Type</label>
-                                    <select disabled={next==3} required onChange={handleAccount} onBlur={handleAccount}>
+                                    <select required onChange={handleAccount} onBlur={handleAccount}>
                                         <optgroup>
                                             <option>--Select Account Type--</option>
                                             <option value={1}>Savings Account</option>
@@ -318,27 +287,20 @@ const CardPayment = ({
                                         </optgroup>
                                     </select>
                                 </div>
-                            </div>
-                           {next == 2 && 
-                                <div className="form-button">
-                                    <button className='transfer-button'>
-                                        {cardData?.requestDisplay
-                                        ? (
-                                            <>
-                                                <LottieAnimation data={loader}/>
-                                                "Scanning your Card.."
-                                            </>
-                                        ) 
-                                        : "Continue"}
-                                    </button>
-                                </div>
-                            }
-                        </form>  
-                        { next == 1 && 
-                            <button className='transfer-button' onClick={connectreader}>Connect to Credio Reader</button>
-                        }
+                        </div>
+                        <div className="form-button">
+                            <button className='transfer-button'>{cardData?.requestDisplay
+                             ? (
+                                <>
+                                    <LottieAnimation data={loader}/>
+                                    "Scanning your Card.."
+                                </>
+                            ) 
+                             : "Continue"}</button>
+                        </div>
+                    </form>
                     </div>
-                {/* } */}
+                }
                 {next === 3 &&
                     <div className="card-field">
                         <p className="enter-pin">Please Enter Your Card Pin</p>
@@ -390,25 +352,31 @@ const CardPayment = ({
                             </div>
                         </div>
                         <div className="form-button">
-                            <button onClick={handlePin} className='transfer-button'>Transfer</button>
+                            <button onClick={handlePin}  className='transfer-button'>Transfer</button>
                         </div>
                     </div>
                 }
-                {next === 5 && <ReceiptModal togglemodal={toggleModal} data={data}/> }
+                {next === 4 && <ReceiptModal togglemodal={toggleModal} data={data}/> }
                 {loading && (<LoadingModal/>)}
             </div>
+            {/* <ReceiptModal/> */}
+            {/* {showerror && (<Errormodal togglemodal={togglemodal2}/>)}
+            {keyloading && (<LoadingModal/>)}
+            {(show1) && (<AccountModal togglemodal={togglemodal} unitamount={amountPerUnit} postState={postState} setpostState={setpostState} setShow1={setShow1}/>)} */}
         </div>
     );
 }
 
-
 const mapStoreToProps = (state) => {
     console.log(state)
     return {
+        membererror:state?.member?.error,
+        memberloading: state?.member?.loading,
+        memberdata: state?.member?.data?.payload,
         cardData: state?.card,
         connected: state?.card?.connected,
-        loading: state.deposit.loading,
-        data: state.deposit.deposit,
+        loading: state.redeposit.loading,
+        data: state?.redeposit?.deposit,
         error: state.deposit.error,
         plan: state?.loanlist?.data?.payload?.memberActionList
     };  
@@ -432,12 +400,13 @@ const mapStoreToProps = (state) => {
             dispatch(sendPIN(pin));
         },
         Deposit: (postdata, history, error) => {
-            dispatch(singledepositData(postdata, history, error));
+            dispatch(depositRepayment(postdata, history, error));
         },
         getloans: (id, type) => {
             dispatch(getLoan(id, type));
         },
+        getmember: (limit, page) => dispatch(getgroupmember(limit, page))
     };
   };
   
-export default connect(mapStoreToProps, mapDispatchToProps)(CardPayment);
+export default connect(mapStoreToProps, mapDispatchToProps)(Repayment);

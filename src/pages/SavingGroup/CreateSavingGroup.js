@@ -6,7 +6,7 @@ import { createSaving, createSavingGroup } from "../../Redux/Saving/SavingAction
 import { connect } from "react-redux";
 import LottieAnimation from "../../Lotties";
 import loader from "../../Assets/animations/loading.json"
-import { getmember } from "../../Redux/Member/MemberAction";
+import { getgroupmember, getmember } from "../../Redux/Member/MemberAction";
 const CreateSavingGroup = ({
     loading,
     error,
@@ -150,54 +150,9 @@ const CreateSavingGroup = ({
     return ( 
         <div className="saving createloan">
             <div className="back">
-                <Link to='/saving'><BiChevronLeft/></Link>
+                <Link to='/saving-group'><BiChevronLeft/></Link>
                 <p className="title">Create Saving</p>
             </div>
-            {/* <div className="top-search">
-                <div className="form-11" style={{ width: '100%' }}>
-                    <div className="input">
-                        <input 
-                            type="text" 
-                            placeholder="SEARCH FOR MEMBER"
-                            value={searchInput}
-                            onChange={handleInputChange}
-                            required
-                        ></input>
-                    </div>
-                </div>
-                <div className="statement-date statement-date-2">
-                    <input
-                        type='text'
-                        placeholder='Start Date'
-                        className='transferfield'
-                        onFocus={(e) => (e.target.type = "date")}
-                        onBlur={(e) => {(e.target.type = "text");}}
-                        // onChange={handlestartdate}
-                        required
-                    ></input>
-                </div>
-            </div>
-            {searchInput && (
-                <div className="member-list">
-                    {filteredMembers.length > 0 ? (
-                        filteredMembers.map((member, index) => (
-                            <div    
-                                onClick={() => handleMemberClick(member)}
-                                style={{ cursor: 'pointer' }} 
-                                key={index} 
-                                className="member-item"
-                            >
-                                {member}
-                            </div>
-                        ))
-                    ) : (
-                        <div>No members found</div>
-                    )}
-                </div>
-            )}
-            <div className="selected-user">
-                <h4 className="form-head">{searchUser}</h4>
-            </div> */}
             <div className="card-body">
                 <form onSubmit={handleSubmit} className="card-field">
                     <div className="form-2"  style={{width: "100%"}}>
@@ -209,6 +164,7 @@ const CreateSavingGroup = ({
                                 value={memberId}
                             >
                                 <optgroup>
+                                    <option>--Select Member--</option>
                                     {member?.map(((member)=>{
                                         return(
                                             <option value={member?._id}>{member?.personalInfo?.fullname}</option>
@@ -342,7 +298,7 @@ const mapDispatchToProps = dispatch => {
         createSaving: (postdata, history, error) => {
             dispatch(createSavingGroup(postdata, history, error));
         },
-        getmember: (limit, page) => dispatch(getmember(limit, page)),
+        getmember: (limit, page) => dispatch(getgroupmember(limit, page)),
     }
 }
 

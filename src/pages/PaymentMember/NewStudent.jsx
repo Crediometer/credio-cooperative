@@ -16,7 +16,7 @@ import { depositData } from "../../Redux/Deposit/DepositAction";
 import LoadingModal from "../../components/Modal/LoadingModal";
 import { getLoan } from "../../Redux/Loan/LaonAction";
 import { getsinglemember } from "../../Redux/Member/MemberAction";
-const NewStudent = ({
+const NewStudentGroup = ({
     buttonScan, 
     cardData, 
     disconnect,
@@ -146,7 +146,7 @@ const NewStudent = ({
             memberNumber:memberdata?.member?.personalInfo?.phone,
             groupId: memberdata?.member?.groupId,
             cooperativeId: memberdata?.member?.cooperativeId,
-            requestType: 0
+            requestType: 1
         } }); 
     }
     const handletypeId = (e)=>{
@@ -210,9 +210,9 @@ const NewStudent = ({
             Deposit(
                 { ...postState, ...{tlv: cardData.tlv} },
                 () => {
-                    setnext(4)
                     setSuccess2(true)
                     setpostState({})
+                    setnext(4)
                     // On Success
                 },
                 () => {
@@ -264,19 +264,6 @@ const NewStudent = ({
             // setpostState({ ...postState, ...{endDate: endDate} });  
         }
     }, [totalAmount, amountPerUnit, repeatEvery, startDate]);
-    //useEffect(()=>{
-    //     setpostState({ ...postState,
-    //         tlv:cardData?.tlv,
-    //         key: keyinfo?.pin_key,
-    //         merchantId: keyinfo?.merchantId,
-    //         merchantCategoryCode: keyinfo?.merchantCategoryCode,
-    //         terminalId:keyinfo?.terminalid,
-    //         merchantName: keyinfo?.merchantName
-    //     }); 
-    // },[keyinfo, cardData])
-    // useEffect(()=>{
-    //     fetchprofile();
-    // },[]);
     useEffect(()=>{
         getloans(id, transactionType)
     },[id,transactionType])
@@ -286,7 +273,7 @@ const NewStudent = ({
     return ( 
         <div className="payment saving">
             <div className="back">
-                <Link to={`/payment/${id}`}><BiChevronLeft/></Link>
+                <Link to={`/payment-group/${id}`}><BiChevronLeft/></Link>
                 <p className="title">Recurring Payments</p>
             </div>
             <div className="card-body">
@@ -430,6 +417,7 @@ const NewStudent = ({
                 {next === 3 &&
                     <div className="card-field">
                         <p className="enter-pin">Please Enter Your Card Pin</p>
+                        <p className="enter-pin">Charges fee of #50 will be added to this transaction</p>
                         <div className="field-container">
                             <div className="field-1">
                                 <div className="pinfield">
@@ -535,4 +523,4 @@ const mapStoreToProps = (state) => {
     };
   };
   
-export default connect(mapStoreToProps, mapDispatchToProps)(NewStudent);
+export default connect(mapStoreToProps, mapDispatchToProps)(NewStudentGroup);

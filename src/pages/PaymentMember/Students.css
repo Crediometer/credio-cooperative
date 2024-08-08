@@ -1,0 +1,1068 @@
+.students-top{
+    display: flex;
+    justify-content: right;
+}
+.payment2{
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    padding: 4rem;
+}
+.payment-method{
+    margin-top: 80px;
+}
+.students-top button{
+    font-family: "Inter";
+    font-size: 11px;
+    font-size: 600;
+    color: white;
+    background-color: #263238;
+    padding: 12px 50px;
+    border-radius: 5px;
+    border: none;
+}
+.students-body{
+    margin-top: 14px;
+    background-color: #E5ECF6;
+    height: 500px;
+  
+    padding: 24px 48px;
+    border-radius: 5px;
+}
+.students-table-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.student-table-body{
+    height:400px;
+    overflow-y: scroll;
+    margin-top: 10px;
+}
+.students-info h4{
+    font-family: "Poppins";
+    font-size: 24px;
+    font-weight: 700;
+    color: #298097;
+}
+.students-info p{
+    font-family: "Poppins";
+    font-size: 13px;
+    font-weight: 500;
+    color: #16C098;
+}
+.students-filter{
+    width: 50%;
+    display: flex;
+    align-items: right;
+    /* gap: 21px; */
+}
+.students-filter:first-child{
+    width: 65%;
+}
+.students-select{
+    width: 40% !important;
+}
+.students-search{
+    width: 100%;
+    padding: 10px 12px;
+    background-color: #F9FBFF;
+    border: 1px solid #E7E7E7;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.students-search svg{
+    font-size: 16px;
+    font-weight: 500;
+    color: #7E7E7E;
+}
+.students-search input{
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    font-family: "Poppins";
+    font-size: 12px;
+    font-weight: 500;
+    color: #B5B7C0;
+}
+.students-search input::placeholder{
+    font-family: "Poppins";
+    font-size: 12px;
+    font-weight: 500;
+    color: #B5B7C0;
+}
+.students-search p{
+    width: 50%;
+    font-family: "Poppins";
+    font-size: 12px;
+    font-weight: 500;
+    color: #7E7E7E;
+}
+.students-search select{
+    /* width: 78%; */
+    border: none;
+    background-color: transparent;
+    font-family: "Poppins";
+    font-size: 12px;
+    font-weight: 800;
+    color: #3D3C42;
+}
+.invoice-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #A3A0A0;
+}
+.invoice-top h4{
+    font-size: 24px;
+    font-weight: 600;
+    color: black;
+}
+.student-invoice{
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+.invoice-list{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 25%;
+}
+.invoice-list p{
+    text-align: center;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 500;
+    color: black;
+    padding-bottom: 10px;
+}
+.active-p{
+    border-bottom: 3px solid #FCBA2D;
+}
+.invoice-body{
+    margin-top: 44px;
+    display: flex;
+    align-items: normal;
+    gap: 36px;
+}
+.mastercard{
+    width: 8%;
+}
+.invoice-payment{
+    width: 60%;
+}
+.card-info{
+    margin-top: 16px;
+    width: 100%;
+}
+.invoice-period{
+    width: 40%;
+}
+.form-head{
+    text-align: center;
+    width: 100%;
+    font-size: 24px;
+    color: #B11226;
+    font-weight: 600;
+}
+.form-body{
+    margin-top: 15px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 20px;
+    color: #B11226;
+    font-weight: 600;
+}
+.payment-form{
+    margin-top: 14px;
+    padding:24px 29px;
+    border: 1px solid #C4C4C4;
+    border-radius: 14px;
+}
+.form-1{
+    width: 100%;
+}
+.form-1 label{
+    font-size: 14px;
+    color: #919499;
+    font-weight: 500;
+}
+.form-1 label span{
+    color: #D70000;
+    margin-left: 4px;
+}
+/* .input-search-name{
+    width: 100%;
+    margin-top: 14px;
+    margin-bottom: 15px;
+    padding: 20px 21px;
+    border-radius: 14px;
+    border: 1px solid #C4C4C4;
+    display: flex;
+    justify-content: space-between;
+} */
+.input-search-name input{
+    width: 100%;
+    margin-top: 14px;
+    margin-bottom: 15px;
+    padding: 20px 21px;
+    border-radius: 14px;
+    border: 1px solid #C4C4C4;
+    background-color: transparent;
+    font-size: 14px;
+    font-family: "Inter";
+    font-weight: 400;
+    color: #474747;
+}
+.input-search-name input:focus{
+    background-color: #F5F7FB;
+    border: 1px solid #C4C4C4;
+}
+.input-search-name textarea{
+    width: 100%;
+    height: 120px;
+    background-color:  transparent;
+    border: none;
+    font-size: 14px;
+    font-family: "Inter";
+    font-weight: 400;
+    color: #474747;
+}
+.input-search-name svg{
+    color: #8A8A8A;
+}
+.form-2{
+    display: flex;
+    align-items: last baseline;
+    gap: 22px;
+}
+.form-2 div{
+    width: 100%;
+}
+.select-field{
+    width: 100%;
+    margin-top: 14px;
+    margin-bottom: 15px;
+}
+.select-field select{
+    width: 100%;
+    padding: 20px 21px;
+    border-radius: 14px;
+    border: 1px solid #C4C4C4;
+    font-size: 14px;
+    font-family: "Inter";
+    font-weight: 400;
+    color: #474747;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('../../Assets/arrow.png');
+    background-size: 10px;
+    background-position: 96% center;
+    background-repeat: no-repeat;
+}
+.save-con{
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.save-con button{
+    width: 100%;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    background-color: #B11226;
+    padding: 8px;
+    border-radius: 14px;
+    border: none;
+}
+/* .save-con-4{
+    margin-top: 20px;
+    width: 70%;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+} */
+
+.save-con-4 button{
+    width: 60%;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    background-color: #B11226;
+    padding: 8px;
+    border-radius: 14px;
+    border: none;
+}
+.save-con-2 button{
+    width: 100%;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    background-color: #298097;
+    padding: 8px;
+    border-radius: 14px;
+    border: none;
+}
+.share{
+    background-color: white !important;
+    color: #298097 !important;
+    border: 1px solid #298097 !important;
+}
+.student-invoice-top{
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.student-invoice-top h4{
+    font-size: 24px;
+    font-family: "Poppins";
+    font-weight: 700;
+    color: #298097;
+}
+.student-invoice-top button{
+    font-size: 20px;
+    font-family: "Poppins";
+    padding: 7px 22px;
+    font-weight: 700;
+    color: #298097;
+    background-color: transparent;
+    border: 1px solid #298097;
+    border-radius: 14px;
+}
+.invoice-progressbar{
+    margin-top: 28px;
+    width: 100%;
+    padding: 8px 26px;
+    border-radius:15px;
+    border:1px solid #C4C4C4;
+}
+.ngn-progressbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.ngn-progressbar p{
+    font-size: 15px;
+    font-family: "Poppins";
+    font-weight: 800;
+    color: #298097;
+}
+.invoice-form .input-search-name input{
+    background-color: #F5F7FB;
+    border: 1.29px solid #C4C4C4;
+}
+.invoice-form .input-search-name input{
+    background-color: #F5F7FB;
+    border: 1.29px solid #C4C4C4;
+}
+.progress-bar{
+    width: 100%;
+    height: 35px;
+    border-radius: 8px;
+    margin-top: 13px;
+    background-color: #F5F7FB;
+}
+.progress-bar-fill{
+    height: 100%;
+    border-radius: 8px;
+    background-color: #E3F5FF;
+    transition: width 0.5s ease-out;
+}
+.progress-label{
+    text-align: right;
+    margin-top: 12px;
+    font-size: 15px;
+    font-family: "Poppins";
+    font-weight: 600;
+    color: #298097;
+    transition: width 0.5s ease-out;
+}
+.transfer{
+    padding: 2rem 2.0625rem;
+}
+.transfer-head{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.75rem;
+    color: #000000;
+}
+.transfer-body{
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.transfer-inner{
+    width: 100%;
+    border-radius: 15px;
+    padding: 1rem;
+    /* background: rgba(230, 230, 230, 0.88); */
+    border-radius: 2px;
+}
+.transfer-to-title{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.5rem;
+    color: #000000;
+}
+.transfer-to-inner{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 44px;
+    padding-bottom: 52px;
+    border-bottom: 0.2px solid #000000;
+}
+.to{ 
+    width: 48%;
+    padding: 1rem;
+    margin-left: 10px;
+    margin-right: 10px;
+    background: #FFFFFF;
+    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.066);
+    border-radius: 8px;
+}
+.to-select-2{
+    background-color: #b1122776;
+    box-shadow: 5px 5px 8px rgba(244, 113, 113, 0.066);
+}
+.to p{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1rem;
+    text-align: left;
+    color: #000000;
+}
+.member-list{
+    width: 100%;
+    background-color: #FFFFFF;
+    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.066);
+    padding: 1rem;
+}
+.member-item{
+    margin-bottom: 10px;
+}
+.to-inner{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.to-image{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #E0E0E0;
+    border-radius: 10px;
+
+}
+.to-image img{
+    width: 30px;
+}
+.to-image svg{
+    font-size: 1rem;
+}
+.to-select input{
+    width: 30px;
+}
+.to-select input[type=radio]{
+    accent-color: #AC1337;
+}
+.transfer-cred{
+    padding: 1.4375rem 0rem;
+    border-bottom: 0.2px solid #000000;
+}
+.transfer-send{
+    display: flex;
+    align-items: center;
+}
+.transfer-send p{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.1rem;
+    color: rgba(0, 0, 0, 0.8);
+}
+.transfer-send select{
+    margin-left: 10px;
+    background-color: white;
+    border: none;
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    color: #2b2b2b6b;
+}
+.transfer-account{
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.transfer-account-left{
+    width: 60%;
+    padding:1.3rem 1.5rem;
+    background: #FFFFFF;
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.02);
+    border-radius: 8px;
+}
+.account-left-head{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.6rem;
+    color: rgba(0, 0, 0, 0.9);
+}
+.account-left-text{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.2rem;
+    color: rgba(0, 0, 0, 0.4);
+}
+.transfer-account-right{
+    width: 35%;
+}
+.transfer-available{
+    display: flex;
+    align-items: center;
+}
+.available-2{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.7375rem;
+    color: rgba(43, 43, 43, 0.4);
+}
+.sub-2{
+    margin-left: 10px;
+    background: rgba(179, 28, 47, 0.15);
+    border-radius: 4.40917px;
+}
+.sub-2 p{
+    padding: 0.3125rem 0.4375rem;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.475rem;
+    color: rgba(43, 43, 43, 0.9);
+}
+.balance-2{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: rgba(0, 0, 0, 0.9);
+}
+.form-1-outer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+.form-11, .form-2{
+    position: relative;
+    margin-top: 24px;
+    width: 32%;
+}
+.form-11{
+    margin-top: 0px !important  ;
+}
+.form-1-select{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1px;
+    background: #F5F5f5;
+    border-radius: 4px;
+    border: none;
+    width: 100%;
+    padding: 1.0625rem 1.875rem;
+}
+.form-1-select p, .form-1-select svg{
+    color: #2b2b2b85;
+    font-size: 1.2rem;
+    font-family: Darker Grotesque;
+    font-weight: 500;
+}
+.bank-select{
+    position: absolute;
+    z-index: 4;
+    width: 100%;
+    border-radius: 2.031px;
+    background: #DCDCDC;
+    padding: 1.17rem 1.33rem;
+}
+.bank-select-top{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.bank-select-top p{
+    color: rgba(0, 0, 0, 0.80);
+    font-size: 0.76144rem;
+    font-family: Poppins;
+    font-weight: 500;
+}
+.select-cancel{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    background-color: #000000;
+    border-radius: 50%;
+}
+.select-cancel svg{
+    font-size: 0.6rem;
+    color: white;
+}
+.bank-select-search{
+    margin-top: 40px;
+}
+.bank-select-search input{
+    width: 100%;
+    border: none;
+    padding: 0.54rem 0.89rem;
+    border-radius: 2.031px;
+    background: #FFF;
+    color: #2B2B2B;
+    font-size: 0.76144rem;
+    font-family: Darker Grotesque;
+    font-weight: 500;
+}
+.bank-select-body{
+    margin-top: 15px;
+    height: 300px;
+    overflow-y: scroll;
+}
+.banks{
+    margin-bottom: 15px;
+    padding: 0.95rem 0.86rem;
+    display: flex;
+    align-items: center;
+    border-radius: 2.031px;
+    background: #FFF;
+}
+.bank-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 27px;
+    height: 27px;
+    background-color: #A6A6A636;
+    border-radius: 50%;
+}
+.bank-name{
+    margin-left: 30px;
+    color: rgba(0, 0, 0, 0.80);
+    font-size: 0.76144rem;
+    font-family: Poppins;
+    font-weight: 500;
+}
+.form-2{
+    margin-top: 24px;
+    width: 48%;
+}
+.form-1-label{
+    font-size: 0.8rem;
+}
+.save-ben{
+    padding: 24px 0px;
+    border-bottom: 0.2px solid #000000;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+.save-ben p{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.5);
+}
+.save-ben-switch{
+    margin-left: 25px;
+}
+.form-button{
+    margin-top: 32px;
+}
+.reset{
+    padding:1rem 0rem;
+    width: 100%;
+    background: #F5F5f5;
+    border-radius: 8px;
+    border: none;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 39px;
+    color: #707070;
+}
+.transfer-button{
+    margin-top: 31px;
+    padding:0.7rem 0rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: #AC1337;
+    border-radius: 8px;
+    border: none;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 39px;
+    color: #FFFFFF;
+}
+.input label,.enter-pin{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.8);
+}
+.field-container{
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+.pinfield input{
+    width: 80px;
+    height: 80px;
+    font-size: 32px;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+    border-radius: 8px;
+    border: none;
+    margin: 2px;
+    background-color: #D6DEE0;
+    color: #000000;
+    outline: none;
+    transition: all 0.1s;
+}
+.pinfield input:focus{
+    background-color: #F1C37E;
+}
+.input input{
+    margin-top: 0px;
+    background: #F5F5f5;
+    border-radius: 4px;
+    border: none;
+    width: 100%;
+    padding: 1.0625rem 1.875rem;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.2rem;
+    color: #2B2B2B;
+}
+
+.input select{
+    margin-top: 16px;
+    background: #F5F5f5;
+    border-radius: 4px;
+    border: none;
+    width: 100%;
+    padding: 1.0625rem 1.875rem;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #2B2B2B;
+}
+.input input::placeholder{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #2b2b2b85;
+}
+.card-body{
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.card-field{
+    width: 40%;
+    background-color: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.087);
+    -webkit-box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.089);
+    -moz-box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.084);
+}
+.connect-reader{
+    margin-top: 80px;
+    width: 400px;
+    height: 400px;
+    flex-direction: column;
+    border-radius: 50%;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    background-color: #B11226;
+    box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.087);
+    -webkit-box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.089);
+    -moz-box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.084);
+}
+.connect-reader svg{
+    color: white;
+    font-size: 5rem;
+}
+.connect-reader p{
+    text-align: center;
+    color: white;
+    font-size: 1.5rem;
+}
+.connect-reader button{
+    background-color: white;
+    padding: 1rem 3rem;
+    border: none;
+    border-radius: 8px; 
+    color: #B11226;
+}
+@media (max-width: 1280px) {
+    .account-left-head{
+        font-size: 1.4rem;
+    }
+    .balance-2{
+        font-size: 1.4rem;
+    }
+}
+@media (max-width: 1210px) {
+    .account-left-head{
+        font-size: 1.8rem;
+    }
+    .available-2{
+        font-size: 0.7rem;
+    }
+    .balance-2{
+        font-size: 1.4rem;
+    }
+}
+@media (max-width: 1000px) {
+    .payment2{
+        padding: 1.5rem;
+    }
+    .transfer{
+        padding: 2rem 1rem;
+    }
+    .transfer-head{
+        font-size: 0.75rem;
+    }
+    .transfer-body{
+        margin-top: 0px;
+    }
+    .transfer-inner{
+        padding: 0rem;
+        background: transparent;
+    }
+    .transfer-to-title{
+        display: none;
+    }
+    .transfer-to-inner{
+        margin-top: 20px;
+        padding-bottom: 24px;
+    }
+    .to p{
+        font-size: 0.625rem;
+    }
+    .to-image{
+        width: 29px;
+        height: 29px;
+    }
+    .to-image img{
+        width: 19px;
+    }
+    .to-image svg{
+        font-size: 0.8rem;
+    }
+    .transfer-cred{
+        position: relative;
+        padding: 1rem 0rem;
+        border-bottom: 0px;
+    }
+    .transfer-send p{
+        font-size: 0.875rem;
+    }
+    .transfer-send select, .transfer-available{
+        display: none;
+    }
+    .transfer-account-left{
+        width: 100%;
+    }
+    .transfer-account-right{
+        width: 0%;
+    }
+    .balance-2{
+        position: absolute;
+        top: 20px;
+        right: 1rem;
+        font-size: 0.625rem;
+    }
+    .account-left-head{
+        font-size: 0.8125rem;
+    }
+    .account-left-text{
+        font-size: 0.5rem;
+    }
+    .form-1-outer{
+        display: block;
+    }
+    .form-1, .form-2{
+        margin-top: 24px;
+        width: 100% !important;
+    }
+    .form-2{
+        margin-top: 24px;
+        width: 100%;
+    }
+    .form-11{
+        width: 100% !important;
+    }
+    .form-1-label{
+        font-size: 0.7rem;
+    }
+    .connect-reader{
+        margin-top: 80px;
+        width: 300px;
+        height:300px;
+    }
+    .connect-reader svg{
+        font-size: 3.5rem;
+    }
+    .connect-reader p{
+        font-size: 1rem;
+    }
+    .connect-reader button{
+        background-color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 8px; 
+        color: #B11226;
+    }
+}
+@media (max-width: 800px){
+    .card-field{
+        width: 90%;
+    }
+    .student-invoice-top h4{
+        font-size: 18px;
+    }
+    .student-invoice-top button{
+        font-size: 14px;
+        font-family: "Poppins";
+        padding: 7px 10px;
+        font-weight: 600;
+        color: #298097;
+        background-color: transparent;
+        border: 1px solid #298097;
+        border-radius: 14px;
+    }
+    .invoice-body{
+        margin-top: 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: normal;
+        gap: 36px;
+    }
+    .invoice-payment{
+        width: 100%;
+    }
+    .invoice-period{
+        width: 100%;
+    }
+    .form-2-mobile{
+        flex-direction: column !important;
+    }
+}
+@media (max-width: 800px){
+    .students-table-top div{
+        
+    }
+    .students-info{
+        width: 48%;
+    }
+    .students-info h4{
+        font-family: "Poppins";
+        font-size: 14px;
+        font-weight: 700;
+        color: #298097;
+    }
+    .students-info p{
+        font-family: "Poppins";
+        font-size: 12px;
+        font-weight: 500;
+        color: #16C098;
+    }
+    .students-filter{
+        width: 48%;;
+        display: flex;
+        align-items: center;
+        gap: 11px;
+    }
+    .students-body{
+        margin-top: 14px;
+        background-color: #E5ECF6;
+        height: 500px;
+        padding: 1rem;
+        border-radius: 5px;
+    }
+    .students-select{
+        width: 40% !important;
+    }
+    .students-search{
+        width: 100%;
+        padding: 0.5rem;
+    }
+    .students-search svg{
+        font-size: 12px;
+        font-weight: 500;
+        color: #7E7E7E;
+    }
+    .students-search input{
+        font-size: 10px;
+    }
+    .students-search input::placeholder{
+        font-size: 10px;
+    }
+    .students-search p{
+        font-size: 8px;
+    }
+    .students-search select{
+        font-size: 8px;
+    }
+}

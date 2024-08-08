@@ -4,10 +4,11 @@ import MemberTable from "../../components/Table/MemberTable";
 import { FaSearch } from "react-icons/fa";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import { getmember } from "../../Redux/Member/MemberAction";
+import { getgroupmember, getmember } from "../../Redux/Member/MemberAction";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { TablePagination } from "@mui/material";
+import GroupMemberTable from "../../components/Table/GroupMemberTable";
 const MemberListGroup = ({
     loading, 
     error, 
@@ -30,7 +31,7 @@ const MemberListGroup = ({
     return ( 
         <div className="saving">
             <div className="back">
-                <Link to='/dashboard'><BiChevronLeft/></Link>
+                <Link to='/dashboard-member'><BiChevronLeft/></Link>
                 <p className="title">Member List</p>
             </div>
             <div className="saving-graph">
@@ -44,7 +45,7 @@ const MemberListGroup = ({
                         ></input>
                     </div>  
                 </div>
-                <MemberTable data={data?.members}/>
+                <GroupMemberTable data={data?.members}/>
                 <Stack style={{marginTop: "10px"}} spacing={2}>
                 <TablePagination
                     component="div"
@@ -70,7 +71,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        getmember: (limit, page) => dispatch(getmember(limit, page)),
+        getmember: (limit, page) => dispatch(getgroupmember(limit, page)),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(MemberListGroup);

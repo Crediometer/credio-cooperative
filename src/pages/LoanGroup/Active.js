@@ -3,13 +3,13 @@ import { FaExclamation, FaExclamationCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import styles from './Payment.module.css';
 import { useEffect, useState } from "react";
-import { getActiveLoan } from "../../Redux/Loan/LaonAction";
+import { getActiveLoan, getGroupActiveLoan } from "../../Redux/Loan/LaonAction";
 import { connect } from "react-redux";
 import LottieAnimation from "../../Lotties";
 import preloader from "../../Assets/animations/preloader.json"
 import empty from "../../Assets/animations/Empty.json"
 import { Stack, TablePagination } from "@mui/material";
-const Active = (
+const ActiveGroup = (
     {
         getActiveLoan,
         loading,
@@ -66,7 +66,7 @@ const Active = (
     return ( 
         <div className="saving">
         <div className="back">
-            <Link to='/loans'><BiChevronLeft/></Link>
+            <Link to='/loans-group'><BiChevronLeft/></Link>
             <p className="title">Active Loan</p>
         </div>
         <div className="top-search">
@@ -223,8 +223,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        getActiveLoan: (limit, page) => dispatch(getActiveLoan(limit, page)),
+        getActiveLoan: (limit, page) => dispatch(getGroupActiveLoan(limit, page)),
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Active);
+export default connect(mapStateToProps, mapDispatchToProps)(ActiveGroup);

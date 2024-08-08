@@ -31,3 +31,8 @@
 .login-form{
     margin-bottom: 20px;
 }
+@media (max-width:800px) {
+    .login-inner{
+        width: 90%;
+    }
+}

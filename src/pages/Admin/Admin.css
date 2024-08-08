@@ -7,6 +7,12 @@
     align-items: center;
     justify-content: center;
 }
+.admin-outer{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .admin-inner-2{
     justify-content: start;
 }
