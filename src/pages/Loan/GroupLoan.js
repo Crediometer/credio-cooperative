@@ -17,49 +17,39 @@ const GroupLoan = ({
     group
 }) => {
     const history = useNavigate();
-    const members = ['John Doe', 'Jane Smith', 'Michael Johnson', 'Alice Williams', 'David Brown'];
-    // State to hold the search input and the filtered members
-    const [searchInput, setSearchInput] = useState('');
-    const [searchUser, setSearchUser] = useState('');
     const [show, setShow] = useState(false);
-    const [filteredMembers, setFilteredMembers] = useState(members);
     const [memberId, setMemberId] = useState('')
     const [amount, setAmount] = useState('')
     const [interval, setInterval] = useState("")
+    const [interestType, setInterestType] = useState('');
     const [interestRate, setInterestRate] = useState("")
     const [purpose, setPurpose] = useState("")
     const [startDate, setStartDate] = useState("")
     const [endDate, setEndDate] = useState("")
     const [monthlyPayment, setmonthlyPayment] = useState("")
     const [postState, setPostState] = useState({})
+    const [formattedMonthlyPayment, setFormattedMonthlyPayment] = useState("");
+    const [formattedAmount, setformattedAmount] = useState("");
     const togglemodal=()=>{
         setShow(!show)
     }
-    const handleInputChange = (e) => {
+    const handleamount = (e) => {
         const value = e.target.value;
-        setSearchInput(value);
-        
-        // Filter members based on input value
-        if (value) {
-            const filtered = members.filter(member => 
-                member.toLowerCase().includes(value.toLowerCase())
-            );
-            setFilteredMembers(filtered);
-        } else {
-            setFilteredMembers([]);
-        }
+        const numericValue = value.replace(/\D/g, ''); // Remove non-numeric characters
+
+        setAmount(numericValue); // Set the unformatted amount
+        const formattedValue = formatAmount(numericValue);
+        setformattedAmount(formattedValue); // Set the formatted amount for display
+
+        const newValue = parseInt(numericValue);
+        setPostState({ ...postState, ...{ amount: newValue } });
     };
-    const handleMemberClick = (member) => {
-        setSearchUser(member);
-        setSearchInput("")
-        setFilteredMembers([]);
+
+    const formatAmount = (input) => {
+        // Add commas as thousand separators
+        return input.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
-    const handleamount = (e)=>{
-        const value = e.target.value
-        setAmount(value)
-        const newvalue = parseInt(value)
-        setPostState({...postState, ...{amount:newvalue}})
-    }
+
     const handleInterval = (e)=>{
         const value = e.target.value
         setInterval(value)
@@ -71,6 +61,10 @@ const GroupLoan = ({
         setInterestRate(value)
         const newvalue = parseInt(value)
         setPostState({...postState, ...{interestRate:newvalue}})
+    }
+    const handleInterestType = (e)=>{
+        const value = e.target.value
+        setInterestType(value)
     }
     const handlePurpose = (e)=>{
         const value = e.target.value
@@ -86,19 +80,57 @@ const GroupLoan = ({
     const handleStartDate = (e)=>{
         const value = e.target.value
         setStartDate(value)
-        const newvalue = parseInt(value)
-        setPostState({...postState, ...{startDate: newvalue, endDate:parseInt(endDate)}})
+        const newvalue = new Date(value).toISOString();
+        setPostState({...postState, ...{startDate: newvalue}})
     }
     const handleEndDate = (e)=>{
         const value = e.target.value
         setEndDate(value)
-        const newvalue = parseInt(value)
+        const newvalue = new Date(value).toISOString();
         setPostState({...postState, ...{endDate:newvalue}})
     }
     const handlemember = (e) => {
         const value = e.target.value;
         setMemberId(value);
     };
+    const calculateCompoundInterest = (principal, rate, time) => {
+        const interest = principal * Math.pow((1 + rate / 100), time) - principal;
+        return principal + interest;
+    };
+    const calculateSimpleInterest = (principal, rate, time) => {
+        const interest = (principal * rate) / 100;
+        return principal + interest;
+    };
+    const calculatePaymentPerInterval = (totalRepayment, intervalCount) => {
+        return totalRepayment / intervalCount;
+    };
+    useEffect(() => {
+        if (amount && startDate && endDate && interval) {
+            const principal = parseFloat(amount);
+            const rate = parseFloat(interestRate);
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const timeInYears = (end - start) / (1000 * 60 * 60 * 24 * 365);
+            
+            let totalRepayment = 0;
+
+            if (interestType === 'Compound Interest') {
+                totalRepayment = calculateCompoundInterest(principal, rate, timeInYears);
+                console.log(totalRepayment)
+            } else if (interestType === 'Single Line Interest') {
+                totalRepayment = calculateSimpleInterest(principal, rate, timeInYears);
+                console.log(totalRepayment)
+            }
+            const intervalDays = parseInt(interval);
+            const intervalCount = Math.floor((end - start) / (intervalDays * 24 * 60 * 60 * 1000));
+            const paymentPerIntervalValue = calculatePaymentPerInterval(totalRepayment, intervalCount).toFixed(2);
+            console.log(paymentPerIntervalValue)
+            setmonthlyPayment(paymentPerIntervalValue);
+            const formattedPayment = formatAmount(paymentPerIntervalValue);
+            setFormattedMonthlyPayment(formattedPayment);
+            setPostState({...postState, ...{monthlyPayment:parseFloat(paymentPerIntervalValue)}})
+        }
+    }, [amount, interestType, startDate, endDate, interval]);
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
@@ -112,6 +144,7 @@ const GroupLoan = ({
                 setInterestRate("")
                 setPurpose("")
                 setmonthlyPayment("")
+                setformattedAmount("")
             }, ()=>{ 
                 window.scrollTo(0, 0);
             });
@@ -119,31 +152,31 @@ const GroupLoan = ({
             // setPending(false);
         }
     };
-    useEffect(() => {
-        if (amount && monthlyPayment && interval) {
-            const days = {
-                5: 5,
-                7: 7,
-                15: 15,
-                30: 30
-            };
+    // useEffect(() => {
+    //     if (amount && monthlyPayment && interval) {
+    //         const days = {
+    //             5: 5,
+    //             7: 7,
+    //             15: 15,
+    //             30: 30
+    //         };
 
-            const repeatDays = days[interval];
-            const units = parseInt(amount) / parseInt(monthlyPayment);
-            const endDateValue = new Date(startDate);
-            endDateValue.setDate(endDateValue.getDate() + (units * repeatDays));
-            setEndDate(formatDate(endDateValue));
-            // setpostState({ ...postState, ...{startdate: startDate} });
-            // setpostState({ ...postState, ...{endDate: endDate} });  
-        }
-    }, [amount, monthlyPayment, interval, startDate]);
+    //         const repeatDays = days[interval];
+    //         const units = parseInt(amount) / parseInt(monthlyPayment);
+    //         const endDateValue = new Date(startDate);
+    //         endDateValue.setDate(endDateValue.getDate() + (units * repeatDays));
+    //         setEndDate(formatDate(endDateValue));
+    //         // setpostState({ ...postState, ...{startdate: startDate} });
+    //         // setpostState({ ...postState, ...{endDate: endDate} });  
+    //     }
+    // }, [amount, monthlyPayment, interval, startDate]);
 
-    function formatDate(date) {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    }
+    // function formatDate(date) {
+    //     const year = date.getFullYear();
+    //     const month = String(date.getMonth() + 1).padStart(2, '0');
+    //     const day = String(date.getDate()).padStart(2, '0');
+    //     return `${year}-${month}-${day}`;
+    // }
     useEffect(()=>{
         getgroup()
     },[])
@@ -153,54 +186,9 @@ const GroupLoan = ({
                 <Link to='/loans'><BiChevronLeft/></Link>
                 <p className="title">Create Group Loan</p>
             </div>
-            {/* <div className="top-search">
-                <div className="form-11" style={{ width: '100%' }}>
-                    <div className="input">
-                        <input 
-                            type="text" 
-                            placeholder="SEARCH FOR MEMBER"
-                            value={searchInput}
-                            onChange={handleInputChange}
-                            required
-                        ></input>
-                    </div>
-                </div>
-                <div className="statement-date statement-date-2">
-                    <input
-                        type='text'
-                        placeholder='Start Date'
-                        className='transferfield'
-                        onFocus={(e) => (e.target.type = "date")}
-                        onBlur={(e) => {(e.target.type = "text");}}
-                        // onChange={handlestartdate}
-                        required
-                    ></input>
-                </div>
-            </div>
-            {searchInput && (
-                <div className="member-list">
-                    {filteredMembers.length > 0 ? (
-                        filteredMembers.map((member, index) => (
-                            <div    
-                                onClick={() => handleMemberClick(member)}
-                                style={{ cursor: 'pointer' }} 
-                                key={index} 
-                                className="member-item"
-                            >
-                                {member}
-                            </div>
-                        ))
-                    ) : (
-                        <div>No members found</div>
-                    )}
-                </div>
-            )}
-            <div className="selected-user">
-                <h4 className="form-head">{searchUser}</h4>
-            </div> */}
             <div className="card-body">
                 <form onSubmit={handleSubmit} className="card-field">
-                <div className="form-2"  style={{width: "100%"}}>
+                     <div className="form-2"  style={{width: "100%"}}>
                         <div className="input input-4">
                             <label>Group</label>
                             <select
@@ -209,6 +197,7 @@ const GroupLoan = ({
                                 onBlur={handlemember}
                             >
                                 <optgroup>
+                                    <option>--Select Group--</option>
                                     {group?.map(((member)=>{
                                         return(
                                             <option value={member?._id}>{member?.groupInfo?.name}</option>
@@ -223,11 +212,25 @@ const GroupLoan = ({
                             <label>Amount</label>
                             <input type="text" 
                                 placeholder="Enter Amount"
-                                value={amount}
+                                value={formattedAmount}
                                 onBlur={handleamount}
                                 onChange={handleamount}
                                 required
                             ></input>
+                        </div>
+                    </div>
+                    <div className="form-2"  style={{width: "100%"}}>
+                        <div className="input input-4">
+                            <label>Interest Type</label>
+                            <select
+                                value={interestType}
+                                onChange={handleInterestType}
+                                onBlur={handleInterestType}
+                            >
+                                <option>-- Select Interest Type --</option>
+                                <option value="Compound Interest">Compound Interest</option>
+                                <option value="Single Line Interest">Single Line Interest</option>
+                            </select>
                         </div>
                     </div>
                     <div className="form-2"  style={{width: "100%"}}>
@@ -244,13 +247,13 @@ const GroupLoan = ({
                     </div>
                     <div className="form-2"  style={{width: "100%"}}>
                         <div className="input input-4">
-                            <label>Monthly Payment</label>
-                            <input type="text" 
-                            placeholder="Enter Monthly Payment"
-                            value={monthlyPayment}
-                            onBlur={handleMonthlyPayment}
-                            onChange={handleMonthlyPayment}
-                            required
+                            <label>Repayment</label>
+                            <input 
+                                type="text" 
+                                value={formattedMonthlyPayment}
+                                disabled
+                                placeholder="Amount for Repayment"
+                                required
                             ></input>
                         </div>
                     </div>
@@ -287,10 +290,12 @@ const GroupLoan = ({
                     <div className="form-2"  style={{width: "100%"}}>
                         <div className="input input-4">
                             <label>End Date</label>
-                            <input type="date" 
-                            value={endDate}
-                            disabled
-                            required
+                            <input 
+                                type="date" 
+                                value={endDate} 
+                                onBlur={handleEndDate}
+                                onChange={handleEndDate}
+                                required
                             ></input>
                         </div>
                     </div>
@@ -327,7 +332,7 @@ const mapStateToProps = state => {
     console.log(state)
     return{
         error:state?.loan?.error,
-        loading: state?.laon?.loading,
+        loading: state?.loan?.loading,
         profile: state?.profile?.data?.payload?._id,
         data: state?.loan?.data?.payload?.expenses,
         group:state?.groups?.data?.payload,

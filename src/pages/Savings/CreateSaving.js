@@ -31,34 +31,27 @@ const CreateSaving = ({
     const [endDate, setEndDate] = useState("")
     const [monthlyPayment, setmonthlyPayment] = useState("")
     const [postState, setPostState] = useState({})
+    const [formattedMonthlyPayment, setFormattedMonthlyPayment] = useState("");
+    const [formattedAmount, setformattedAmount] = useState("");
     const togglemodal=()=>{
         setShow(!show)
     }
-    const handleInputChange = (e) => {
+    const handleamount = (e) => {
         const value = e.target.value;
-        setSearchInput(value);
-        
-        // Filter members based on input value
-        if (value) {
-            const filtered = members.filter(member => 
-                member.toLowerCase().includes(value.toLowerCase())
-            );
-            setFilteredMembers(filtered);
-        } else {
-            setFilteredMembers([]);
-        }
+        const numericValue = value.replace(/\D/g, ''); // Remove non-numeric characters
+
+        setAmount(numericValue); // Set the unformatted amount
+        const formattedValue = formatAmount(numericValue);
+        setformattedAmount(formattedValue); // Set the formatted amount for display
+
+        const newValue = parseInt(numericValue);
+        setPostState({ ...postState, ...{ amount: newValue } });
     };
-    const handleMemberClick = (member) => {
-        setSearchUser(member);
-        setSearchInput("")
-        setFilteredMembers([]);
+
+    const formatAmount = (input) => {
+        // Add commas as thousand separators
+        return input.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
-    const handleamount = (e)=>{
-        const value = e.target.value
-        setAmount(value)
-        const newvalue = parseInt(value)
-        setPostState({...postState, ...{amount:newvalue}})
-    }
     const handleInterval = (e)=>{
         const value = e.target.value
         setInterval(value)
@@ -85,8 +78,8 @@ const CreateSaving = ({
     const handleStartDate = (e)=>{
         const value = e.target.value
         setStartDate(value)
-        const newvalue = parseInt(value)
-        setPostState({...postState, ...{startDate: newvalue, endDate:parseInt(endDate)}})
+        const newvalue = new Date(value).toISOString();
+        setPostState({...postState, ...{startDate: newvalue, endDate}})
     }
     const handleEndDate = (e)=>{
         const value = e.target.value
@@ -135,7 +128,9 @@ const CreateSaving = ({
             const units = parseInt(amount) / parseInt(monthlyPayment);
             const endDateValue = new Date(startDate);
             endDateValue.setDate(endDateValue.getDate() + (units * repeatDays));
-            setEndDate(formatDate(endDateValue));
+            const NewEndDate = formatDate(endDateValue)
+            // const EndDate = new Date(NewEndDate).toISOString()
+            setEndDate(NewEndDate);
             // setpostState({ ...postState, ...{startdate: startDate} });
             // setpostState({ ...postState, ...{endDate: endDate} });  
         }
@@ -153,51 +148,6 @@ const CreateSaving = ({
                 <Link to='/saving'><BiChevronLeft/></Link>
                 <p className="title">Create Saving</p>
             </div>
-            {/* <div className="top-search">
-                <div className="form-11" style={{ width: '100%' }}>
-                    <div className="input">
-                        <input 
-                            type="text" 
-                            placeholder="SEARCH FOR MEMBER"
-                            value={searchInput}
-                            onChange={handleInputChange}
-                            required
-                        ></input>
-                    </div>
-                </div>
-                <div className="statement-date statement-date-2">
-                    <input
-                        type='text'
-                        placeholder='Start Date'
-                        className='transferfield'
-                        onFocus={(e) => (e.target.type = "date")}
-                        onBlur={(e) => {(e.target.type = "text");}}
-                        // onChange={handlestartdate}
-                        required
-                    ></input>
-                </div>
-            </div>
-            {searchInput && (
-                <div className="member-list">
-                    {filteredMembers.length > 0 ? (
-                        filteredMembers.map((member, index) => (
-                            <div    
-                                onClick={() => handleMemberClick(member)}
-                                style={{ cursor: 'pointer' }} 
-                                key={index} 
-                                className="member-item"
-                            >
-                                {member}
-                            </div>
-                        ))
-                    ) : (
-                        <div>No members found</div>
-                    )}
-                </div>
-            )}
-            <div className="selected-user">
-                <h4 className="form-head">{searchUser}</h4>
-            </div> */}
             <div className="card-body">
                 <form onSubmit={handleSubmit} className="card-field">
                     <div className="form-2"  style={{width: "100%"}}>
@@ -209,6 +159,7 @@ const CreateSaving = ({
                                 value={memberId}
                             >
                                 <optgroup>
+                                    <option>-- Select Member --</option>
                                     {member?.map(((member)=>{
                                         return(
                                             <option value={member?._id}>{member?.personalInfo?.fullname}</option>
@@ -223,7 +174,7 @@ const CreateSaving = ({
                             <label>Amount</label>
                             <input type="text" 
                                 placeholder="Enter Amount"
-                                value={amount}
+                                value={formattedAmount}
                                 onBlur={handleamount}
                                 onChange={handleamount}
                                 required

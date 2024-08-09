@@ -31,34 +31,27 @@ const CreateSavingGroup = ({
     const [endDate, setEndDate] = useState("")
     const [monthlyPayment, setmonthlyPayment] = useState("")
     const [postState, setPostState] = useState({})
+    const [formattedAmount, setformattedAmount] = useState("");
     const togglemodal=()=>{
         setShow(!show)
     }
-    const handleInputChange = (e) => {
+
+    const handleamount = (e) => {
         const value = e.target.value;
-        setSearchInput(value);
-        
-        // Filter members based on input value
-        if (value) {
-            const filtered = members.filter(member => 
-                member.toLowerCase().includes(value.toLowerCase())
-            );
-            setFilteredMembers(filtered);
-        } else {
-            setFilteredMembers([]);
-        }
+        const numericValue = value.replace(/\D/g, ''); // Remove non-numeric characters
+
+        setAmount(numericValue); // Set the unformatted amount
+        const formattedValue = formatAmount(numericValue);
+        setformattedAmount(formattedValue); // Set the formatted amount for display
+
+        const newValue = parseInt(numericValue);
+        setPostState({ ...postState, ...{ amount: newValue } });
     };
-    const handleMemberClick = (member) => {
-        setSearchUser(member);
-        setSearchInput("")
-        setFilteredMembers([]);
+
+    const formatAmount = (input) => {
+        // Add commas as thousand separators
+        return input.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
-    const handleamount = (e)=>{
-        const value = e.target.value
-        setAmount(value)
-        const newvalue = parseInt(value)
-        setPostState({...postState, ...{amount:newvalue}})
-    }
     const handleInterval = (e)=>{
         const value = e.target.value
         setInterval(value)
@@ -85,8 +78,9 @@ const CreateSavingGroup = ({
     const handleStartDate = (e)=>{
         const value = e.target.value
         setStartDate(value)
-        const newvalue = parseInt(value)
-        setPostState({...postState, ...{startDate: newvalue, endDate:parseInt(endDate)}})
+        const newvalue = new Date(value).toISOString();
+        // const endnewvalue = endDate.toISOString()
+        setPostState({...postState, ...{startDate: newvalue, endDate}})
     }
     const handleEndDate = (e)=>{
         const value = e.target.value
@@ -179,7 +173,7 @@ const CreateSavingGroup = ({
                             <label>Amount</label>
                             <input type="text" 
                                 placeholder="Enter Amount"
-                                value={amount}
+                                value={formattedAmount}
                                 onBlur={handleamount}
                                 onChange={handleamount}
                                 required

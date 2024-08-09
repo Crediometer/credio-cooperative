@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import  './Login.css'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faSpinner, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { connect } from 'react-redux';
 import { LoginAuthAction, LoginGroupAction } from '../../Redux/Login/LoginAction';
 import { useNavigate } from 'react-router-dom';
@@ -15,11 +17,23 @@ const Login = ({
     error,
 }) => {
     const history = useNavigate();
+    const [type, setType] = useState('password');
+    const [icon, setIcon] =useState(faEye);
     const [loginState, setLoginState] = useState({})
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [showerror, setshowerror] = useState(false)
     const [role, setRole] = useState("")
+    const vissibleToggle=()=>{
+        if(type==='password'){
+            setIcon(faEye);
+            setType('text');
+        }
+        else{
+            setIcon(faEyeSlash);
+            setType('password');
+        }
+    }
     const handleEmail = (e) =>{
         const inputValue = e.target.value.trim().toLowerCase();
         setEmail(inputValue);
@@ -102,15 +116,16 @@ const Login = ({
                         </div>
                     </div>
                     <div className="login-form">
-                        <div className="input">
-                            <label className='form-1-label'>Password</label>
+                        <label className='form-1-label'>Password</label>
+                        <div className="input input-2">
                             <input 
-                                type="password" 
+                                type={type}
                                 placeholder="*********"
                                 required
                                 onChange={handlePassword}
                                 onBlur={handlePassword}
                             ></input>
+                             <span className="psw-visible"><FontAwesomeIcon icon={icon} onClick={vissibleToggle}/></span>
                         </div>
                     </div>
                     <div className="buttons login-buttons">
@@ -127,8 +142,9 @@ const Login = ({
 }
 
 const mapStateToProps = state => {
+    console.log(state)
     return{
-        error:state?.login?.error?.error,
+        error:state?.login?.error?.message,
         loading: state?.login?.dataAdded,
     }
 }

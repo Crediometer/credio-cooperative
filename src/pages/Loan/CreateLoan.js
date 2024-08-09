@@ -17,12 +17,7 @@ const CreateLoan = ({
     profile
 }) => {
     const history = useNavigate();
-    const members = ['John Doe', 'Jane Smith', 'Michael Johnson', 'Alice Williams', 'David Brown'];
-    // State to hold the search input and the filtered members
-    const [searchInput, setSearchInput] = useState('');
-    const [searchUser, setSearchUser] = useState('');
     const [show, setShow] = useState(false);
-    const [filteredMembers, setFilteredMembers] = useState(members);
     const [memberId, setMemberId] = useState('')
     const [amount, setAmount] = useState('')
     const [interval, setInterval] = useState("")
@@ -34,15 +29,28 @@ const CreateLoan = ({
     const [monthlyPayment, setmonthlyPayment] = useState("")
     const [postState, setPostState] = useState({})
     const [paymentPerInterval, setPaymentPerInterval] = useState(0);
+    const [formattedMonthlyPayment, setFormattedMonthlyPayment] = useState("");
+    const [formattedAmount, setformattedAmount] = useState("");
     const togglemodal=()=>{
         setShow(!show)
     }
-    const handleamount = (e)=>{
-        const value = e.target.value
-        setAmount(value)
-        const newvalue = parseInt(value)
-        setPostState({...postState, ...{amount:newvalue}})
-    }
+    const handleamount = (e) => {
+        const value = e.target.value;
+        const numericValue = value.replace(/\D/g, ''); // Remove non-numeric characters
+
+        setAmount(numericValue); // Set the unformatted amount
+        const formattedValue = formatAmount(numericValue);
+        setformattedAmount(formattedValue); // Set the formatted amount for display
+
+        const newValue = parseInt(numericValue);
+        setPostState({ ...postState, ...{ amount: newValue } });
+    };
+
+    const formatAmount = (input) => {
+        // Add commas as thousand separators
+        return input.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
+
     const handleInterval = (e)=>{
         const value = e.target.value
         setInterval(value)
@@ -73,13 +81,13 @@ const CreateLoan = ({
     const handleStartDate = (e)=>{
         const value = e.target.value
         setStartDate(value)
-        const newvalue = parseInt(value)
+        const newvalue = new Date(value).toISOString();
         setPostState({...postState, ...{startDate: newvalue}})
     }
     const handleEndDate = (e)=>{
         const value = e.target.value
         setEndDate(value)
-        const newvalue = parseInt(value)
+        const newvalue = new Date(value).toISOString();
         setPostState({...postState, ...{endDate:newvalue}})
     }
     const handlemember = (e) => {
@@ -118,6 +126,8 @@ const CreateLoan = ({
             const intervalCount = Math.floor((end - start) / (intervalDays * 24 * 60 * 60 * 1000));
             const paymentPerIntervalValue = calculatePaymentPerInterval(totalRepayment, intervalCount).toFixed(2);
             setmonthlyPayment(paymentPerIntervalValue);
+            const formattedPayment = formatAmount(paymentPerIntervalValue);
+            setFormattedMonthlyPayment(formattedPayment);
             setPostState({...postState, ...{monthlyPayment:parseFloat(paymentPerIntervalValue)}})
         }
     }, [amount, interestType, startDate, endDate, interval, startDate]);
@@ -202,7 +212,7 @@ const CreateLoan = ({
                             <label>Amount</label>
                             <input type="text" 
                                 placeholder="Enter Amount"
-                                value={amount}
+                                value={formattedAmount}
                                 onBlur={handleamount}
                                 onChange={handleamount}
                                 required
@@ -240,7 +250,7 @@ const CreateLoan = ({
                             <label>Repayment</label>
                             <input 
                                 type="text" 
-                                value={monthlyPayment}
+                                value={formattedMonthlyPayment}
                                 disabled
                                 placeholder="Amount for Repayment"
                                 required

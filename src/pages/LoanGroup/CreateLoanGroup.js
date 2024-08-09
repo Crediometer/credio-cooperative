@@ -33,16 +33,29 @@ const CreateLoanGroup = ({
     const [monthlyPayment, setmonthlyPayment] = useState("")
     const [postState, setPostState] = useState({})
     const [interestType, setInterestType] = useState('');
+    const [formattedMonthlyPayment, setFormattedMonthlyPayment] = useState("");
+    const [formattedAmount, setformattedAmount] = useState("");
     const [paymentPerInterval, setPaymentPerInterval] = useState(0);
     const togglemodal=()=>{
         setShow(!show)
     }
-    const handleamount = (e)=>{
-        const value = e.target.value
-        setAmount(value)
-        const newvalue = parseInt(value)
-        setPostState({...postState, ...{amount:newvalue}})
-    }
+    const handleamount = (e) => {
+        const value = e.target.value;
+        const numericValue = value.replace(/\D/g, ''); // Remove non-numeric characters
+
+        setAmount(numericValue); // Set the unformatted amount
+        const formattedValue = formatAmount(numericValue);
+        setformattedAmount(formattedValue); // Set the formatted amount for display
+
+        const newValue = parseInt(numericValue);
+        setPostState({ ...postState, ...{ amount: newValue } });
+    };
+
+    const formatAmount = (input) => {
+        // Add commas as thousand separators
+        return input.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
+
     const handleInterval = (e)=>{
         const value = e.target.value
         setInterval(value)
@@ -73,13 +86,13 @@ const CreateLoanGroup = ({
     const handleStartDate = (e)=>{
         const value = e.target.value
         setStartDate(value)
-        const newvalue = parseInt(value)
+        const newvalue = new Date(value).toISOString();
         setPostState({...postState, ...{startDate: newvalue}})
     }
     const handleEndDate = (e)=>{
         const value = e.target.value
         setEndDate(value)
-        const newvalue = parseInt(value)
+        const newvalue = new Date(value).toISOString();
         setPostState({...postState, ...{endDate:newvalue}})
     }
     const handlemember = (e) => {
@@ -118,6 +131,8 @@ const CreateLoanGroup = ({
             const intervalCount = Math.floor((end - start) / (intervalDays * 24 * 60 * 60 * 1000));
             const paymentPerIntervalValue = calculatePaymentPerInterval(totalRepayment, intervalCount).toFixed(2);
             setmonthlyPayment(paymentPerIntervalValue);
+            const formattedPayment = formatAmount(paymentPerIntervalValue);
+            setFormattedMonthlyPayment(formattedPayment);
             setPostState({...postState, ...{monthlyPayment:parseFloat(paymentPerIntervalValue)}})
         }
     }, [amount, interestType, startDate, endDate, interval, startDate]);
@@ -204,8 +219,7 @@ const CreateLoanGroup = ({
                             <label>Amount</label>
                             <input type="text" 
                                 placeholder="Enter Amount"
-                                value={amount}
-                                // value={formattedAmount}
+                                value={formattedAmount}
                                 onBlur={handleamount}
                                 onChange={handleamount}
                                 required
@@ -243,7 +257,7 @@ const CreateLoanGroup = ({
                             <label>Repayment</label>
                             <input 
                                 type="text" 
-                                value={monthlyPayment}
+                                value={formattedMonthlyPayment}
                                 disabled
                                 placeholder="Amount for Repayment"
                                 required

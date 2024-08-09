@@ -774,6 +774,31 @@
 .pinfield input:focus{
     background-color: #F1C37E;
 }
+.input-2{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #F5F5f5;
+    border-radius: 4px;
+    border: none;
+    width: 100%;
+    padding: 1.0625rem 1.875rem;
+    color: #2B2B2B;
+}
+.input-2 input{
+    margin-top: 0px;
+    background: #F5F5f5;
+    border-radius: 4px;
+    border: none;
+    width: 100%;
+    padding: 0rem 0rem !important;
+    font-family: 'Poppins';
+    font-style: normal; 
+    font-weight: 500;
+    font-size: 1.2rem;
+    color: #2B2B2B;
+}
+
 .input input{
     margin-top: 0px;
     background: #F5F5f5;
