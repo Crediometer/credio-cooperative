@@ -60,6 +60,13 @@ const CreateLoan = ({
     const handleInterestType = (e)=>{
         const value = e.target.value
         setInterestType(value)
+        if (value === 'Compound Interest') {
+            const newvalue = 1
+            setPostState({...postState, ...{interestRateType: newvalue}})
+        } else if (value === 'Single Line Interest') {
+            const newvalue = 0
+            setPostState({...postState, ...{interestRateType: newvalue}})
+        }
     }
     const handleInterestRate = (e)=>{
         const value = e.target.value
@@ -312,7 +319,7 @@ const CreateLoan = ({
                         </div>
                     </div>
                     <div className="form-button">
-                        <button className='transfer-button'>
+                        <button className='buttons transfer-button'>
                             {loading ? (
                                 <LottieAnimation data={loader}/>
                             ):"Create"} 

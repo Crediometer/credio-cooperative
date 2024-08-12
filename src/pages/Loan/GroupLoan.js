@@ -65,6 +65,13 @@ const GroupLoan = ({
     const handleInterestType = (e)=>{
         const value = e.target.value
         setInterestType(value)
+        if (value === 'Compound Interest') {
+            const newvalue = 1
+            setPostState({...postState, ...{interestRateType: newvalue}})
+        } else if (value === 'Single Line Interest') {
+            const newvalue = 0
+            setPostState({...postState, ...{interestRateType: newvalue}})
+        }
     }
     const handlePurpose = (e)=>{
         const value = e.target.value

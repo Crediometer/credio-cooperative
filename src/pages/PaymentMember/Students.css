@@ -800,7 +800,7 @@
 }
 
 .input input{
-    margin-top: 0px;
+    margin-top: 10px;
     background: #F5F5f5;
     border-radius: 4px;
     border: none;
@@ -814,7 +814,7 @@
 }
 
 .input select{
-    margin-top: 16px;
+    margin-top: 10px;
     background: #F5F5f5;
     border-radius: 4px;
     border: none;
@@ -1002,7 +1002,11 @@
 }
 @media (max-width: 800px){
     .card-field{
-        width: 90%;
+        width: 95%;
+        padding: 1.5rem;
+        box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.016);
+        -webkit-box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.016);
+        -moz-box-shadow: 0px 2px 11px 0px rgba(0, 0, 0, 0.016);
     }
     .student-invoice-top h4{
         font-size: 18px;
@@ -1023,6 +1027,14 @@
         flex-direction: column;
         align-items: normal;
         gap: 36px;
+    }
+    .input input, .input select{
+        padding: 1rem 1.1rem;
+        font-size: 0.8rem;
+    }
+    .input input::placeholder{
+        font-weight: 400;
+        font-size: 0.8rem;
     }
     .invoice-payment{
         width: 100%;

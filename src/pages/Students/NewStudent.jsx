@@ -430,6 +430,7 @@ const NewStudent = ({
                 {next === 3 &&
                     <div className="card-field">
                         <p className="enter-pin">Please Enter Your Card Pin</p>
+                        <p className="enter-pin">Charges fee of #50 will be added to this transaction</p>
                         <div className="field-container">
                             <div className="field-1">
                                 <div className="pinfield">

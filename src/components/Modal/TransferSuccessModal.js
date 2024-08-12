@@ -4,21 +4,50 @@ import wrong from '../../Assets/animations/SuccessTick.json'
 import { Link } from 'react-router-dom';
 import { postEmandate } from '../../Redux/Payment/PaymentAction';
 import { connect } from 'react-redux';
+import { useEffect } from 'react';
 const TransferSuccessModal = ({ 
     message,
     loading,
     error,
     data,
     postemandate,
-    debitdata
+    debitdata,
+    memberdata,
+    mandate, 
+    type
 }) => {
+    let requestType;
+    let productType;
+    console.log(memberdata);
     const handlesubmit = () =>{
-        postemandate({mandateCodes: debitdata?.data?.mandateCode}, ()=>{
+        postemandate({
+            mandateCodes: debitdata?.data?.mandateCode,
+            productId: mandate.productId,
+            type: productType,
+            requestType, 
+            memberName: memberdata?.member?.personalInfo?.fullname,
+            memberId: memberdata?.member?._id,
+            memberNumber: memberdata?.member?.personalInfo?.phone
+        }, ()=>{
 
         },()=>{
 
         })
     }
+    useEffect(()=>{
+        if(type){
+            requestType = 0
+        }else{
+            requestType = 1
+        }
+    },[type])
+    useEffect(()=>{
+        if(mandate.type == 0){
+            productType = true
+        }else{
+            productType = false
+        }
+    },[mandate])
     return ( 
         <div className="modal-background">
             <div className="modalssss">
@@ -29,7 +58,7 @@ const TransferSuccessModal = ({
                     <LottieAnimation data={wrong}/>
                     <p className="create-payment create-payment-2">{message}</p>
                     <div className="signup-button save-con">
-                        <button onClick={handlesubmit} class="btn btn-primary shadow-2 mb-4 start-button">Ok</button>
+                        <button onClick={handlesubmit} class="btn btn-primary shadow-2 mb-4 start-button">Confirm Transaction</button>
                     </div>
                 </div>
             </div>

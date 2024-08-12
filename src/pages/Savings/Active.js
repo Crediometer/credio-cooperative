@@ -67,7 +67,7 @@ const ActiveSavings = ({
                 <Link to='/saving'><BiChevronLeft/></Link>
                 <p className="title">Active Saving</p>
             </div>
-            <div className="top-search">
+            {/* <div className="top-search">
                 <div className="form-11" style={{ width: '100%' }}>
                     <div className="input">
                         <input 
@@ -90,7 +90,7 @@ const ActiveSavings = ({
                         required
                     ></input>
                 </div>
-            </div>
+            </div> */}
             {searchInput && (
                 <div className="member-list">
                     {filteredMembers.length > 0 ? (

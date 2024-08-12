@@ -12,6 +12,8 @@ import LottieAnimation from '../../Lotties';
 import loader from '../../Assets/animations/loading.json'
 import { getLoan } from '../../Redux/Loan/LaonAction';
 import TransferSuccessModal from '../../components/Modal/TransferSuccessModal';
+import LoadingModal from '../../components/Modal/LoadingModal';
+import { getsinglemember } from '../../Redux/Member/MemberAction';
 const BankTransfer = (
     {
         debitloading,
@@ -26,7 +28,9 @@ const BankTransfer = (
         createEnquiry,
         getBank,
         getloans,
-        plan
+        plan,
+        memberdata,
+        getsinglemember
     }
 ) => {
     const {id} = useParams()
@@ -52,6 +56,7 @@ const BankTransfer = (
     const [typeid, setTypeId] = useState("")
     const [nibssCode, setnibssCode] = useState(null);
     const [postState, setPostState] = useState({})
+    const [mandateState, setMandateState] = useState({})
     const [nameState, setNameState] = useState({})
     const [query, setQuery] = useState("")
     const handleClick = () => {
@@ -63,21 +68,21 @@ const BankTransfer = (
     const handleSelectedBank = (option) => {
         setSelectBank(option)
     };
-    // const handletype = (e)=>{
-    //     const value = e.target.value
-    //     setType(value)
-    //     console.log(type)
-    //     setNameState({...nameState, ...{type}})
-    // }
-    // const handletypeId = (e)=>{
-    //     const value = e.target.value
-    //     setTypeId(value)
-    //     if(type == 0){
-    //         setNameState({...nameState, ...{savingsId: typeid}})
-    //     }else if(type == 1){
-    //         setNameState({...nameState, ...{loanId: typeid}})
-    //     }
-    // }
+    const handletype = (e)=>{
+        const value = e.target.value
+        setType(value)
+        console.log(type)
+        setMandateState({...mandateState, ...{type}})
+    }
+    const handletypeId = (e)=>{
+        const value = e.target.value
+        setTypeId(value)
+        if(type == 0){
+            setMandateState({...mandateState, ...{productId: typeid}})
+        }else if(type == 1){
+            setMandateState({...mandateState, ...{productId: typeid}})
+        }
+    }
     const handleBank = (value) => {
         setnibssCode(value);
         setPostState({ ...postState, ...{ bankCode: value } });
@@ -87,7 +92,7 @@ const BankTransfer = (
         const value = e.target.value
         setAccountNumber(value)
         setPostState({...postState, ...{accountNumber: value, }})
-        setNameState({...nameState, ...{accountNumber: value,accountName:accountName2,amount, frequency:"0", startDate, endDate, payerName, payerAddress, payeeName, payeeAddress, subscriberCode,phoneNumber, emailAddress,narration}})
+        setNameState({...nameState, ...{accountNumber: value,amount, frequency:"0", startDate, endDate, payerName, payerAddress, payeeName, payeeAddress, subscriberCode,phoneNumber, emailAddress,narration}})
     }
     const handleSubmit = () =>{
         createEnquiry(nameState,()=>{
@@ -97,6 +102,7 @@ const BankTransfer = (
     useEffect(() => {
         if (accountName?.data?.[0]?.data?.accountName) {
             setAccountName2(accountName.data[0].data.accountName);
+            setNameState({...nameState, ...{accountName:accountName.data[0].data.accountName}})
         }
     }, [accountName]);
     useEffect(()=>{
@@ -116,6 +122,9 @@ const BankTransfer = (
         getBank();
     },[])
     useEffect(()=>{
+        getsinglemember(id)
+    }, [id])
+    useEffect(()=>{
         getloans(id, type)
     },[id,type])
     return ( 
@@ -123,7 +132,7 @@ const BankTransfer = (
         {/* {(num % 2 == 0) ? ( */}
             <div className="transfer">
             <div className="back">
-                <Link to='/payment'><BiChevronLeft/></Link>
+                <Link to={`/payment/${id}`}><BiChevronLeft/></Link>
                 <p className="title">Direct Bank Debit</p>
             </div>
             <div className="transfer-body">
@@ -177,7 +186,6 @@ const BankTransfer = (
                                         <label className='form-1-label'>Beneficiary’s  Account Number </label>
                                         <input type="text" placeholder="0198604538" 
                                         value={accountNumber}
-                                        onBlur={handleAccountNumber}
                                         onChange={handleAccountNumber}
                                         required
                                         maxLength={10}
@@ -235,6 +243,67 @@ const BankTransfer = (
                                 </div>
                             </div>
                             <div className="form-1-outer">
+                                <div className="form-2"  style={{width: "100%"}}>
+                                    <div className="input input-4">
+                                        <label>Transaction Type</label>
+                                        <select
+                                            onChange={handletype}
+                                            onBlur={handletype}
+                                            required
+                                        >
+                                            <optgroup>
+                                                <option>--Transaction Type--</option>
+                                                <option value={0}>Savings</option>
+                                                <option value={1}>Loan</option>
+                                            
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                                {type == 1 && (
+                                    <div className="form-2"  style={{width: "100%"}}>
+                                        <div className="input input-4">
+                                            <label>Loan Plan</label>
+                                            <select
+                                                onChange={handletypeId}
+                                                onBlur={handletypeId}
+                                                required
+                                            >
+                                                <optgroup>
+                                                <option>--Select a Loan Plan---</option>
+                                                    {plan?.map(plan => {
+                                                        return(
+                                                            <option value={plan._id}>{plan.purpose} ||  {plan.amount}</option>
+                                                        )
+                                                    })}
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                )}
+                                {type == 0 && (
+                                        <div className="form-2"  style={{width: "100%"}}>
+                                            <div className="input input-4">
+                                                <label>Saving Plan</label>
+                                                <select
+                                                    onChange={handletypeId}
+                                                    onBlur={handletypeId}
+                                                    required
+                                                >
+                                                    <optgroup>
+                                                        <option>--Select a Saving Plan---</option>
+                                                        {plan?.map(plan => {
+                                                            return(
+                                                                <option value={plan._id}>{plan.purpose} ||  {plan.amount}</option>
+                                                            )
+                                                        })}
+                                                    </optgroup>
+                                                </select>
+                                            </div>
+                                        </div>
+                                )}
+                            </div>
+                            <div className="form-1-outer">
                                 <div className="form-2">
                                     <div className="input">
                                         <label>Amount</label>
@@ -257,67 +326,6 @@ const BankTransfer = (
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className="form-1-outer">
-                            <div className="form-2"  style={{width: "100%"}}>
-                    <div className="input input-4">
-                        <label>Transaction Type</label>
-                        <select
-                            onChange={handletype}
-                            onBlur={handletype}
-                            required
-                        >
-                            <optgroup>
-                                <option>--Transaction Type--</option>
-                                <option value={0}>Savings</option>
-                                <option value={1}>Loan</option>
-                              
-                            </optgroup>
-                        </select>
-                    </div>
-                </div>
-                {type == 1 && (
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>Loan Plan</label>
-                            <select
-                                onChange={handletypeId}
-                                onBlur={handletypeId}
-                                required
-                            >
-                                <optgroup>
-                                <option>--Select a Loan Plan---</option>
-                                    {plan?.map(plan => {
-                                        return(
-                                            <option value={plan._id}>{plan.purpose} ||  {plan.amount}</option>
-                                        )
-                                    })}
-                                </optgroup>
-                            </select>
-                        </div>
-                    </div>
-                )}
-                {type == 0 && (
-                        <div className="form-2"  style={{width: "100%"}}>
-                            <div className="input input-4">
-                                <label>Saving Plan</label>
-                                <select
-                                    onChange={handletypeId}
-                                    onBlur={handletypeId}
-                                    required
-                                >
-                                    <optgroup>
-                                        <option>--Select a Saving Plan---</option>
-                                        {plan?.map(plan => {
-                                            return(
-                                                <option value={plan._id}>{plan.purpose} ||  {plan.amount}</option>
-                                            )
-                                        })}
-                                    </optgroup>
-                                </select>
-                            </div>
-                        </div>
-                )}
-                            </div> */}
                             <div className="form-button">
                                 <button className='reset'>Reset</button><br></br>
                                 <button className='transfer-button'
@@ -330,13 +338,13 @@ const BankTransfer = (
                             </div>
                         </form>
                     </div>
-                    {show && <TransferSuccessModal message={debitData?.data?.responseDescription}/>}
+                    {show && <TransferSuccessModal debitData={debitData} message={debitData?.data?.responseDescription} type={true} mandate={mandateState} memberdata={memberdata}/>}
                     {/* {show && <Pinconfirm togglemodal={handleModal2}/>} */}
                 </div>
             </div>
             </div>  
-            {/* {loading && <LoadingModal/>}
-            {showError && <Errormodal error="Insufficient Balance" togglemodal={handleError}/> } */}
+            {accountLoading && <LoadingModal message= "Getting Account Name...."/>}
+             {/*  {showError && <Errormodal error="Insufficient Balance" togglemodal={handleError}/> } */}
         {/* ) : (
             <div className="key-error-notiication">
                 <p>Please Complete Your Profile</p>
@@ -356,6 +364,9 @@ const mapStateToProps = state => {
         loading:state?.bank?.loading,
         data: state?.bank?.data?.data,
         errors: state?.bank?.error,
+        membererror:state?.singlemember?.error,
+        memberloading: state?.singlemember?.loading,
+        memberdata: state?.singlemember?.data?.payload,
         accountName: state?.accountName?.data,
         accountLoading: state?.accountName?.loading,
         plan: state?.loanlist?.data?.payload?.memberActionList
@@ -376,6 +387,7 @@ const mapDispatchToProps = dispatch => {
         getloans: (id, type) => {
             dispatch(getLoan(id, type));
         },
+        getsinglemember: (id) => dispatch(getsinglemember(id)),
     }
 } 
  

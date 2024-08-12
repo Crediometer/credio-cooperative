@@ -36,13 +36,13 @@ const MemberList = ({
             <div className="saving-graph">
                     <div className="filter-top">
                     <Link to="/register-member"><button>+ Add Member</button></Link>
-                    <div className="join-search-2 search-filter">
+                    {/* <div className="join-search-2 search-filter">
                         <FaSearch/>
                         <input
                             type="text"
                             placeholder="SEARCH FOR MEMBER "
                         ></input>
-                    </div>  
+                    </div>   */}
                 </div>
                 <MemberTable data={data?.members}/>
                 <Stack style={{marginTop: "10px"}} spacing={2}>

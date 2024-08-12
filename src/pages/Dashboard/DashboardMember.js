@@ -157,7 +157,7 @@ const Dashboard = ({
                             
                         </div>
                     </div>
-                    <div className="date-picker">
+                    {/* <div className="date-picker">
                         <div className="statement-date">
                             <input
                                 type='text'
@@ -169,7 +169,7 @@ const Dashboard = ({
                                 required
                             ></input>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="dashboard-navigate">
                         {/* <Link to="/payment">
                             <Box

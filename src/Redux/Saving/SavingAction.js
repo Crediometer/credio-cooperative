@@ -288,6 +288,7 @@ export const savingFaliure = (error) => {
         if (error.response){
           dispatch(createFaliure(error?.response?.data));
         }
+        setErrorHandler()
       }
     };
   };
@@ -313,8 +314,10 @@ export const savingFaliure = (error) => {
         }
       } catch (error) {
         if (error.response){
+
           dispatch(createFaliure(error?.response?.data));
         }
+        setErrorHandler()
       }
     };
   };

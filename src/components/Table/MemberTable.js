@@ -33,11 +33,11 @@ export default function MemberTable({data}) {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-          <TableCell style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1.2rem", fontWeight:"700"}} align="left">S/N</TableCell>
-            <TableCell style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1.2rem", fontWeight:"700"}} align="left">Name</TableCell>
-            <TableCell  style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1.2rem", fontWeight:"700"}} align="left">Gender</TableCell>
-            <TableCell  style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1.2rem", fontWeight:"700"}} align="left">Date Joined</TableCell>
-            <TableCell  style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1.2rem", fontWeight:"700"}} align="left">Occupation</TableCell>
+          <TableCell style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">S/N</TableCell>
+            <TableCell style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">Name</TableCell>
+            <TableCell  style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">Gender</TableCell>
+            <TableCell  style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">Date Joined</TableCell>
+            <TableCell  style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">Occupation</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -46,15 +46,15 @@ export default function MemberTable({data}) {
                 key={row.name}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                    <TableCell  style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} component="th" scope="row"  align="left">
+                    <TableCell  style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"500"}} component="th" scope="row"  align="left">
                       {index + 1}
                     </TableCell>
-                    <TableCell  style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} component="th" scope="row"  align="left">
+                    <TableCell  style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"500"}} component="th" scope="row"  align="left">
                         {row?.personalInfo?.fullname}
                     </TableCell>
-                    <TableCell  style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row?.personalInfo?.sex}</TableCell>
-                    <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row.createdAt.slice(0,10)}</TableCell>
-                    <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row?.personalInfo?.occupationBusiness}</TableCell>
+                    <TableCell  style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"500"}} align="left">{row?.personalInfo?.sex}</TableCell>
+                    <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"500"}} align="left">{row.createdAt.slice(0,10)}</TableCell>
+                    <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"500"}} align="left">{row?.personalInfo?.occupationBusiness}</TableCell>
                     <Link to={`/member-details/${row._id}`}>  <TableCell><button className='view-button'>View</button></TableCell> </Link>
                 </TableRow>
            

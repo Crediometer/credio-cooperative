@@ -100,13 +100,36 @@ const Dashboard = ({
                         <div className="card-top">
                             <div className="savings">
                                 <p>Account Balance</p>
-                                <h2>N0</h2>
+                                <IntlProvider>
+                                    {" "}
+                                    <h2>
+                                    <FormattedNumber
+                                        value={
+                                            getprofile?.financialSummary?.totalLoanCurrentlyPaid
+                                        }
+                                        style="currency"
+                                        currency="NGN"
+                                    />
+                                    </h2>
+                                </IntlProvider> 
                             </div>
                             <div className="savings">
                                 <p style={{textAlign: "right"}}>Savings</p>
-                                <h2 style={{textAlign: "right"}}>N{getprofile?.financialSummary?.totalSavings}</h2>
+                                <IntlProvider>
+                                    {" "}
+                                    <h2
+                                        style={{textAlign: "right"}}
+                                    >
+                                    <FormattedNumber
+                                        value={
+                                            getprofile?.financialSummary?.totalSavings
+                                        }
+                                        style="currency"
+                                        currency="NGN"
+                                    />
+                                    </h2>
+                                </IntlProvider> 
                             </div>
-                            
                         </div>
                         <div className="card-top">
                             <div className="savings">
@@ -115,12 +138,25 @@ const Dashboard = ({
                             </div>
                             <div className="savings">
                                 <p style={{textAlign: "right"}}>Loans</p>
-                                <h2 style={{textAlign: "right"}}>N{getprofile?.financialSummary?.totalLoans}</h2>
+                                <IntlProvider>
+                                    {" "}
+                                    <h2
+                                    style={{textAlign: "right"}}
+                                    >
+                                    <FormattedNumber
+                                        value={
+                                            getprofile?.financialSummary?.totalLoans
+                                        }
+                                        style="currency"
+                                        currency="NGN"
+                                    />
+                                    </h2>
+                                </IntlProvider> 
                             </div>
                             
                         </div>
                     </div>
-                    <div className="date-picker">
+                    {/* <div className="date-picker">
                         <div className="statement-date">
                             <input
                                 type='text'
@@ -132,7 +168,7 @@ const Dashboard = ({
                                 required
                             ></input>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="dashboard-navigate">
                         {/* <Link to="/payment">
                             <Box
