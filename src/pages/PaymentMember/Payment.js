@@ -30,13 +30,13 @@ const PaymentGroup = () => {
                     </Link>
                 </div>
                 <div className="dashboard-navigate">
-                    <Link  to={id ? `/debit-transfer-group/${id}` : "/debit-transfer" }>
+                    {/* <Link  to={id ? `/debit-transfer-group/${id}` : "/debit-transfer" }>
                         <Box
                             color="rgba(18, 15, 199, 0.123)"
                             icons={<HiOutlinePlusSm/>}
                             text="Direct Bank Debit"
                         />
-                    </Link>
+                    </Link> */}
                     <Link to={id ? `/recurring-group/${id}` : "/recurring" }>
                     <Box
                         color="rgba(210, 193, 43, 0.123)"

@@ -6,6 +6,7 @@ import { createloan, createloanGroup } from "../../Redux/Loan/LaonAction";
 import { connect } from "react-redux";
 import LottieAnimation from "../../Lotties";
 import loader from "../../Assets/animations/loading.json"
+import preloader from "../../Assets/animations/preloader.json"
 import { getgroupmember } from "../../Redux/Member/MemberAction";
 const CreateLoanGroup = ({
     loading,
@@ -14,6 +15,7 @@ const CreateLoanGroup = ({
     createloan,
     getmember,
     member,
+    memberloading,
     profile
 }) => {
     const history = useNavigate();
@@ -22,6 +24,7 @@ const CreateLoanGroup = ({
     const [searchInput, setSearchInput] = useState('');
     const [searchUser, setSearchUser] = useState('');
     const [show, setShow] = useState(false);
+    const [showerror, setShowError] = useState(false)
     const [filteredMembers, setFilteredMembers] = useState(members);
     const [memberId, setMemberId] = useState('')
     const [amount, setAmount] = useState('')
@@ -54,6 +57,9 @@ const CreateLoanGroup = ({
 
     const formatAmount = (input) => {
         // Add commas as thousand separators
+        if (typeof input !== 'string') {
+            input = String(input); // Convert to string if it's not
+        }
         return input.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
     const handleNumberOfMonth = (e) =>{
@@ -156,7 +162,6 @@ const CreateLoanGroup = ({
                 // Calculate using Flat Line Interest
                 totalmonthlyPayment = calculateFlatLineInterest(principal, flatrate, timeInMonths).toFixed(2);
             }
-           
             setmonthlyPayment(totalmonthlyPayment);
             const formattedPayment = formatAmount(totalmonthlyPayment);
             setFormattedMonthlyPayment(formattedPayment);
@@ -217,12 +222,19 @@ const CreateLoanGroup = ({
                     setmonthlyPayment("")
             }, ()=>{ 
                 window.scrollTo(0, 0);
+                setShowError(true)
             });
         }catch(error){
             // setPending(false);
         }
     };
     return ( 
+        <>
+        {memberloading ? (
+            <div className="preloader">
+                 <LottieAnimation data={preloader}/>
+            </div>
+        ):( 
         <div className="saving createloan">
              <div className="back">
                 <Link to='/loans-group'><BiChevronLeft/></Link>
@@ -232,6 +244,11 @@ const CreateLoanGroup = ({
             <div className="card-body">
 
                 <form onSubmit={handleSubmit} className="card-field">
+                {showerror && (
+                    <div className="alert-error">
+                        <p>{error.message}</p>
+                    </div>
+                )}
                 <div className="form-2"  style={{width: "100%"}}>
                         <div className="input input-4">
                             <label>Member</label>
@@ -388,6 +405,8 @@ const CreateLoanGroup = ({
                 />}
             </div>
         </div>
+        )}
+        </>
     );
 }
 const mapStateToProps = state => {
@@ -396,7 +415,8 @@ const mapStateToProps = state => {
         error:state?.loan?.error,
         loading: state?.loan?.loading,
         profile: state?.profile?.data?.payload?._id,
-        data: state?.loan?.data?.payload?.expenses  ,
+        data: state?.loan?.data?.payload?.expenses,
+        memberloading: state?.member?.loading,
         member: state?.member?.data?.payload?.members,
     }
 }

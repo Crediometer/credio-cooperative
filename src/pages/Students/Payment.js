@@ -30,13 +30,13 @@ const Payment = () => {
                     </Link>
                 </div>
                 <div className="dashboard-navigate">
-                    <Link  to={`/debit-transfer/${id}`}>
+                    {/* <Link  to={`/debit-transfer/${id}`}>
                         <Box
                             color="rgba(18, 15, 199, 0.123)"
                             icons={<HiOutlinePlusSm/>}
                             text="Direct Bank Debit"
                         />
-                    </Link>
+                    </Link> */}
                     <Link to={`/recurring/${id}`}>
                     <Box
                         color="rgba(210, 193, 43, 0.123)"

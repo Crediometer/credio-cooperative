@@ -387,6 +387,7 @@ export const activeRequest = () => {
         if (error.response){
           dispatch(createFaliure(error?.response?.data));
         }
+        setErrorHandler()
       }
     };
   };
@@ -414,6 +415,7 @@ export const activeRequest = () => {
         if (error.response){
           dispatch(createFaliure(error?.response?.data));
         }
+        setErrorHandler()
       }
     };
   };
@@ -441,6 +443,7 @@ export const activeRequest = () => {
         if (error.response){
           dispatch(createFaliure(error?.response?.data));
         }
+        setErrorHandler()
       }
     };
   };

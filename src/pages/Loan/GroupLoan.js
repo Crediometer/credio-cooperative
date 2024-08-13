@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import LottieAnimation from "../../Lotties";
 import loader from "../../Assets/animations/loading.json"
 import { getGroup } from "../../Redux/Group/GroupAction";
+import preloader from "../../Assets/animations/preloader.json"
 const GroupLoan = ({
     loading,
     error,
@@ -14,10 +15,12 @@ const GroupLoan = ({
     createloan,
     profile,
     getgroup,
+    memberloading,
     group
 }) => {
     const history = useNavigate();
     const [show, setShow] = useState(false);
+    const [showerror, setShowError] = useState(false)
     const [memberId, setMemberId] = useState('')
     const [amount, setAmount] = useState('')
     const [interval, setInterval] = useState("")
@@ -48,6 +51,9 @@ const GroupLoan = ({
 
     const formatAmount = (input) => {
         // Add commas as thousand separators
+        if (typeof input !== 'string') {
+            input = String(input); // Convert to string if it's not
+        }
         return input.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
 
@@ -178,6 +184,7 @@ const GroupLoan = ({
                 setmonthlyPayment("")
             }, ()=>{ 
                 window.scrollTo(0, 0);
+                setShowError(true)
             });
         }catch(error){
             // setPending(false);
@@ -218,168 +225,181 @@ const GroupLoan = ({
         return `${year}-${month}-${day}`;
     }
     return ( 
-        <div className="saving createloan">
-             <div className="back">
-                <Link to='/loans'><BiChevronLeft/></Link>
-                <p className="title">Create Group Loan</p>
-            </div>
-            <div className="card-body">
-                <form onSubmit={handleSubmit} className="card-field">
-                     <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>Group</label>
-                            <select
-                                value={memberId}
-                                onChange={handlemember}
-                                onBlur={handlemember}
-                            >
-                                <optgroup>
-                                    <option>--Select Group--</option>
-                                    {group?.map(((member)=>{
-                                        return(
-                                            <option value={member?._id}>{member?.groupInfo?.name}</option>
-                                        )       
-                                    }))}
-                                </optgroup>
-                            </select>
-                        </div>
+        <>
+            {memberloading ? (
+                <div className="preloader">
+                    <LottieAnimation data={preloader}/>
+                </div>
+            ):( 
+                <div className="saving createloan">
+                    <div className="back">
+                        <Link to='/loans'><BiChevronLeft/></Link>
+                        <p className="title">Create Group Loan</p>
                     </div>
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>Amount</label>
-                            <input type="text" 
-                                placeholder="Enter Amount"
-                                value={formattedAmount}
-                                onBlur={handleamount}
-                                onChange={handleamount}
-                                required
-                            ></input>
-                        </div>
+                    <div className="card-body">
+                        <form onSubmit={handleSubmit} className="card-field">
+                            {showerror && (
+                                <div className="alert-error">
+                                    <p>{error.message}</p>
+                                </div>
+                            )}
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>Group</label>
+                                    <select
+                                        value={memberId}
+                                        onChange={handlemember}
+                                        onBlur={handlemember}
+                                    >
+                                        <optgroup>
+                                            <option>--Select Group--</option>
+                                            {group?.map(((member)=>{
+                                                return(
+                                                    <option value={member?._id}>{member?.groupInfo?.name}</option>
+                                                )       
+                                            }))}
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>Amount</label>
+                                    <input type="text" 
+                                        placeholder="Enter Amount"
+                                        value={formattedAmount}
+                                        onBlur={handleamount}
+                                        onChange={handleamount}
+                                        required
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>Interest Type</label>
+                                    <select
+                                        value={interestType}
+                                        onChange={handleInterestType}
+                                        onBlur={handleInterestType}
+                                    >
+                                        <option>-- Select Interest Type --</option>
+                                        <option value="Compound Interest">Compound Interest</option>
+                                        <option value="Single Line Interest">Single Line Interest</option>
+                                        <option value="Flat Line Interest">Flat Line Interest</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>Interest Rate</label>
+                                    <input type="text" 
+                                    placeholder="Enter Interest Rate"
+                                    onBlur={handleInterestRate}
+                                    value={interestRate}
+                                    onChange={handleInterestRate}
+                                    required
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>Interval</label>
+                                    <select
+                                        onChange={handleInterval}
+                                        onBlur={handleInterval}
+                                        value={interval}
+                                        required
+                                    >
+                                        <optgroup>
+                                            <option>--Select Option--</option>
+                                            <option value={5}>5 Days</option>
+                                            <option value={7}>7 Days</option>
+                                            <option value={15}>BiWeekly</option>
+                                            <option value={30}>Monthly</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>Number Of Month</label>
+                                    <input 
+                                        type="number" 
+                                        value={NumberOfMonth}
+                                        placeholder="Enter Number Of Month"
+                                        min="1"
+                                        max="36"
+                                        onChange={handleNumberOfMonth}
+                                        onBlur={handleNumberOfMonth}
+                                        required
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>Start Date</label>
+                                    <input type="date" 
+                                    onBlur={handleStartDate}
+                                    onChange={handleStartDate}
+                                    value={startDate}
+                                    required
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>Repayment</label>
+                                    <input 
+                                        type="text" 
+                                        value={formattedMonthlyPayment}
+                                        disabled
+                                        placeholder="Amount for Repayment"
+                                        required
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>End Date</label>
+                                    <input 
+                                        type="date" 
+                                        value={endDate} 
+                                        // onBlur={handleEndDate}
+                                        // onChange={handleEndDate}
+                                        disabled
+                                        required
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>Purpose</label>
+                                    <input type="text" 
+                                    placeholder="Purpose of Loan"
+                                    value={purpose}
+                                    onBlur={handlePurpose}
+                                    onChange={handlePurpose}
+                                    required
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className="form-button">
+                                <button className='transfer-button'>
+                                    {loading ? (
+                                        <LottieAnimation data={loader}/>
+                                    ):"Create"} 
+                                </button>
+                            </div>
+                        </form>
+                        {show && <LoanModal 
+                            data={postState}
+                            type="Group Loan"
+                            togglemodal={togglemodal}
+                        />}
                     </div>
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>Interest Type</label>
-                            <select
-                                value={interestType}
-                                onChange={handleInterestType}
-                                onBlur={handleInterestType}
-                            >
-                                <option>-- Select Interest Type --</option>
-                                <option value="Compound Interest">Compound Interest</option>
-                                <option value="Single Line Interest">Single Line Interest</option>
-                                <option value="Flat Line Interest">Flat Line Interest</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>Interest Rate</label>
-                            <input type="text" 
-                            placeholder="Enter Interest Rate"
-                            onBlur={handleInterestRate}
-                            value={interestRate}
-                            onChange={handleInterestRate}
-                            required
-                            ></input>
-                        </div>
-                    </div>
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>Interval</label>
-                            <select
-                                onChange={handleInterval}
-                                onBlur={handleInterval}
-                                value={interval}
-                                required
-                            >
-                                <optgroup>
-                                    <option>--Select Option--</option>
-                                    <option value={5}>5 Days</option>
-                                    <option value={7}>7 Days</option>
-                                    <option value={15}>BiWeekly</option>
-                                    <option value={30}>Monthly</option>
-                                </optgroup>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>Number Of Month</label>
-                            <input 
-                                type="number" 
-                                value={NumberOfMonth}
-                                placeholder="Enter Number Of Month"
-                                min="1"
-                                max="36"
-                                onChange={handleNumberOfMonth}
-                                onBlur={handleNumberOfMonth}
-                                required
-                            ></input>
-                        </div>
-                    </div>
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>Start Date</label>
-                            <input type="date" 
-                            onBlur={handleStartDate}
-                            onChange={handleStartDate}
-                            value={startDate}
-                            required
-                            ></input>
-                        </div>
-                    </div>
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>Repayment</label>
-                            <input 
-                                type="text" 
-                                value={formattedMonthlyPayment}
-                                disabled
-                                placeholder="Amount for Repayment"
-                                required
-                            ></input>
-                        </div>
-                    </div>
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>End Date</label>
-                            <input 
-                                type="date" 
-                                value={endDate} 
-                                // onBlur={handleEndDate}
-                                // onChange={handleEndDate}
-                                disabled
-                                required
-                            ></input>
-                        </div>
-                    </div>
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>Purpose</label>
-                            <input type="text" 
-                            placeholder="Purpose of Loan"
-                            value={purpose}
-                            onBlur={handlePurpose}
-                            onChange={handlePurpose}
-                            required
-                            ></input>
-                        </div>
-                    </div>
-                    <div className="form-button">
-                        <button className='transfer-button'>
-                            {loading ? (
-                                <LottieAnimation data={loader}/>
-                            ):"Create"} 
-                        </button>
-                    </div>
-                </form>
-                {show && <LoanModal 
-                    data={postState}
-                    type="Group Loan"
-                    togglemodal={togglemodal}
-                />}
-            </div>
-        </div>
+                </div>
+            )}
+        </>        
     );
 }
 const mapStateToProps = state => {
@@ -390,6 +410,7 @@ const mapStateToProps = state => {
         profile: state?.profile?.data?.payload?._id,
         data: state?.loan?.data?.payload?.expenses,
         group:state?.groups?.data?.payload,
+        memberloading: state?.groups?.loading,
     }
 }
 
