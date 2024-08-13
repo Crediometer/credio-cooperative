@@ -27,6 +27,7 @@ const GroupLoan = ({
     const [startDate, setStartDate] = useState("")
     const [endDate, setEndDate] = useState("")
     const [monthlyPayment, setmonthlyPayment] = useState("")
+    const [NumberOfMonth, setNumberOfMonth] = useState("")
     const [postState, setPostState] = useState({})
     const [formattedMonthlyPayment, setFormattedMonthlyPayment] = useState("");
     const [formattedAmount, setformattedAmount] = useState("");
@@ -56,6 +57,10 @@ const GroupLoan = ({
         const newvalue = parseInt(value)
         setPostState({...postState, ...{interval: newvalue}})
     }
+    const handleNumberOfMonth = (e) =>{
+        const value = e.target.value
+        setNumberOfMonth(value)
+    }
     const handleInterestRate = (e)=>{
         const value = e.target.value
         setInterestRate(value)
@@ -70,6 +75,9 @@ const GroupLoan = ({
             setPostState({...postState, ...{interestRateType: newvalue}})
         } else if (value === 'Single Line Interest') {
             const newvalue = 0
+            setPostState({...postState, ...{interestRateType: newvalue}})
+        }else if (value === 'Flat Line Interest') {
+            const newvalue = 2
             setPostState({...postState, ...{interestRateType: newvalue}})
         }
     }
@@ -111,47 +119,63 @@ const GroupLoan = ({
     const calculatePaymentPerInterval = (totalRepayment, intervalCount) => {
         return totalRepayment / intervalCount;
     };
+    const calculateFlatLineInterest = (principal, rate, time) => {
+        const a = principal * rate;
+        const at = a * time;
+        const pat = principal + at;
+        const monthlyPayment = pat / time;
+        return monthlyPayment;
+    };
     useEffect(() => {
         if (amount && startDate && endDate && interval) {
             const principal = parseFloat(amount);
             const rate = parseFloat(interestRate);
+            const flatrate = parseFloat(interestRate) / 100; // Convert rate to decimal
             const start = new Date(startDate);
             const end = new Date(endDate);
+            const timeInMonths = parseInt(NumberOfMonth, 10);
             const timeInYears = (end - start) / (1000 * 60 * 60 * 24 * 365);
-            
             let totalRepayment = 0;
-
+            let totalmonthlyPayment = 0
             if (interestType === 'Compound Interest') {
                 totalRepayment = calculateCompoundInterest(principal, rate, timeInYears);
-                console.log(totalRepayment)
+                const intervalDays = parseInt(interval);
+                const intervalCount = Math.floor((end - start) / (intervalDays * 24 * 60 * 60 * 1000));
+                totalmonthlyPayment = calculatePaymentPerInterval(totalRepayment, intervalCount).toFixed(2);
             } else if (interestType === 'Single Line Interest') {
                 totalRepayment = calculateSimpleInterest(principal, rate, timeInYears);
-                console.log(totalRepayment)
+                const intervalDays = parseInt(interval);
+                const intervalCount = Math.floor((end - start) / (intervalDays * 24 * 60 * 60 * 1000));
+                totalmonthlyPayment = calculatePaymentPerInterval(totalRepayment, intervalCount).toFixed(2);
+            }else if (interestType === 'Flat Line Interest') {
+                // Calculate using Flat Line Interest
+                totalmonthlyPayment = calculateFlatLineInterest(principal, flatrate, timeInMonths).toFixed(2);
             }
-            const intervalDays = parseInt(interval);
-            const intervalCount = Math.floor((end - start) / (intervalDays * 24 * 60 * 60 * 1000));
-            const paymentPerIntervalValue = calculatePaymentPerInterval(totalRepayment, intervalCount).toFixed(2);
-            console.log(paymentPerIntervalValue)
-            setmonthlyPayment(paymentPerIntervalValue);
-            const formattedPayment = formatAmount(paymentPerIntervalValue);
+           
+            setmonthlyPayment(totalmonthlyPayment);
+            const formattedPayment = formatAmount(totalmonthlyPayment);
             setFormattedMonthlyPayment(formattedPayment);
-            setPostState({...postState, ...{monthlyPayment:parseFloat(paymentPerIntervalValue)}})
+            setPostState({...postState, ...{monthlyPayment:parseFloat(totalmonthlyPayment)}})
         }
-    }, [amount, interestType, startDate, endDate, interval]);
+    }, [amount, interestType, startDate, endDate, interval, startDate]);
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
             await createloan(
                 {loansProfileData:postState, memberId: memberId} , ()=>{ 
                 setShow(true)
-                setEndDate("")
+                setStartDate("")
                 setEndDate("")
                 setAmount("")
                 setInterval("")
+                setFormattedMonthlyPayment("")
+                setNumberOfMonth("")
+                setformattedAmount("")
+                setInterestType("")
                 setInterestRate("")
                 setPurpose("")
+                setMemberId("")
                 setmonthlyPayment("")
-                setformattedAmount("")
             }, ()=>{ 
                 window.scrollTo(0, 0);
             });
@@ -159,34 +183,40 @@ const GroupLoan = ({
             // setPending(false);
         }
     };
-    // useEffect(() => {
-    //     if (amount && monthlyPayment && interval) {
-    //         const days = {
-    //             5: 5,
-    //             7: 7,
-    //             15: 15,
-    //             30: 30
-    //         };
-
-    //         const repeatDays = days[interval];
-    //         const units = parseInt(amount) / parseInt(monthlyPayment);
-    //         const endDateValue = new Date(startDate);
-    //         endDateValue.setDate(endDateValue.getDate() + (units * repeatDays));
-    //         setEndDate(formatDate(endDateValue));
-    //         // setpostState({ ...postState, ...{startdate: startDate} });
-    //         // setpostState({ ...postState, ...{endDate: endDate} });  
-    //     }
-    // }, [amount, monthlyPayment, interval, startDate]);
-
-    // function formatDate(date) {
-    //     const year = date.getFullYear();
-    //     const month = String(date.getMonth() + 1).padStart(2, '0');
-    //     const day = String(date.getDate()).padStart(2, '0');
-    //     return `${year}-${month}-${day}`;
-    // }
     useEffect(()=>{
         getgroup()
     },[])
+    useEffect(() => {
+        if (startDate && interval && NumberOfMonth) {
+            const days = {
+                5: 5,
+                7: 7,
+                15: 15,
+                30: 30
+            };
+            const start = new Date(startDate);
+            const totalDays = NumberOfMonth * 30;
+            const fullIntervals = Math.floor(totalDays / days[interval]);
+            const remainingDays = totalDays % days[interval];
+            const daysToAdd = fullIntervals * days[interval] + remainingDays;
+            const endDates = new Date(start);
+            endDates.setDate(start.getDate() + daysToAdd);
+            const end =formatDate(endDates)
+            // const repeatDays = days[interval];
+            // const units = parseInt(amount) / parseInt(monthlyPayment);
+            // const endDateValue = new Date(startDate);
+            // endDateValue.setDate(endDateValue.getDate() + (units * repeatDays));
+            setEndDate(end)
+            console.log(end)
+            setPostState({ ...postState, ...{endDate: end} });  
+        }
+    }, [startDate, interval, NumberOfMonth]);
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
     return ( 
         <div className="saving createloan">
              <div className="back">
@@ -237,6 +267,7 @@ const GroupLoan = ({
                                 <option>-- Select Interest Type --</option>
                                 <option value="Compound Interest">Compound Interest</option>
                                 <option value="Single Line Interest">Single Line Interest</option>
+                                <option value="Flat Line Interest">Flat Line Interest</option>
                             </select>
                         </div>
                     </div>
@@ -249,18 +280,6 @@ const GroupLoan = ({
                             value={interestRate}
                             onChange={handleInterestRate}
                             required
-                            ></input>
-                        </div>
-                    </div>
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>Repayment</label>
-                            <input 
-                                type="text" 
-                                value={formattedMonthlyPayment}
-                                disabled
-                                placeholder="Amount for Repayment"
-                                required
                             ></input>
                         </div>
                     </div>
@@ -285,6 +304,21 @@ const GroupLoan = ({
                     </div>
                     <div className="form-2"  style={{width: "100%"}}>
                         <div className="input input-4">
+                            <label>Number Of Month</label>
+                            <input 
+                                type="number" 
+                                value={NumberOfMonth}
+                                placeholder="Enter Number Of Month"
+                                min="1"
+                                max="36"
+                                onChange={handleNumberOfMonth}
+                                onBlur={handleNumberOfMonth}
+                                required
+                            ></input>
+                        </div>
+                    </div>
+                    <div className="form-2"  style={{width: "100%"}}>
+                        <div className="input input-4">
                             <label>Start Date</label>
                             <input type="date" 
                             onBlur={handleStartDate}
@@ -296,12 +330,25 @@ const GroupLoan = ({
                     </div>
                     <div className="form-2"  style={{width: "100%"}}>
                         <div className="input input-4">
+                            <label>Repayment</label>
+                            <input 
+                                type="text" 
+                                value={formattedMonthlyPayment}
+                                disabled
+                                placeholder="Amount for Repayment"
+                                required
+                            ></input>
+                        </div>
+                    </div>
+                    <div className="form-2"  style={{width: "100%"}}>
+                        <div className="input input-4">
                             <label>End Date</label>
                             <input 
                                 type="date" 
                                 value={endDate} 
-                                onBlur={handleEndDate}
-                                onChange={handleEndDate}
+                                // onBlur={handleEndDate}
+                                // onChange={handleEndDate}
+                                disabled
                                 required
                             ></input>
                         </div>
