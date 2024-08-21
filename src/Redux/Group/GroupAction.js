@@ -79,8 +79,9 @@ export const creategroup = (registerState, history, setErrorHandler) => {
         dispatch(postgroupSuccess(res));
       //   dispatch(transferData(registerState))
       }
-    } catch (error) {
+    } catch (error) { 
       if (error.response){
+        setErrorHandler();
         dispatch(postgroupFaliure(error?.response?.data));
       }
     }

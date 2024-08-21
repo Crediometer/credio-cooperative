@@ -16,6 +16,7 @@ import { depositData } from "../../Redux/Deposit/DepositAction";
 import LoadingModal from "../../components/Modal/LoadingModal";
 import { getLoan } from "../../Redux/Loan/LaonAction";
 import { getsinglemember } from "../../Redux/Member/MemberAction";
+import ErrorModal from "../../components/Modal/ErrorModal";
 const NewStudentGroup = ({
     buttonScan, 
     cardData, 
@@ -117,7 +118,8 @@ const NewStudentGroup = ({
         setPin3(e.target.value)
     }
     const toggleModal = ()=>{
-        setnext(1)
+        setnext(2)
+        setShowError(false)
     }
     const handlerepeat =(e)=>{
         const value = e.target.value
@@ -217,6 +219,7 @@ const NewStudentGroup = ({
                 },
                 () => {
                     // On Error
+                    setShowError(true)
                 }
             );
         }
@@ -277,26 +280,11 @@ const NewStudentGroup = ({
                 <p className="title">Recurring Payments</p>
             </div>
             <div className="card-body">
-                {next===1 && (
+                {(next===1 || next === 2) && (
                     <form style={{ width: '100%', marginTop:"-2 0px" }} onSubmit={connectreader}>
                         <div className="invoice-body">
                             <div className="invoice-period"  style={{ width: '100%' }} >
-                                {/* <h4 className="form-head">Period</h4> */}
                                 <div className="payment-form">
-                                    {/* <div className="form-1">
-                                        <label>Repeat Every<span>*</span></label>
-                                        <div className="select-field">
-                                            <select required onChange={handlerepeat} onBlur={handlerepeat}>
-                                                <optgroup>
-                                                    <option>--Select Option--</option>
-                                                    <option value={5}>5 Days</option>
-                                                    <option value={7}>7 Days</option>
-                                                    <option value={15}>Biweekly</option>
-                                                    <option value={30}>Monthly</option>
-                                                </optgroup>
-                                            </select>
-                                        </div>
-                                    </div> */}
                                     <div className="form-1">
                                         <label>Transaction Type<span>*</span></label>
                                         <div className="select-field">
@@ -353,53 +341,55 @@ const NewStudentGroup = ({
                                             </div>
                                         </div>
                                     )}
-                                    {/* <div className="form-1">
-                                        <label>Enter Total Amount<span>*</span></label>
-                                        <div className="input-search-name">
-                                            <input type="text" required onChange={handletotal} onBlur={handletotal}></input>
+                                    <div className="form-2"  style={{width: "100%"}}>
+                                        <div className="input input-4">
+                                            <label>Account Type</label>
+                                            <select required onChange={handleAccount} onBlur={handleAccount}>
+                                                <optgroup>
+                                                    <option>--Select Account Type--</option>
+                                                    <option value={1}>Savings Account</option>
+                                                    <option value={2}>Current Account</option>
+                                                    <option value={0}>Universal Account</option>
+                                                </optgroup>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div className="form-1">
-                                        <label>Enter Amount per unit<span>*</span></label>
-                                        <div className="input-search-name">
-                                            <input type="text" required onChange={handleunit} onBlur={handleunit}></input>
-                                        </div>
-                                    </div>
-                                    <div className="form-1">
-                                        <label>Start Date<span>*</span></label>
-                                        <div className="input-search-name">
-                                            <input type="date" required value={startDate} disabled></input>
-                            
-                                        </div>
-                                    </div>
-                                    <div className="form-1">
-                                        <label>End Date<span>*</span></label>
-                                        <div className="input-search-name">
-                                            <input type="date" required value={endDate} disabled ></input>
-                                        </div>
-                                    </div> */}
                                 </div>
                             </div>
                         </div>
-                        <div className="save-con save-con-4">
-                            <button>Connect to Credio Reader</button>
-                        </div>
+                        {next === 1 && (
+                            <div className="save-con save-con-4">
+                                <button>Connect to Credio Reader</button>
+                            </div>
+                        )}
+                        {next === 2 && (
+                            <div className="form-button">
+                                <button className='transfer-button' onClick={handleSubmit}>{cardData?.requestDisplay
+                                ? (
+                                    <>
+                                        <LottieAnimation data={loader}/>
+                                        "Scanning your Card.."
+                                    </>
+                                ) 
+                                : "Continue"}</button>
+                            </div>
+                        )}
                     </form>
                 )}
-                { next===2 && <div className="card-field">
+                {/* { next===2 && <div className="card-field">
                     <form onSubmit={handleSubmit}>
                         <div className="form-2"  style={{width: "100%"}}>
-                                <div className="input input-4">
-                                    <label>Account Type</label>
-                                    <select required onChange={handleAccount} onBlur={handleAccount}>
-                                        <optgroup>
-                                            <option>--Select Account Type--</option>
-                                            <option value={1}>Savings Account</option>
-                                            <option value={2}>Current Account</option>
-                                            <option value={0}>Universal Account</option>
-                                        </optgroup>
-                                    </select>
-                                </div>
+                            <div className="input input-4">
+                                <label>Account Type</label>
+                                <select required onChange={handleAccount} onBlur={handleAccount}>
+                                    <optgroup>
+                                        <option>--Select Account Type--</option>
+                                        <option value={1}>Savings Account</option>
+                                        <option value={2}>Current Account</option>
+                                        <option value={0}>Universal Account</option>
+                                    </optgroup>
+                                </select>
+                            </div>
                         </div>
                         <div className="form-button">
                             <button className='transfer-button'>{cardData?.requestDisplay
@@ -413,7 +403,7 @@ const NewStudentGroup = ({
                         </div>
                     </form>
                     </div>
-                }
+                } */}
                 {next === 3 &&
                     <div className="card-field">
                         <p className="enter-pin">Please Enter Your Card Pin</p>
@@ -472,6 +462,7 @@ const NewStudentGroup = ({
                 }
                 {next === 4 && <ReceiptModal togglemodal={toggleModal} data={data}/> }
                 {loading && (<LoadingModal/>)}
+                {showerror && (<ErrorModal togglemodal={toggleModal} message2={data} message={error.message}/>)}
             </div>
             {/* <ReceiptModal/> */}
             {/* {showerror && (<Errormodal togglemodal={togglemodal2}/>)}
@@ -490,7 +481,7 @@ const mapStoreToProps = (state) => {
         cardData: state?.card,
         connected: state?.card?.connected,
         loading: state.redeposit.loading,
-        data: state.deposit,
+        data: state.redeposit.deposit,
         error: state.deposit.error,
         plan: state?.loanlist?.data?.payload?.memberActionList
     };  

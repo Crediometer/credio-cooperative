@@ -124,7 +124,7 @@ const ActiveGroup = (
                 {data?.loans?.length === 0 ? (
                     <div className="empty-animate">
                         <LottieAnimation data={empty}/>
-                        <p>No Data Found</p>
+                        <p>No Active Loan Found</p>
                     </div>
                 ):(
                     <>

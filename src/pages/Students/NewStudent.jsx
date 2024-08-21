@@ -16,6 +16,7 @@ import { depositData } from "../../Redux/Deposit/DepositAction";
 import LoadingModal from "../../components/Modal/LoadingModal";
 import { getLoan } from "../../Redux/Loan/LaonAction";
 import { getsinglemember } from "../../Redux/Member/MemberAction";
+import ErrorModal from "../../components/Modal/ErrorModal";
 const NewStudent = ({
     buttonScan, 
     cardData, 
@@ -117,7 +118,8 @@ const NewStudent = ({
         setPin3(e.target.value)
     }
     const toggleModal = ()=>{
-        setnext(1)
+        setnext(2)
+        setShowError(false)
     }
     const handlerepeat =(e)=>{
         const value = e.target.value
@@ -217,6 +219,7 @@ const NewStudent = ({
                 },
                 () => {
                     // On Error
+                    setShowError(true)
                 }
             );
         }
@@ -254,7 +257,6 @@ const NewStudent = ({
                 15: 15,
                 30: 30
             };
-
             const repeatDays = days[repeatEvery];
             const units = parseInt(totalAmount) / parseInt(amountPerUnit);
             const endDateValue = new Date(startDate);
@@ -264,19 +266,6 @@ const NewStudent = ({
             // setpostState({ ...postState, ...{endDate: endDate} });  
         }
     }, [totalAmount, amountPerUnit, repeatEvery, startDate]);
-    //useEffect(()=>{
-    //     setpostState({ ...postState,
-    //         tlv:cardData?.tlv,
-    //         key: keyinfo?.pin_key,
-    //         merchantId: keyinfo?.merchantId,
-    //         merchantCategoryCode: keyinfo?.merchantCategoryCode,
-    //         terminalId:keyinfo?.terminalid,
-    //         merchantName: keyinfo?.merchantName
-    //     }); 
-    // },[keyinfo, cardData])
-    // useEffect(()=>{
-    //     fetchprofile();
-    // },[]);
     useEffect(()=>{
         getloans(id, transactionType)
     },[id,transactionType])
@@ -290,7 +279,7 @@ const NewStudent = ({
                 <p className="title">Recurring Payments</p>
             </div>
             <div className="card-body">
-                {next===1 && (
+                {(next===1 || next === 2) && (
                     <form style={{ width: '100%', marginTop:"-2 0px" }} onSubmit={connectreader}>
                         <div className="invoice-body">
                             <div className="invoice-period"  style={{ width: '100%' }} >
@@ -366,40 +355,42 @@ const NewStudent = ({
                                             </div>
                                         </div>
                                     )}
-                                    {/* <div className="form-1">
-                                        <label>Enter Total Amount<span>*</span></label>
-                                        <div className="input-search-name">
-                                            <input type="text" required onChange={handletotal} onBlur={handletotal}></input>
+                                    <div className="form-2"  style={{width: "100%"}}>
+                                        <div className="input input-4">
+                                            <label>Account Type</label>
+                                            <select required onChange={handleAccount} onBlur={handleAccount}>
+                                                <optgroup>
+                                                    <option>--Select Account Type--</option>
+                                                    <option value={1}>Savings Account</option>
+                                                    <option value={2}>Current Account</option>
+                                                    <option value={0}>Universal Account</option>
+                                                </optgroup>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div className="form-1">
-                                        <label>Enter Amount per unit<span>*</span></label>
-                                        <div className="input-search-name">
-                                            <input type="text" required onChange={handleunit} onBlur={handleunit}></input>
-                                        </div>
-                                    </div>
-                                    <div className="form-1">
-                                        <label>Start Date<span>*</span></label>
-                                        <div className="input-search-name">
-                                            <input type="date" required value={startDate} disabled></input>
-                            
-                                        </div>
-                                    </div>
-                                    <div className="form-1">
-                                        <label>End Date<span>*</span></label>
-                                        <div className="input-search-name">
-                                            <input type="date" required value={endDate} disabled ></input>
-                                        </div>
-                                    </div> */}
                                 </div>
                             </div>
                         </div>
-                        <div className="save-con save-con-4">
-                            <button>Connect to Credio Reader</button>
-                        </div>
+                        {next === 1 && (
+                            <div className="save-con save-con-4">
+                                <button>Connect to Credio Reader</button>
+                            </div>
+                        )}
+                        {next === 2 && (
+                            <div className="form-button">
+                                <button className='transfer-button' onClick={handleSubmit}>{cardData?.requestDisplay
+                                ? (
+                                    <>
+                                        <LottieAnimation data={loader}/>
+                                        "Scanning your Card.."
+                                    </>
+                                ) 
+                                : "Continue"}</button>
+                            </div>
+                        )}  
                     </form>
                 )}
-                { next===2 && <div className="card-field">
+                {/* { next===2 && <div className="card-field">
                     <form onSubmit={handleSubmit}>
                         <div className="form-2"  style={{width: "100%"}}>
                                 <div className="input input-4">
@@ -426,7 +417,7 @@ const NewStudent = ({
                         </div>
                     </form>
                     </div>
-                }
+                } */}
                 {next === 3 &&
                     <div className="card-field">
                         <p className="enter-pin">Please Enter Your Card Pin</p>
@@ -485,6 +476,7 @@ const NewStudent = ({
                 }
                 {next === 4 && <ReceiptModal togglemodal={toggleModal} data={data}/> }
                 {loading && (<LoadingModal/>)}
+                {showerror && (<ErrorModal togglemodal={toggleModal} message2={data} message={error.message}/>)}
             </div>
             {/* <ReceiptModal/> */}
             {/* {showerror && (<Errormodal togglemodal={togglemodal2}/>)}
@@ -503,8 +495,8 @@ const mapStoreToProps = (state) => {
         cardData: state?.card,
         connected: state?.card?.connected,
         loading: state.redeposit.loading,
-        data: state.deposit,
-        error: state.deposit.error,
+        data: state.redeposit.deposit,
+        error: state.redeposit.error,
         plan: state?.loanlist?.data?.payload?.memberActionList
     };  
   };

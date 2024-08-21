@@ -224,7 +224,7 @@ const CreateSaving = ({
                         </div>
                         <div className="form-2"  style={{width: "100%"}}>
                             <div className="input input-4">
-                                <label>RePayment</label>
+                                <label>Installment </label>
                                 <input type="text" 
                                 placeholder="Enter Amount fo RePayment"
                                 onBlur={handleMonthlyPayment}

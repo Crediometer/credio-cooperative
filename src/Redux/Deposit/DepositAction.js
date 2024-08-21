@@ -66,6 +66,9 @@ export const depositData = (depositState, history, historyError) => {
       if (res.status === 200) {
         history()
         dispatch(depositSuccess(data)); 
+      }else if(res.status === 208){
+        historyError()
+        dispatch(depositSuccess(data));
       }
     } catch (error) {
       if (error.response) {

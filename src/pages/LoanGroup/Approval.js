@@ -102,7 +102,7 @@ const ApprovalGroup = (
                         {data?.loans?.length === 0 ? (
                             <div className="empty-animate">
                                 <LottieAnimation data={empty}/>
-                                <p>No Data Found</p>
+                                <p>No Approved Loan Found</p>
                             </div>
                         ):(
                             <>

@@ -69,8 +69,8 @@ const LoanModal = ({data, togglemodal, type}) => {
                         </div>
                         <div className="receipt-con">
                             <div className="receipt-content">
-                                <p className="receipt-title">Duration:</p>
-                                <p className="receip-cont">{data.interval} Months</p>
+                                <p className="receipt-title">interval:</p>
+                                <p className="receip-cont">{data.interval==5 ? "5 Days" : data.interval==7 ? "7 Days" :  data.interval==15 ? "Biweekly" : "Monthly"}</p>
                             </div>
                             <div className="receipt-content">
                                 <p className="receipt-title">Purpose:</p>

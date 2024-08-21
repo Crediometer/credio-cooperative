@@ -116,7 +116,7 @@ const ClosedSaving = ({
                      {data?.savings?.length === 0 ? (
                         <div className="empty-animate">
                             <LottieAnimation data={empty}/>
-                            <p>No Data Found</p>
+                            <p>No Closed Saving Found</p>
                         </div>
                     ):(
                         <>

@@ -111,7 +111,7 @@ const OverdueGroup = ({
                     {data?.loans?.length === 0 ? (
                         <div className="empty-animate">
                             <LottieAnimation data={empty}/>
-                            <p>No Data Found</p>
+                            <p>No Overdue Loan Found</p>
                         </div>
                     ):(
                         <>

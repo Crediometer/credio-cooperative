@@ -113,7 +113,7 @@ const Closed = ({
                         {data?.loans?.length === 0 ? (
                         <div className="empty-animate">
                             <LottieAnimation data={empty}/>
-                            <p>No Data Found</p>
+                            <p>No Closed Loan Found</p>
                         </div>
                     ):(
                         <>
