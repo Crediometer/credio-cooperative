@@ -9,6 +9,7 @@ import LottieAnimation from "../../Lotties";
 import preloader from "../../Assets/animations/preloader.json"
 import empty from "../../Assets/animations/Empty.json"
 import { Stack, TablePagination } from "@mui/material";
+import { FormattedNumber, IntlProvider } from "react-intl";
 const Active = (
     {
         getActiveLoan,
@@ -129,70 +130,80 @@ const Active = (
                 ):(
                     <>
                         {data?.loans?.map((saving) => {
-                            <Link to="/saving-active-details">
-                                <div className="active-card">
-                                    <div className="active-top">
-                                        <div className="active-status">
-                                            <p>ACTIVE</p>
+                           return(
+                                <div className="approval-card">
+                                    <div className="personal-section">
+                                        <div className="approval-card-top">
+                                            <p className="card-header">Personal Information</p>
+                                            <p>{saving.createdAt.slice(0,10)}</p>
                                         </div>
-                                        <div className={styles.paymentCircleInner}>
-                                            <svg
-                                            width={circleWidth}
-                                            height={circleWidth}
-                                            viewBox={`0 0 ${circleWidth} ${circleWidth}`}
-                                            >
-                                            <circle
-                                                cx={circleWidth / 2}
-                                                cy={circleWidth / 2}
-                                                strokeWidth="10px"
-                                                r={radius}
-                                                className={styles.circleBackground}
-                                            />
-                                            <circle
-                                                cx={circleWidth / 2}
-                                                cy={circleWidth / 2}
-                                                strokeWidth="10px"
-                                                r={radius}
-                                                className={styles.circleProgress}
-                                                style={{
-                                                    strokeDasharray: dashArray,
-                                                    strokeDashoffset: dashOffset
-                                                }}
-                                                transform={`rotate(-90 ${circleWidth / 2} ${circleWidth / 2})`}
-                                            />
-                                                {" "}
-                                                <text 
-                                                    x='50%' 
-                                                    y="50%" 
-                                                    dy='0.3em' 
-                                                    textAnchor='middle'
-                                                    className={styles.circleText}
-                                                >
-                                                    80%
-                                                </text>
-                                                {/* <text 
-                                                    x='50%' 
-                                                    y="50%" 
-                                                    dy='0.3em' 
-                                                    textAnchor='middle'
-                                                    className={styles.circleText}
-                                                >
-                                                    NGN378,032
-                                                </text> */}
-                                            </svg>
+                                        <div className="aprroval-information">
+                                            <div className="information-inner">
+                                                <p>Amount: 
+                                                    <IntlProvider>  
+                                                        {" "}
+                                                        <span>
+                                                        <FormattedNumber
+                                                            value={
+                                                                saving.amount
+                                                            }
+                                                            style="currency"
+                                                            currency="NGN"
+                                                        />
+                                                        </span>
+                                                    </IntlProvider> 
+                                                </p>
+                                                <p style={{textAlign: "right"}}>Amount With Interest: 
+                                                    <IntlProvider>  
+                                                        {" "}
+                                                        <span>
+                                                        <FormattedNumber
+                                                            value={
+                                                                saving.amountWithInterest
+                                                            }
+                                                            style="currency"
+                                                            currency="NGN"
+                                                        />
+                                                        </span>
+                                                    </IntlProvider> 
+                                                </p>
+                                            </div>
+                                            <div className="information-inner">
+                                                <p>Purpose: <span>{saving.purpose}</span></p>
+                                                <p style={{textAlign: "right"}}>interval : <span>{(saving.interval==5)?"5 Days":(saving.interval==7)?"7 Days":(saving.interval==15)?"BiWeekly":"Monthly"}</span></p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="active-body">
-                                        <p className="loan-for">Ademola John</p>
-                                        <h3>N400,000</h3>
-                                        <p className="loan-details">Your saving request has been approved and disbursed</p>
-                                        <div className="active-warning">
-                                            <FaExclamationCircle/>
-                                            <p>Tap here to moere details </p>
+                                    <div className="personal-section">
+                                        <div className="approval-card-top">
+                                            <p className="card-header">Financial Information</p>
+                                        </div>
+                                        <div className="aprroval-information">
+                                            <div className="information-inner">
+                                                <p>Interest Rate: <span>{saving.interestRate}%</span></p>
+                                                <p>Start Date: <span>{saving.startDate}</span></p>
+                                            </div>
+                                            <div className="information-inner">
+                                                <p>EndDate: <span>{saving.endDate}</span></p>
+                                                <p>Interval Payback: 
+                                                    <IntlProvider>  
+                                                        {" "}
+                                                        <span>
+                                                        <FormattedNumber
+                                                            value={
+                                                                saving.monthlyPayment
+                                                            }
+                                                            style="currency"
+                                                            currency="NGN"
+                                                        />
+                                                        </span>
+                                                    </IntlProvider> 
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </Link>
+                           )
                         })}
                     </>
                 )}

@@ -31,7 +31,7 @@ export default function GroupTable({data}) {
           <TableRow>
           <TableCell style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1.2rem", fontWeight:"700"}} align="left">S/N</TableCell>
             <TableCell style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1.2rem", fontWeight:"700"}} align="left">Name</TableCell>
-            <TableCell  style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1.2rem", fontWeight:"700"}} align="left">Date Created</TableCell>
+            <TableCell  style={{color: "#B11226", fontFamily: "Poppins", fontSize:"1.2rem", fontWeight:"700"}} align="left">Credio Account Number</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -46,8 +46,8 @@ export default function GroupTable({data}) {
                     <TableCell  style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} component="th" scope="row"  align="left">
                     {row?.groupInfo?.name}
                     </TableCell>
-                    <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row.createdAt.slice(0,10)}</TableCell>
-                    <Link to={`/dashboard-member`}>  <TableCell><button className='view-button'>View</button></TableCell> </Link>
+                    <TableCell style={{color: "#4B4B4B", fontFamily: "Poppins", fontSize:"1rem", fontWeight:"600"}} align="left">{row?.groupInfo?.credioAccountNumber}</TableCell>
+                    {/* <Link to={`/dashboard-member`}>  <TableCell><button className='view-button'>View</button></TableCell> </Link> */}
                 </TableRow>
            
           ))}
