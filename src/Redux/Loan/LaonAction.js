@@ -153,8 +153,8 @@ export const activeRequest = () => {
     };
   };
 
-  const baseUrl = "https://cooperative-be.onrender.com/api/v1"
-  const baseUrl2 = "https://coop-sp-c896c5c4c3f0.herokuapp.com/api/v1"
+  const baseUrl = "https://coopnode.crediometer.com/api/v1"
+  const baseUrl2 = "https://www.coopsp.crediometer.com/api/v1"
   
   export const getLoan = (id,type) => {
     return async (dispatch) => {

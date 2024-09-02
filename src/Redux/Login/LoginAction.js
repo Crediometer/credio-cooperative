@@ -14,7 +14,7 @@ const AuthActionType = {
     LOGIN_FAIL: "LOGIN_FAIL",
 };
 
-const baseUrl = "https://cooperative-be.onrender.com/api/v1"
+const baseUrl = "https://coopnode.crediometer.com/api/v1"
 let autoLogoutTimer;
 const LoginAuthAction = (loginState, history, setErrorHandler) => {
     return async (dispatch) => {
