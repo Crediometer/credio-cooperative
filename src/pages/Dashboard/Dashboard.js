@@ -5,29 +5,39 @@ import {IoNotificationsOutline} from 'react-icons/io5'
 import { HiOutlinePlusSm } from "react-icons/hi";
 import { PiBellSimpleFill, PiSignOut } from "react-icons/pi";
 import {IoMdArrowDropdown} from 'react-icons/io'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Box from "../../components/Box/Box";
 import { RiAdminFill } from "react-icons/ri";
 import { CgProfile } from "react-icons/cg";
 import { MdOutlinePermContactCalendar } from "react-icons/md";
+import { FormattedNumber, IntlProvider } from "react-intl";
 import { useEffect, useState } from "react";
 import { fetchprofile, vaultprofile } from "../../Redux/Profile/ProfileAction";
 import { connect } from "react-redux";
 import LottieAnimation from "../../Lotties";
 import preloader from "../../Assets/animations/preloader.json"
 import { getTransaction } from "../../Redux/Transactions/TransactionAction";
+import { LogOutAuthAction } from "../../Redux/Login/LoginAction";
 const Dashboard = ({
     loading, 
     error, 
+    transloading,
+    data,
     getprofile,
     fetchprofile,
     vaultprofile,
-    gettransaction
+    gettransaction,
+    logout
 }) => {
     const [show, setShow] = useState(false)
-
+    const history = useNavigate();
     const handleshow =()=>{
         setShow(!show)
+    }
+    const handlelogout =()=>{
+        logout(
+            ()=>{ history(`/login`)}
+        )
     }
     useEffect(()=>{
         fetchprofile();
@@ -36,7 +46,7 @@ const Dashboard = ({
     }, [])
     return ( 
         <>
-            {loading ? (
+            {loading||transloading ? (
                 <div className="preloader">
                      <LottieAnimation data={preloader}/>
                 </div>
@@ -77,7 +87,7 @@ const Dashboard = ({
                                             <MdOutlinePermContactCalendar />
                                             <p>Contact Us</p>
                                         </div>
-                                        <div className="nav-bar-content sign-out">
+                                        <div onClick={handlelogout} className="nav-bar-content sign-out">
                                             <PiSignOut />
                                             <p>Sign Out</p>
                                         </div>
@@ -90,13 +100,36 @@ const Dashboard = ({
                         <div className="card-top">
                             <div className="savings">
                                 <p>Account Balance</p>
-                                <h2>N0</h2>
+                                <IntlProvider>
+                                    {" "}
+                                    <h2>
+                                    <FormattedNumber
+                                        value={
+                                            getprofile?.financialSummary?.totalLoanCurrentlyPaid
+                                        }
+                                        style="currency"
+                                        currency="NGN"
+                                    />
+                                    </h2>
+                                </IntlProvider> 
                             </div>
                             <div className="savings">
                                 <p style={{textAlign: "right"}}>Savings</p>
-                                <h2 style={{textAlign: "right"}}>N{getprofile?.financialSummary?.totalSavings}</h2>
+                                <IntlProvider>
+                                    {" "}
+                                    <h2
+                                        style={{textAlign: "right"}}
+                                    >
+                                    <FormattedNumber
+                                        value={
+                                            getprofile?.financialSummary?.totalSavings
+                                        }
+                                        style="currency"
+                                        currency="NGN"
+                                    />
+                                    </h2>
+                                </IntlProvider> 
                             </div>
-                            
                         </div>
                         <div className="card-top">
                             <div className="savings">
@@ -105,12 +138,25 @@ const Dashboard = ({
                             </div>
                             <div className="savings">
                                 <p style={{textAlign: "right"}}>Loans</p>
-                                <h2 style={{textAlign: "right"}}>N{getprofile?.financialSummary?.totalLoans}</h2>
+                                <IntlProvider>
+                                    {" "}
+                                    <h2
+                                    style={{textAlign: "right"}}
+                                    >
+                                    <FormattedNumber
+                                        value={
+                                            getprofile?.financialSummary?.totalLoans
+                                        }
+                                        style="currency"
+                                        currency="NGN"
+                                    />
+                                    </h2>
+                                </IntlProvider> 
                             </div>
                             
                         </div>
                     </div>
-                    <div className="date-picker">
+                    {/* <div className="date-picker">
                         <div className="statement-date">
                             <input
                                 type='text'
@@ -122,7 +168,7 @@ const Dashboard = ({
                                 required
                             ></input>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="dashboard-navigate">
                         {/* <Link to="/payment">
                             <Box
@@ -186,117 +232,44 @@ const Dashboard = ({
                     <div className="dashboard-transaction">
                         <h2 className="recent-head">Recent Transactions</h2>
                         <div className="transactions">
-                        <div className="approval-card approval-saving">
-                                    <div className="personal-section">
-                                        <div className="approval-card-top">
-                                            <p className="card-header">Personal Information</p>
-                                            <div className="information-inner information-inner-2">
-                                                <p className="withdrawal-type">Savings</p>
-                                                <h2 className="withdrawal-type withdrawal-type-2">N200,000</h2>
+                            {data?.map((transaction)=>{
+                                return(
+                                    <div className={transaction.type == 1 ? 'approval-card approval-saving' : 'approval-card approval-loan'}>
+                                        <div className="personal-section">
+                                            <div className="approval-card-top">
+                                                <div className="information-inner information-inner-2">
+                                                <IntlProvider>
+                                                    {" "}
+                                                    <h2
+                                                        className="withdrawal-type withdrawal-type-2"
+                                                    >
+                                                    <FormattedNumber
+                                                        value={
+                                                           transaction.amount
+                                                        }
+                                                        style="currency"
+                                                        currency="NGN"
+                                                    />
+                                                    </h2>
+                                                </IntlProvider> 
+                                                </div>
+                                                <p>{transaction.createdAt.slice(0,10)}</p>
                                             </div>
-                                            <p>15th May, 2024</p>
-                                        </div>
-                                        
-                                        <div className="aprroval-information">
-                                            <div className="information-inner">
-                                                <p>First Name: <span>Adewunmi</span></p>
-                                                <p style={{textAlign: "right"}}>Email: <span>adewumi@gmail.com</span></p>
-                                            </div>
-                                            <div className="information-inner">
-                                                <p>Last Name: <span>George</span></p>
-                                                <p style={{textAlign: "right"}}>Phone : <span>09078987678</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="personal-section">
-                                        <div className="approval-card-top">
-                                            <p className="card-header">Financial Information</p>
-                                        </div>
-                                        <div className="aprroval-information">
-                                            <div className="information-inner">
-                                                <p>Loan Request: <span>Adewunmi</span></p>
-                                                <p>Total Amount Saved: <span>N1,000,000</span></p>
-                                            </div>
-                                            <div className="information-inner">
-                                                <p>Purpose: <span>Car</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="approval-card approval-loan">
-                                    <div className="personal-section">
-                                        <div className="approval-card-top">
-                                            <p className="card-header">Personal Information</p>
-                                            <div className="information-inner information-inner-2">
-                                                <p className="withdrawal-type">Loan</p>
-                                                <h2 className="withdrawal-type withdrawal-type-2">N500,000</h2>
-                                            </div>
-                                            <p>20th May, 2024</p>
-                                        </div>
-                                        <div className="aprroval-information">
-                                            <div className="information-inner">
-                                                <p>First Name: <span>Adeleye</span></p>
-                                                <p style={{textAlign: "right"}}>Email: <span>adeleye@gmail.com</span></p>
-                                            </div>
-                                            <div className="information-inner">
-                                                <p>Last Name: <span>Tobi</span></p>
-                                                <p style={{textAlign: "right"}}>Phone : <span>090789589</span></p>
+                                            
+                                            <div className="aprroval-information">
+                                                <div className="information-inner">
+                                                    <p>from<span>{transaction.from}</span></p>
+                                                    <p style={{textAlign: "right"}}>to: <span>{transaction.to}</span></p>
+                                                </div>
+                                                {/* <div className="information-inner">
+                                                    <p>Last Name: <span>George</span></p>
+                                                    <p style={{textAlign: "right"}}>Phone : <span>09078987678</span></p>
+                                                </div> */}
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="personal-section">
-                                        <div className="approval-card-top">
-                                            <p className="card-header">Financial Information</p>
-                                        </div>
-                                        <div className="aprroval-information">
-                                            <div className="information-inner">
-                                                <p>Loan Request: <span>Adeleye</span></p>
-                                                <p>Total Amount Loaned: <span>N500,000</span></p>
-                                            </div>
-                                            <div className="information-inner">
-                                                <p>Purpose: <span>Business</span></p>
-                                                <p>Monthly Payback: <span>N100,000</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="approval-card approval-loan">
-                                    <div className="personal-section">
-                                        <div className="approval-card-top">
-                                            <p className="card-header">Personal Information</p>
-                                            <div className="information-inner information-inner-2">
-                                                <p className="withdrawal-type">Loan</p>
-                                                <h2 className="withdrawal-type withdrawal-type-2">N5,000,000</h2>
-                                            </div>
-                                            <p>22th May, 2024</p>
-                                        </div>
-                                        <div className="aprroval-information">
-                                            <div className="information-inner">
-                                                <p>First Name: <span>Akin</span></p>
-                                                <p style={{textAlign: "right"}}>Email: <span>akin@gmail.com</span></p>
-                                            </div>
-                                            <div className="information-inner">
-                                                <p>Last Name: <span>Lara</span></p>
-                                                <p style={{textAlign: "right"}}>Phone : <span>08090987646</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="personal-section">
-                                        <div className="approval-card-top">
-                                            <p className="card-header">Financial Information</p>
-                                        </div>
-                                        <div className="aprroval-information">
-                                            <div className="information-inner">
-                                                <p>Loan Request: <span>Akin</span></p>
-                                                <p>Total Amount Loaned: <span>N5,000,000</span></p>
-                                            </div>
-                                            <div className="information-inner">
-                                                <p>Purpose: <span>Business</span></p>
-                                                <p>Monthly Payback: <span>N500,000</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                )
+                            })}
                         </div>
                     </div>
                 </div>
@@ -306,9 +279,12 @@ const Dashboard = ({
     );
 }
 const mapStateToProps = state => {
+    console.log(state)
     return{
         error:state?.profile?.error,
         loading: state?.profile?.loading,
+        transloading: state?.transaction?.loading,
+        data:state?.transaction?.data?.payload?.transactions,
         getprofile: state?.profile?.data?.payload,
     }
 }
@@ -317,6 +293,7 @@ const mapDispatchToProps = dispatch => {
     return{
         fetchprofile: () => dispatch(fetchprofile()),
         gettransaction: () => dispatch(getTransaction()),
+        logout: (history) => dispatch(LogOutAuthAction(history)),
         // vaultprofile: () => dispatch(vaultprofile()),
     }
 }

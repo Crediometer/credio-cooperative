@@ -6,7 +6,8 @@ import { createSaving, createSavingGroup } from "../../Redux/Saving/SavingAction
 import { connect } from "react-redux";
 import LottieAnimation from "../../Lotties";
 import loader from "../../Assets/animations/loading.json"
-import { getmember } from "../../Redux/Member/MemberAction";
+import { getgroupmember, getmember } from "../../Redux/Member/MemberAction";
+import preloader from "../../Assets/animations/preloader.json"
 const CreateSavingGroup = ({
     loading,
     error,
@@ -14,6 +15,7 @@ const CreateSavingGroup = ({
     createSaving,
     getmember,
     member,
+    memberloading,
     profile
 }) => {
     const history = useNavigate();
@@ -21,6 +23,7 @@ const CreateSavingGroup = ({
     const [searchInput, setSearchInput] = useState('');
     const [searchUser, setSearchUser] = useState('');
     const [show, setShow] = useState(false);
+    const [showerror, setShowError] = useState(false)
     const [filteredMembers, setFilteredMembers] = useState(members);
     const [memberId, setMemberId] = useState('')
     const [amount, setAmount] = useState('')
@@ -31,34 +34,27 @@ const CreateSavingGroup = ({
     const [endDate, setEndDate] = useState("")
     const [monthlyPayment, setmonthlyPayment] = useState("")
     const [postState, setPostState] = useState({})
+    const [formattedAmount, setformattedAmount] = useState("");
     const togglemodal=()=>{
         setShow(!show)
     }
-    const handleInputChange = (e) => {
+
+    const handleamount = (e) => {
         const value = e.target.value;
-        setSearchInput(value);
-        
-        // Filter members based on input value
-        if (value) {
-            const filtered = members.filter(member => 
-                member.toLowerCase().includes(value.toLowerCase())
-            );
-            setFilteredMembers(filtered);
-        } else {
-            setFilteredMembers([]);
-        }
+        const numericValue = value.replace(/\D/g, ''); // Remove non-numeric characters
+
+        setAmount(numericValue); // Set the unformatted amount
+        const formattedValue = formatAmount(numericValue);
+        setformattedAmount(formattedValue); // Set the formatted amount for display
+
+        const newValue = parseInt(numericValue);
+        setPostState({ ...postState, ...{ amount: newValue } });
     };
-    const handleMemberClick = (member) => {
-        setSearchUser(member);
-        setSearchInput("")
-        setFilteredMembers([]);
+
+    const formatAmount = (input) => {
+        // Add commas as thousand separators
+        return input.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
-    const handleamount = (e)=>{
-        const value = e.target.value
-        setAmount(value)
-        const newvalue = parseInt(value)
-        setPostState({...postState, ...{amount:newvalue}})
-    }
     const handleInterval = (e)=>{
         const value = e.target.value
         setInterval(value)
@@ -85,8 +81,9 @@ const CreateSavingGroup = ({
     const handleStartDate = (e)=>{
         const value = e.target.value
         setStartDate(value)
-        const newvalue = parseInt(value)
-        setPostState({...postState, ...{startDate: newvalue, endDate:parseInt(endDate)}})
+        const newvalue = new Date(value).toISOString();
+        // const endnewvalue = endDate.toISOString()
+        setPostState({...postState, ...{startDate: newvalue, endDate}})
     }
     const handleEndDate = (e)=>{
         const value = e.target.value
@@ -117,6 +114,7 @@ const CreateSavingGroup = ({
                 setEndDate("")
             }, ()=>{ 
                 window.scrollTo(0, 0);
+                setShowError(true)
             });
         }catch(error){
             // setPending(false);
@@ -148,181 +146,150 @@ const CreateSavingGroup = ({
         return `${year}-${month}-${day}`;
     }
     return ( 
-        <div className="saving createloan">
-            <div className="back">
-                <Link to='/saving'><BiChevronLeft/></Link>
-                <p className="title">Create Saving</p>
-            </div>
-            {/* <div className="top-search">
-                <div className="form-11" style={{ width: '100%' }}>
-                    <div className="input">
-                        <input 
-                            type="text" 
-                            placeholder="SEARCH FOR MEMBER"
-                            value={searchInput}
-                            onChange={handleInputChange}
-                            required
-                        ></input>
+        <>
+            {memberloading ? (
+                <div className="preloader">
+                    <LottieAnimation data={preloader}/>
+                </div>
+            ):( 
+                <div className="saving createloan">
+                    <div className="back">
+                        <Link to='/saving-group'><BiChevronLeft/></Link>
+                        <p className="title">Create Saving</p>
                     </div>
-                </div>
-                <div className="statement-date statement-date-2">
-                    <input
-                        type='text'
-                        placeholder='Start Date'
-                        className='transferfield'
-                        onFocus={(e) => (e.target.type = "date")}
-                        onBlur={(e) => {(e.target.type = "text");}}
-                        // onChange={handlestartdate}
-                        required
-                    ></input>
-                </div>
-            </div>
-            {searchInput && (
-                <div className="member-list">
-                    {filteredMembers.length > 0 ? (
-                        filteredMembers.map((member, index) => (
-                            <div    
-                                onClick={() => handleMemberClick(member)}
-                                style={{ cursor: 'pointer' }} 
-                                key={index} 
-                                className="member-item"
-                            >
-                                {member}
+                    <div className="card-body">
+                        <form onSubmit={handleSubmit} className="card-field">
+                            {showerror && (
+                                <div className="alert-error">
+                                    <p>{error.message}</p>
+                                </div>
+                            )}
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>Member</label>
+                                    <select
+                                        onChange={handlemember}
+                                        onBlur={handlemember}
+                                        value={memberId}
+                                    >
+                                        <optgroup>
+                                            <option>--Select Member--</option>
+                                            {member?.map(((member)=>{
+                                                return(
+                                                    <option value={member?._id}>{member?.personalInfo?.fullname}</option>
+                                                )       
+                                            }))}
+                                        </optgroup>
+                                    </select>
+                                </div>
                             </div>
-                        ))
-                    ) : (
-                        <div>No members found</div>
-                    )}
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>Amount</label>
+                                    <input type="text" 
+                                        placeholder="Enter Amount"
+                                        value={formattedAmount}
+                                        onBlur={handleamount}
+                                        onChange={handleamount}
+                                        required
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>Interest Rate</label>
+                                    <input type="text" 
+                                    value={interestRate}
+                                    placeholder="Enter Interest Rate"
+                                    onBlur={handleInterestRate}
+                                    onChange={handleInterestRate}
+                                    required
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>Installment </label>
+                                    <input type="text" 
+                                    placeholder="Enter Amount fo RePayment"
+                                    onBlur={handleMonthlyPayment}
+                                    onChange={handleMonthlyPayment}
+                                    required
+                                    value={monthlyPayment}
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>Interval</label>
+                                    <select
+                                        value={interval}
+                                        onChange={handleInterval}
+                                        onBlur={handleInterval}
+                                        required
+                                    >
+                                        <optgroup>
+                                            <option>--Select Option--</option>
+                                            <option value={5}>5 Days</option>
+                                            <option value={7}>7 Days</option>
+                                            <option value={15}>BiWeekly</option>
+                                            <option value={30}>Monthly</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>Start Date</label>
+                                    <input type="date" 
+                                    placeholder="Enter Interest Rate"
+                                    value={startDate}
+                                    onBlur={handleStartDate}
+                                    onChange={handleStartDate}
+                                    required
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>End Date</label>
+                                    <input 
+                                        type="date" 
+                                        required 
+                                        value={endDate} 
+                                        disabled 
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className="form-2"  style={{width: "100%"}}>
+                                <div className="input input-4">
+                                    <label>Purpose</label>
+                                    <input type="text" 
+                                    placeholder="Purpose of Loan"
+                                    onBlur={handlePurpose}
+                                    onChange={handlePurpose}
+                                    value={purpose}
+                                    required
+                                    ></input>
+                                </div>
+                            </div>
+                            <div className="form-button">
+                                <button className='transfer-button'>
+                                    {loading ? (
+                                        <LottieAnimation data={loader}/>
+                                    ):"Create"} 
+                                </button>
+                            </div>
+                        </form>
+                        {show && <LoanModal
+                            type='Saving'
+                            togglemodal={togglemodal}
+                            data={postState}
+                        />}
+                    </div>
                 </div>
             )}
-            <div className="selected-user">
-                <h4 className="form-head">{searchUser}</h4>
-            </div> */}
-            <div className="card-body">
-                <form onSubmit={handleSubmit} className="card-field">
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>Member</label>
-                            <select
-                                onChange={handlemember}
-                                onBlur={handlemember}
-                                value={memberId}
-                            >
-                                <optgroup>
-                                    {member?.map(((member)=>{
-                                        return(
-                                            <option value={member?._id}>{member?.personalInfo?.fullname}</option>
-                                        )       
-                                    }))}
-                                </optgroup>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>Amount</label>
-                            <input type="text" 
-                                placeholder="Enter Amount"
-                                value={amount}
-                                onBlur={handleamount}
-                                onChange={handleamount}
-                                required
-                            ></input>
-                        </div>
-                    </div>
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>Interest Rate</label>
-                            <input type="text" 
-                            value={interestRate}
-                            placeholder="Enter Interest Rate"
-                            onBlur={handleInterestRate}
-                            onChange={handleInterestRate}
-                            required
-                            ></input>
-                        </div>
-                    </div>
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>RePayment</label>
-                            <input type="text" 
-                            placeholder="Enter Amount fo RePayment"
-                            onBlur={handleMonthlyPayment}
-                            onChange={handleMonthlyPayment}
-                            required
-                            value={monthlyPayment}
-                            ></input>
-                        </div>
-                    </div>
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>Interval</label>
-                            <select
-                                value={interval}
-                                onChange={handleInterval}
-                                onBlur={handleInterval}
-                                required
-                            >
-                                <optgroup>
-                                    <option>--Select Option--</option>
-                                    <option value={5}>5 Days</option>
-                                    <option value={7}>7 Days</option>
-                                    <option value={15}>BiWeekly</option>
-                                    <option value={30}>Monthly</option>
-                                </optgroup>
-                            </select>
-                        </div>
-                    </div>
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>Start Date</label>
-                            <input type="date" 
-                            placeholder="Enter Interest Rate"
-                            value={startDate}
-                            onBlur={handleStartDate}
-                            onChange={handleStartDate}
-                            required
-                            ></input>
-                        </div>
-                    </div>
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>End Date</label>
-                            <input 
-                                type="date" 
-                                required 
-                                value={endDate} 
-                                disabled 
-                            ></input>
-                        </div>
-                    </div>
-                    <div className="form-2"  style={{width: "100%"}}>
-                        <div className="input input-4">
-                            <label>Purpose</label>
-                            <input type="text" 
-                            placeholder="Purpose of Loan"
-                            onBlur={handlePurpose}
-                            onChange={handlePurpose}
-                            value={purpose}
-                            required
-                            ></input>
-                        </div>
-                    </div>
-                    <div className="form-button">
-                        <button className='transfer-button'>
-                            {loading ? (
-                                <LottieAnimation data={loader}/>
-                            ):"Create"} 
-                        </button>
-                    </div>
-                </form>
-                {show && <LoanModal
-                    type='Saving'
-                    togglemodal={togglemodal}
-                    data={postState}
-                />}
-            </div>
-        </div>
+        </>
     );
 }
 
@@ -333,6 +300,7 @@ const mapStateToProps = state => {
         loading: state?.saving?.loading,
         profile: state?.profile?.data?.payload?._id,
         data: state?.saving?.data?.payload?.expenses,
+        memberloading: state?.member?.loading,
         member: state?.member?.data?.payload?.members,
     }
 }
@@ -342,7 +310,7 @@ const mapDispatchToProps = dispatch => {
         createSaving: (postdata, history, error) => {
             dispatch(createSavingGroup(postdata, history, error));
         },
-        getmember: (limit, page) => dispatch(getmember(limit, page)),
+        getmember: (limit, page) => dispatch(getgroupmember(limit, page)),
     }
 }
 

@@ -129,6 +129,7 @@ const PersonalGroup = ({
                             onBlur={handlemember}
                             >
                                 <optgroup>
+                                    <option>--Select Member--</option>
                                     {member?.map(((member)=>{
                                         return(
                                             <option value={member?._id}>{member?.personalInfo?.fullname}</option>

@@ -9,6 +9,7 @@ import { depositData, singledepositData } from "../../Redux/Deposit/DepositActio
 import LottieAnimation from "../../Lotties";
 import loader from "../../Assets/animations/loading.json"
 import LoadingModal from "../../components/Modal/LoadingModal";
+import { getLoan } from "../../Redux/Loan/LaonAction";
 const CardPayment = ({
     buttonScan, 
     cardData, 
@@ -19,7 +20,9 @@ const CardPayment = ({
     Deposit,
     loading,
     error, 
-    data
+    data,
+    getloans,
+    plan
 }) => {
     const {id} = useParams()
     const members = ['John Doe', 'Jane Smith', 'Michael Johnson', 'Alice Williams', 'David Brown'];
@@ -30,7 +33,8 @@ const CardPayment = ({
     const [next, setnext] = useState(1)
     const [pin, setPin] = useState("");
     const [amount, setAmount] = useState("")
-    const [transactionType, setTransactionType] = useState("")
+    const [transactionType, setTransactionType] = useState(null)
+    const [typeid, setTypeId] = useState("")
     const [accountType, setAccountType] = useState("")
     const [postState, setpostState] = useState({});
     const [showPin, setShowPin] = useState(false);
@@ -42,14 +46,25 @@ const CardPayment = ({
     const handletransactiontype =(e)=>{
         const value = e.target.value
         setTransactionType(value)
-        setpostState({ ...postState, ...{transactionType} }); 
+        setpostState({ ...postState, ...{type: transactionType} }); 
     }
-
+    const handletypeId = (e)=>{
+        const value = e.target.value
+        setTypeId(value)
+        if(transactionType == 0){
+            setpostState({...postState, ...{savingsId: typeid}})
+        }else if(transactionType == 1){
+            setpostState({...postState, ...{loanId: typeid}})
+        }
+    }
+    const toggleModal = ()=>{
+        setnext(1)
+    }
     const handletotal =(e)=>{
         const value = e.target.value
         setAmount(value)
         const newvalue = parseFloat(value)
-        setpostState({ ...postState, ...{totalAmount: amount} });
+        setpostState({ ...postState, ...{amount: newvalue, memberId: id } });
     }
 
     const handleAccount=(e)=>{
@@ -165,6 +180,7 @@ const CardPayment = ({
                 () => {
                     setSuccess2(true)
                     setpostState({})
+                    setnext(5)
                     // On Success
                 },
                 () => {
@@ -197,54 +213,26 @@ const CardPayment = ({
         if(cardData.pinRequest ){
             setnext(3)
         }
-    },[cardData]) 
+    },[cardData])
+    useEffect(()=>{
+        getloans(id, transactionType)
+    },[id,transactionType]) 
+    // useEffect(()=>{
+    //     if(next === 3)
+    // },[next])
     return ( 
         <div className="saving">
             <div className="back">
-                <Link to='/payment'><BiChevronLeft/></Link>
+                <Link to={`/payment/${id}`}><BiChevronLeft/></Link>
                 <p className="title">Card Payments</p>
             </div>
-            
-            <div className="form-11" style={{ width: '100%' }}>
-                <div className="input">
-                    <input 
-                        type="text" 
-                        placeholder="SEARCH FOR MEMBER"
-                        value={id ? id: searchInput}
-                        onChange={handleInputChange}
-                        disabled={id}
-                        required
-                    ></input>
-                </div>
-            </div>
-            {searchInput && (
-                <div className="member-list">
-                    {filteredMembers.length > 0 ? (
-                        filteredMembers.map((member, index) => (
-                            <div    
-                                onClick={() => handleMemberClick(member)}
-                                style={{ cursor: 'pointer' }} 
-                                key={index} 
-                                className="member-item"
-                            >
-                                {member}
-                            </div>
-                        ))
-                    ) : (
-                        <div>No members found</div>
-                    )}
-                </div>
-            )}
-            <div className="selected-user">
-                <h4 className="form-head">{searchUser}</h4>
-            </div>
             <div className="card-body">
-              { next===1 && <div className="connect-reader">
+              {/* { next===1 && <div className="connect-reader">
                     <FaWifi />
                     <p>Connect Credio Reader</p>
                     <button onClick={connectreader}>Connect</button>
-                </div>}
-               { next===2 && 
+                </div>} */}
+               {/* { next===1 &&  */}
                     <div className="card-field">
                         <form onSubmit={handleSubmit}>
                             <div className="form-2"  style={{width: "100%"}}>
@@ -253,6 +241,7 @@ const CardPayment = ({
                                     <input type="text" 
                                     placeholder="Enter Amount"
                                     // value={formattedAmount}
+                                    disabled={next==3}
                                     onBlur={handletotal}
                                     onChange={handletotal}
                                     required
@@ -263,20 +252,64 @@ const CardPayment = ({
                             <div className="form-2"  style={{width: "100%"}}>
                                 <div className="input input-4">
                                     <label>Transaction Type</label>
-                                    <select required onChange={handletransactiontype} onBlur={handletransactiontype}>
+                                    <select disabled={next==3} required onChange={handletransactiontype} onBlur={handletransactiontype}>
                                         <optgroup>
                                             <option>--Transaction Type--</option>
-                                            <option value="savings">Savings</option>
-                                            <option value="loan">Loan</option>
+                                            <option value={0}>Savings</option>
+                                            <option value={1}>Loan</option>
                                         
                                         </optgroup>
                                     </select>
                                 </div>
                             </div>
+                            {transactionType == 1 && (
+                                <div className="form-2"  style={{width: "100%"}}>
+                                    <div className="input input-4">
+                                        <label>Loan Plan</label>
+                                        <select
+                                            disabled={next==3}
+                                            onChange={handletypeId}
+                                            onBlur={handletypeId}
+                                            required
+                                        >
+                                            <optgroup>
+                                            <option>--Select a Loan Plan---</option>
+                                                {plan?.map(plan => {
+                                                    return(
+                                                        <option value={plan._id}>{plan.purpose} ||  {plan.amount}</option>
+                                                    )
+                                                })}
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                </div>
+                            )}
+                            {transactionType == 0 && (
+                                    <div className="form-2"  style={{width: "100%"}}>
+                                        <div className="input input-4">
+                                            <label>Saving Plan</label>
+                                            <select
+                                                disabled={next==3}
+                                                onChange={handletypeId}
+                                                onBlur={handletypeId}
+                                                required
+                                            >
+                                                <optgroup>
+                                                    <option>--Select a Saving Plan---</option>
+                                                    {plan?.map(plan => {
+                                                        return(
+                                                            <option value={plan._id}>{plan.purpose} ||  {plan.amount}</option>
+                                                        )
+                                                    })}
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                            )}
                             <div className="form-2"  style={{width: "100%"}}>
                                 <div className="input input-4">
                                     <label>Account Type</label>
-                                    <select required onChange={handleAccount} onBlur={handleAccount}>
+                                    <select disabled={next==3} required onChange={handleAccount} onBlur={handleAccount}>
                                         <optgroup>
                                             <option>--Select Account Type--</option>
                                             <option value={1}>Savings Account</option>
@@ -286,21 +319,26 @@ const CardPayment = ({
                                     </select>
                                 </div>
                             </div>
-                            <div className="form-button">
-                                <button className='transfer-button'>
-                                    {cardData?.requestDisplay
-                                    ? (
-                                        <>
-                                            <LottieAnimation data={loader}/>
-                                            "Scanning your Card.."
-                                        </>
-                                    ) 
-                                    : "Continue"}
-                                </button>
-                            </div>
+                           {next == 2 && 
+                                <div className="form-button">
+                                    <button className='transfer-button'>
+                                        {cardData?.requestDisplay
+                                        ? (
+                                            <>
+                                                <LottieAnimation data={loader}/>
+                                                "Scanning your Card.."
+                                            </>
+                                        ) 
+                                        : "Continue"}
+                                    </button>
+                                </div>
+                            }
                         </form>  
+                        { next == 1 && 
+                            <button className='transfer-button' onClick={connectreader}>Connect to Credio Reader</button>
+                        }
                     </div>
-                }
+                {/* } */}
                 {next === 3 &&
                     <div className="card-field">
                         <p className="enter-pin">Please Enter Your Card Pin</p>
@@ -354,10 +392,10 @@ const CardPayment = ({
                         <div className="form-button">
                             <button onClick={handlePin} className='transfer-button'>Transfer</button>
                         </div>
-                        {loading && (<LoadingModal/>)}
                     </div>
                 }
-                {next === 5 && <ReceiptModal /> }
+                {next === 5 && <ReceiptModal togglemodal={toggleModal} data={data}/> }
+                {loading && (<LoadingModal/>)}
             </div>
         </div>
     );
@@ -365,12 +403,14 @@ const CardPayment = ({
 
 
 const mapStoreToProps = (state) => {
+    console.log(state)
     return {
         cardData: state?.card,
         connected: state?.card?.connected,
         loading: state.deposit.loading,
-        data: state.deposit,
-        error: state.deposit.error
+        data: state.deposit.deposit,
+        error: state.deposit.error,
+        plan: state?.loanlist?.data?.payload?.memberActionList
     };  
   };
   
@@ -393,6 +433,9 @@ const mapStoreToProps = (state) => {
         },
         Deposit: (postdata, history, error) => {
             dispatch(singledepositData(postdata, history, error));
+        },
+        getloans: (id, type) => {
+            dispatch(getLoan(id, type));
         },
     };
   };

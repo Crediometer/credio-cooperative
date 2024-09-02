@@ -11,7 +11,7 @@ const LoadingModal = ({message}) => {
                     
                         <LottieAnimation data={loader}/>
                   
-                   {/* <p className="create-payment">uploading</p>  */}
+                   <p className="create-payment">{message}</p> 
                 </div>
             </div>
         </div>

@@ -14,6 +14,7 @@ import LottieAnimation from '../../Lotties';
 import preloader from "../../Assets/animations/preloader.json"
 import empty from "../../Assets/animations/Empty.json"
 import { getsinglemember } from '../../Redux/Member/MemberAction';
+import { FormattedNumber, IntlProvider } from 'react-intl';
 const MemberDetails = ({
     getloans,
     getsaving,
@@ -140,16 +141,33 @@ const MemberDetails = ({
                                             <>
                                                     {savedata?.transactions?.map((saving)=>{
                                                         return(
-                                                            <div className="join-search transaction">
-                                                                <div className="transaction-left saving-left">
-                                                                    <GoArrowDownRight />
-                                                                    <p className="transaction-name">David Temidayo</p>
+                                                            <div className="schedule-inner-body">
+                                                                <div className="schedule-inner-detail">
+                                                                    <p>Saving Amount</p>
+                                                                    <IntlProvider>
+                                                                        {" "}
+                                                                        <h3>
+                                                                        <FormattedNumber
+                                                                            value={
+                                                                                saving.amount
+                                                                            }
+                                                                            style="currency"
+                                                                            currency="NGN"
+                                                                        />
+                                                                        </h3>
+                                                                    </IntlProvider> 
                                                                 </div>
-                                                                <div className="transaction-right saving-right">
-                                                                    <h3>N40,000</h3>
-                                                                    <div >
-                                                                        <IoMdArrowDropdown />
-                                                                    </div>
+                                                                <div className="schedule-inner-detail">
+                                                                    <p>Start Date</p>
+                                                                    <h3>{saving.startDate}</h3>
+                                                                </div>
+                                                                <div className="schedule-inner-detail">
+                                                                    <p>Start Date</p>
+                                                                    <h3>{saving.endDate}</h3>
+                                                                </div>
+                                                                <div className="schedule-inner-detail">
+                                                                    <p>Start Date</p>
+                                                                    <h3>{saving.purpose}</h3>
                                                                 </div>
                                                             </div>
                                                         )
@@ -180,16 +198,33 @@ const MemberDetails = ({
                                         <>
                                             {data?.transactions?.map((loan)=>{
                                                 return(
-                                                    <div className="join-search transaction">
-                                                        <div className="transaction-left saving-left">
-                                                            <GoArrowDownRight />
-                                                            <p className="transaction-name">David Temidayo</p>
+                                                    <div className="schedule-inner-body">
+                                                        <div className="schedule-inner-detail">
+                                                            <p>Saving Amount</p>
+                                                            <IntlProvider>
+                                                                {" "}
+                                                                <h3>
+                                                                <FormattedNumber
+                                                                    value={
+                                                                        loan.amount
+                                                                    }
+                                                                    style="currency"
+                                                                    currency="NGN"
+                                                                />
+                                                                </h3>
+                                                            </IntlProvider> 
                                                         </div>
-                                                        <div className="transaction-right saving-right">
-                                                            <h3>N40,000</h3>
-                                                            <div >
-                                                                <IoMdArrowDropdown />
-                                                            </div>
+                                                        <div className="schedule-inner-detail">
+                                                            <p>Start Date</p>
+                                                            <h3>{loan.startDate}</h3>
+                                                        </div>
+                                                        <div className="schedule-inner-detail">
+                                                            <p>Start Date</p>
+                                                            <h3>{loan.endDate}</h3>
+                                                        </div>
+                                                        <div className="schedule-inner-detail">
+                                                            <p>Start Date</p>
+                                                            <h3>{loan.purpose}</h3>
                                                         </div>
                                                     </div>
                                                 )

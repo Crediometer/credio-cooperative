@@ -31,3 +31,13 @@
 .login-form{
     margin-bottom: 20px;
 }
+@media (max-width:800px) {
+    .login-inner{
+        width: 90%;
+        padding: 1.5rem;
+        border-radius: 10px;
+        -webkit-box-shadow: 2px 2px 15px -1px rgba(0, 0, 0, 0.311);
+        -moz-box-shadow: 2px 2px 15px -1px rgba(0, 0, 0, 0.311);
+        box-shadow: 2px 2px 15px -1px rgba(0, 0, 0, 0.311);
+    }
+}

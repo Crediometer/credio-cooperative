@@ -14,6 +14,9 @@ import LottieAnimation from "../../Lotties";
 import loader from "../../Assets/animations/loading.json"
 import { depositData } from "../../Redux/Deposit/DepositAction";
 import LoadingModal from "../../components/Modal/LoadingModal";
+import { getLoan } from "../../Redux/Loan/LaonAction";
+import { getsinglemember } from "../../Redux/Member/MemberAction";
+import ErrorModal from "../../components/Modal/ErrorModal";
 const NewStudent = ({
     buttonScan, 
     cardData, 
@@ -23,8 +26,14 @@ const NewStudent = ({
     sendPin,
     Deposit,
     loading,
+    getloans,
     error, 
-    data
+    data,
+    plan,
+    memberdata,
+    membererror,
+    memberloading,
+    getsinglemember
 }) => {
     const [show1, setShow1] = useState(false)
     const [showBank, setShowBank] = useState(false);
@@ -42,17 +51,13 @@ const NewStudent = ({
     const [amountPerUnit, setAmountPerUnit] = useState('');
     const [repeatEvery, setRepeatEvery] = useState('');
     const [postState, setpostState] = useState({});
+    const [typeid, setTypeId] = useState("")
     const [keyState, setKeyState] = useState({})
     const [number, setNumber] = useState(1);
     const [success2,  setSuccess2] = useState(false)
     const [next, setnext] = useState(1)
     const {id} = useParams()
-    const members = ['John Doe', 'Jane Smith', 'Michael Johnson', 'Alice Williams', 'David Brown'];
-    // State to hold the search input and the filtered members
-    const [searchInput, setSearchInput] = useState('');
-    const [searchUser, setSearchUser] = useState('');
     const [accountType, setAccounttype] = useState()
-    const [filteredMembers, setFilteredMembers] = useState(members);
     const [pin, setPin] = useState("");
     const [showPin, setShowPin] = useState(false);
     const [showPin1, setShowPin1] = useState(false);
@@ -112,25 +117,10 @@ const NewStudent = ({
     const onChangepin4 = (e) => {
         setPin3(e.target.value)
     }
-    const handleInputChange = (e) => {
-        const value = e.target.value;
-        setSearchInput(value);
-        
-        // Filter members based on input value
-        if (value) {
-            const filtered = members.filter(member => 
-                member.toLowerCase().includes(value.toLowerCase())
-            );
-            setFilteredMembers(filtered);
-        } else {
-            setFilteredMembers([]);
-        }
-    };
-    const handleMemberClick = (member) => {
-        setSearchUser(member);
-        setSearchInput("")
-        setFilteredMembers([]);
-    };
+    const toggleModal = ()=>{
+        setnext(2)
+        setShowError(false)
+    }
     const handlerepeat =(e)=>{
         const value = e.target.value
         setRepeatEvery(value)
@@ -151,7 +141,24 @@ const NewStudent = ({
     const handletransactiontype =(e)=>{
         const value = e.target.value
         setTransactionType(value)
-        setpostState({ ...postState, ...{transactionType} }); 
+        setpostState({ ...postState, ...{
+            transactionType, 
+            memberId:id, 
+            memberName: memberdata?.member?.personalInfo?.fullname, 
+            memberNumber:memberdata?.member?.personalInfo?.phone,
+            groupId: memberdata?.member?.groupId,
+            cooperativeId: memberdata?.member?.cooperativeId,
+            requestType: 0
+        } }); 
+    }
+    const handletypeId = (e)=>{
+        const value = e.target.value
+        setTypeId(value)
+        if(transactionType == 0){
+            setpostState({...postState, ...{productId: typeid, type: true}})
+        }else if(transactionType == 1){
+            setpostState({...postState, ...{productId: typeid, type: false}})
+        }
     }
     const handleAccount=(e)=>{
         const value = e.target.value
@@ -205,12 +212,14 @@ const NewStudent = ({
             Deposit(
                 { ...postState, ...{tlv: cardData.tlv} },
                 () => {
+                    setnext(4)
                     setSuccess2(true)
                     setpostState({})
                     // On Success
                 },
                 () => {
                     // On Error
+                    setShowError(true)
                 }
             );
         }
@@ -248,7 +257,6 @@ const NewStudent = ({
                 15: 15,
                 30: 30
             };
-
             const repeatDays = days[repeatEvery];
             const units = parseInt(totalAmount) / parseInt(amountPerUnit);
             const endDateValue = new Date(startDate);
@@ -258,72 +266,26 @@ const NewStudent = ({
             // setpostState({ ...postState, ...{endDate: endDate} });  
         }
     }, [totalAmount, amountPerUnit, repeatEvery, startDate]);
-    //useEffect(()=>{
-    //     setpostState({ ...postState,
-    //         tlv:cardData?.tlv,
-    //         key: keyinfo?.pin_key,
-    //         merchantId: keyinfo?.merchantId,
-    //         merchantCategoryCode: keyinfo?.merchantCategoryCode,
-    //         terminalId:keyinfo?.terminalid,
-    //         merchantName: keyinfo?.merchantName
-    //     }); 
-    // },[keyinfo, cardData])
-    // useEffect(()=>{
-    //     fetchprofile();
-    // },[]);
+    useEffect(()=>{
+        getloans(id, transactionType)
+    },[id,transactionType])
+    useEffect(()=>{
+        getsinglemember(id)
+    },[id])
     return ( 
         <div className="payment saving">
-            {/* <div className="filter-nav">
-                <p className={(number===1) ? "filter-text filter-active": "filter-text"} onClick={()=>{setNumber(1)}}>Cash Payment</p>
-                <p className={(number===2) ? "filter-text filter-active": "filter-text"} onClick={()=>{setNumber(2)}}>Card Payment</p>
-                <p className={(number===3) ? "filter-text filter-active": "filter-text"} onClick={()=>{setNumber(3)}}>Direct Bank Debit</p>
-                <p className={(number===4) ? "filter-text filter-active": "filter-text"} onClick={()=>{setNumber(4)}}>Recuring Payment</p>
-            </div> */}
             <div className="back">
-                <Link to='/payment'><BiChevronLeft/></Link>
+                <Link to={`/payment/${id}`}><BiChevronLeft/></Link>
                 <p className="title">Recurring Payments</p>
             </div>
-            <div className="form-11" style={{ width: '100%' }}>
-                <div className="input">
-                    <input 
-                        type="text" 
-                        placeholder="SEARCH FOR MEMBER"
-                        value={id ? id: searchInput}
-                        onChange={handleInputChange}
-                        disabled={id}
-                        required
-                    ></input>
-                </div>
-            </div>
-            {searchInput && (
-                <div className="member-list">
-                    {filteredMembers.length > 0 ? (
-                        filteredMembers.map((member, index) => (
-                            <div    
-                                onClick={() => handleMemberClick(member)}
-                                style={{ cursor: 'pointer' }} 
-                                key={index} 
-                                className="member-item"
-                            >
-                                {member}
-                            </div>
-                        ))
-                    ) : (
-                        <div>No members found</div>
-                    )}
-                </div>
-            )}
-            <div className="selected-user">
-                <h4 className="form-head">{searchUser}</h4>
-            </div>
             <div className="card-body">
-                {next===1 && (
+                {(next===1 || next === 2) && (
                     <form style={{ width: '100%', marginTop:"-2 0px" }} onSubmit={connectreader}>
                         <div className="invoice-body">
                             <div className="invoice-period"  style={{ width: '100%' }} >
                                 {/* <h4 className="form-head">Period</h4> */}
                                 <div className="payment-form">
-                                    <div className="form-1">
+                                    {/* <div className="form-1">
                                         <label>Repeat Every<span>*</span></label>
                                         <div className="select-field">
                                             <select required onChange={handlerepeat} onBlur={handlerepeat}>
@@ -336,53 +298,99 @@ const NewStudent = ({
                                                 </optgroup>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="form-1">
                                         <label>Transaction Type<span>*</span></label>
                                         <div className="select-field">
                                             <select required onChange={handletransactiontype} onBlur={handletransactiontype}>
                                                 <optgroup>
                                                     <option>--Transaction Type--</option>
-                                                    <option value="savings">Savings</option>
-                                                    <option value="loan">Loan</option>
+                                                    <option value={0}>Savings</option>
+                                                    <option value={1}>Loan</option>
                                                 </optgroup>
                                             </select>
                                         </div>
                                     </div>
-                                    <div className="form-1">
-                                        <label>Enter Total Amount<span>*</span></label>
-                                        <div className="input-search-name">
-                                            <input type="text" required onChange={handletotal} onBlur={handletotal}></input>
+                                    {transactionType == 1 && (
+                                        <div className="form-2"  style={{width: "100%"}}>
+                                            <div className="input input-4">
+                                                <label>Loan Plan</label>
+                                                <select
+                                                    disabled={next==3}
+                                                    onChange={handletypeId}
+                                                    onBlur={handletypeId}
+                                                    required
+                                                >
+                                                    <optgroup>
+                                                    <option>--Select a Loan Plan---</option>
+                                                        {plan?.map(plan => {
+                                                            return(
+                                                                <option value={plan._id}>{plan.purpose} ||  {plan.amount}</option>
+                                                            )
+                                                        })}
+                                                    </optgroup>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="form-1">
-                                        <label>Enter Amount per unit<span>*</span></label>
-                                        <div className="input-search-name">
-                                            <input type="text" required onChange={handleunit} onBlur={handleunit}></input>
+                                    )}
+                                    {transactionType == 0 && (
+                                        <div className="form-2"  style={{width: "100%"}}>
+                                            <div className="input input-4">
+                                                <label>Saving Plan</label>
+                                                <select
+                                                    disabled={next==3}
+                                                    onChange={handletypeId}
+                                                    onBlur={handletypeId}
+                                                    required
+                                                >
+                                                    <optgroup>
+                                                        <option>--Select a Saving Plan---</option>
+                                                        {plan?.map(plan => {
+                                                            return(
+                                                                <option value={plan._id}>{plan.purpose} ||  {plan.amount}</option>
+                                                            )
+                                                        })}
+                                                    </optgroup>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="form-1">
-                                        <label>Start Date<span>*</span></label>
-                                        <div className="input-search-name">
-                                            <input type="date" required value={startDate} disabled></input>
-                            
-                                        </div>
-                                    </div>
-                                    <div className="form-1">
-                                        <label>End Date<span>*</span></label>
-                                        <div className="input-search-name">
-                                            <input type="date" required value={endDate} disabled ></input>
+                                    )}
+                                    <div className="form-2"  style={{width: "100%"}}>
+                                        <div className="input input-4">
+                                            <label>Account Type</label>
+                                            <select required onChange={handleAccount} onBlur={handleAccount}>
+                                                <optgroup>
+                                                    <option>--Select Account Type--</option>
+                                                    <option value={1}>Savings Account</option>
+                                                    <option value={2}>Current Account</option>
+                                                    <option value={0}>Universal Account</option>
+                                                </optgroup>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="save-con save-con-4">
-                            <button>Connect to Credio Reader</button>
-                        </div>
+                        {next === 1 && (
+                            <div className="save-con save-con-4">
+                                <button>Connect to Credio Reader</button>
+                            </div>
+                        )}
+                        {next === 2 && (
+                            <div className="form-button">
+                                <button className='transfer-button' onClick={handleSubmit}>{cardData?.requestDisplay
+                                ? (
+                                    <>
+                                        <LottieAnimation data={loader}/>
+                                        "Scanning your Card.."
+                                    </>
+                                ) 
+                                : "Continue"}</button>
+                            </div>
+                        )}  
                     </form>
                 )}
-                { next===2 && <div className="card-field">
+                {/* { next===2 && <div className="card-field">
                     <form onSubmit={handleSubmit}>
                         <div className="form-2"  style={{width: "100%"}}>
                                 <div className="input input-4">
@@ -409,10 +417,11 @@ const NewStudent = ({
                         </div>
                     </form>
                     </div>
-                }
+                } */}
                 {next === 3 &&
                     <div className="card-field">
                         <p className="enter-pin">Please Enter Your Card Pin</p>
+                        <p className="enter-pin">Charges fee of #50 will be added to this transaction</p>
                         <div className="field-container">
                             <div className="field-1">
                                 <div className="pinfield">
@@ -463,10 +472,11 @@ const NewStudent = ({
                         <div className="form-button">
                             <button onClick={handlePin}  className='transfer-button'>Transfer</button>
                         </div>
-                        {loading && (<LoadingModal/>)}
                     </div>
                 }
-                {next === 4 && <ReceiptModal /> }
+                {next === 4 && <ReceiptModal togglemodal={toggleModal} data={data}/> }
+                {loading && (<LoadingModal/>)}
+                {showerror && (<ErrorModal togglemodal={toggleModal} message2={data} message={error.message}/>)}
             </div>
             {/* <ReceiptModal/> */}
             {/* {showerror && (<Errormodal togglemodal={togglemodal2}/>)}
@@ -477,12 +487,17 @@ const NewStudent = ({
 }
 
 const mapStoreToProps = (state) => {
+    console.log(state)
     return {
+        membererror:state?.singlemember?.error,
+        memberloading: state?.singlemember?.loading,
+        memberdata: state?.singlemember?.data?.payload,
         cardData: state?.card,
         connected: state?.card?.connected,
-        loading: state.deposit.loading,
-        data: state.deposit,
-        error: state.deposit.error
+        loading: state.redeposit.loading,
+        data: state.redeposit.deposit,
+        error: state.redeposit.error,
+        plan: state?.loanlist?.data?.payload?.memberActionList
     };  
   };
   
@@ -506,6 +521,10 @@ const mapStoreToProps = (state) => {
         Deposit: (postdata, history, error) => {
             dispatch(depositData(postdata, history, error));
         },
+        getloans: (id, type) => {
+            dispatch(getLoan(id, type));
+        },
+        getsinglemember: (id) => dispatch(getsinglemember(id)),
     };
   };
   

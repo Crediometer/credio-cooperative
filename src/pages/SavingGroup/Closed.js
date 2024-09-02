@@ -3,12 +3,12 @@ import { BiChevronLeft } from "react-icons/bi";
 import { FaExclamationCircle } from "react-icons/fa";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { getClosedSaving } from "../../Redux/Saving/SavingAction";
+import { getClosedSaving, getGroupClosedSaving } from "../../Redux/Saving/SavingAction";
 import LottieAnimation from "../../Lotties";
 import preloader from "../../Assets/animations/preloader.json"
 import empty from "../../Assets/animations/Empty.json"
 import { Stack, TablePagination } from "@mui/material";
-const ClosedSaving = ({
+const ClosedSavingGroup = ({
     getClosedSaving,
     loading,
     error,
@@ -58,7 +58,7 @@ const ClosedSaving = ({
     return ( 
         <div className="saving">
              <div className="back">
-                <Link to='/saving'><BiChevronLeft/></Link>
+                <Link to='/saving-group'><BiChevronLeft/></Link>
                 <p className="title">Closed Saving</p>
             </div>
             <div className="top-search">
@@ -116,7 +116,7 @@ const ClosedSaving = ({
                      {data?.savings?.length === 0 ? (
                         <div className="empty-animate">
                             <LottieAnimation data={empty}/>
-                            <p>No Data Found</p>
+                            <p>No Closed Saving Found</p>
                         </div>
                     ):(
                         <>
@@ -173,8 +173,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        getClosedSaving: (limit, page) => dispatch(getClosedSaving(limit, page)),
+        getClosedSaving: (limit, page) => dispatch(getGroupClosedSaving(limit, page)),
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ClosedSaving);
+export default connect(mapStateToProps, mapDispatchToProps)(ClosedSavingGroup);

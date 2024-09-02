@@ -46,19 +46,51 @@ export const singledepositFaliure = (error) => {
     payload: error,
   };
 };
-const baseUrl = "https://www.sandbox.b2b.crediopay.com/api/v1"
+const baseUrl = "https://coop-sp-c896c5c4c3f0.herokuapp.com/api/v1"
 
 export const depositData = (depositState, history, historyError) => {
   return async (dispatch) => {
     dispatch(depositRequest())
     try {
-      let datas = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZU51bWJlciI6IisyMzQ5MDY2ODQ3MDI0IiwiYnVzaW5lc3NOYW1lIjoiTXkgQnVzaW5lc3MiLCJfaWQiOiJpZCIsImlhdCI6MTcyMDczODk2MywiZXhwIjoxNzIwODI1MzYzfQ.wt-zL_7V4gTTcXVQlj51DxWpa_RNZJBHjJ5sxW1ezzg";
+      let datas = JSON.parse(localStorage.getItem("auth"))
       const headers = {
         "Content-Type": "application/json",
-        authorization: `Bearer ${datas}`,
+        authorization: `Bearer ${datas?.token?.payload?.token}`,
       };
       const res = await axios.post(
         `${baseUrl}/cooperative/reader/card-tokenization `,
+        depositState,
+        {headers: headers}
+      );
+      const { data } = res;
+      if (res.status === 200) {
+        history()
+        dispatch(depositSuccess(data)); 
+      }else if(res.status === 208){
+        historyError()
+        dispatch(depositSuccess(data));
+      }
+    } catch (error) {
+      if (error.response) {
+        dispatch(depositFaliure(error.response));
+        historyError()
+      }
+     
+    }
+  };
+};
+
+export const depositRepayment = (depositState, history, historyError) => {
+  return async (dispatch) => {
+    dispatch(depositRequest())
+    try {
+      let datas = JSON.parse(localStorage.getItem("auth"))
+      const headers = {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${datas?.token?.payload?.token}`,
+      };
+      const res = await axios.post(
+        `${baseUrl}/cooperative/reader/card-tokenization-group-coop`,
         depositState,
         {headers: headers}
       );
@@ -77,17 +109,77 @@ export const depositData = (depositState, history, historyError) => {
   };
 };
 
+
 export const singledepositData = (depositState, history, historyError) => {
   return async (dispatch) => {
     dispatch(singledepositRequest())
     try {
-      let datas = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZU51bWJlciI6IisyMzQ5MDY2ODQ3MDI0IiwiYnVzaW5lc3NOYW1lIjoiTXkgQnVzaW5lc3MiLCJfaWQiOiJpZCIsImlhdCI6MTcyMDczODUwNSwiZXhwIjoxNzIwODI0OTA1fQ.0pIPoGhy3jRPJ7wCrdOaWJwoylbVmtz5xitXYA3iRLs";
+      let datas = JSON.parse(localStorage.getItem("auth"))
       const headers = {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${datas}`,
+          "Content-Type": "application/json",
+          authorization: `Bearer ${datas?.token?.payload?.token}`,
       };
       const res = await axios.post(
         `${baseUrl}/cooperative/reader/one-time-off`,
+        depositState,
+        { headers: headers }
+      );
+      const { data } = res;
+      if (res.status === 200) {
+        history()
+        dispatch(singledepositSuccess(data)); 
+      }
+    } catch (error) {
+      if (error.response) {
+        dispatch(singledepositFaliure(error.response));
+        historyError()
+      }
+     
+    }
+  };
+};
+
+export const recurringdepositData = (depositState, history, historyError) => {
+  return async (dispatch) => {
+    dispatch(singledepositRequest())
+    try {
+      let datas = JSON.parse(localStorage.getItem("auth"))
+      const headers = {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${datas?.token?.payload?.token}`,
+      };
+      const res = await axios.post(
+        `${baseUrl}/cooperative/reader/card-tokenisation`,
+        depositState,
+        { headers: headers }
+      );
+      const { data } = res;
+      if (res.status === 200) {
+        history()
+        dispatch(singledepositSuccess(data)); 
+      }
+    } catch (error) {
+      if (error.response) {
+        dispatch(singledepositFaliure(error.response));
+        historyError()
+      }
+     
+    }
+  };
+};
+
+
+export const groupsingledepositData = (depositState, history, historyError) => {
+  return async (dispatch) => {
+    dispatch(singledepositRequest())
+    try {
+      let datas = JSON.parse(localStorage.getItem("auth"))
+      const headers = {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${datas?.token?.payload?.token}`,
+      };
+      const res = await axios.post(
+        `${baseUrl}/cooperative/reader/one-time-off-group`,
         depositState,
         { headers: headers }
       );

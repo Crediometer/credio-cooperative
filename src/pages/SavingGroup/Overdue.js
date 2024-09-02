@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { BiChevronLeft } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import { getOverdueSaving } from "../../Redux/Saving/SavingAction";
+import { getGroupOverdueSaving, getOverdueSaving } from "../../Redux/Saving/SavingAction";
 import { Stack, TablePagination } from "@mui/material";
 import LottieAnimation from "../../Lotties";
 import preloader from "../../Assets/animations/preloader.json"
 import empty from "../../Assets/animations/Empty.json"
 import { connect } from "react-redux";
-const Overdue = ({
+const OverdueGroup = ({
     getOverdueSaving,
     loading,
     error,
@@ -53,7 +53,7 @@ const Overdue = ({
     return ( 
         <div className="saving overdue">
             <div className="back">
-                <Link to='/saving'><BiChevronLeft/></Link>
+                <Link to='/saving-group'><BiChevronLeft/></Link>
                 <p className="title">Overdue saving</p>
             </div>
             <div className="top-search">
@@ -111,7 +111,7 @@ const Overdue = ({
                     {data?.savings?.length === 0 ? (
                         <div className="empty-animate">
                             <LottieAnimation data={empty}/>
-                            <p>No Data Found</p>
+                            <p>No Overdue Saving Found</p>
                         </div>
                     ):(
                         <>
@@ -194,8 +194,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        getOverdueSaving: (limit, page) => dispatch(getOverdueSaving(limit, page)),
+        getOverdueSaving: (limit, page) => dispatch(getGroupOverdueSaving(limit, page)),
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Overdue);
+export default connect(mapStateToProps, mapDispatchToProps)(OverdueGroup);
