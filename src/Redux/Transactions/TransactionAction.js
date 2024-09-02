@@ -59,7 +59,7 @@ export const loantransactionRequest = () => {
     };
   };
 
-  const baseUrl = "https://cooperative-be.onrender.com/api/v1"
+  const baseUrl = "https://coopnode.crediometer.com/api/v1"
   export const getloans = (id, limit, page) => {
     return async (dispatch) => {
       dispatch(loantransactionRequest())

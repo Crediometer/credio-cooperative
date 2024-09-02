@@ -46,7 +46,7 @@ export const registerRequest = () => {
     };
   };
 
-const baseUrl = "https://cooperative-be.onrender.com/api/v1"
+const baseUrl = "https://coopnode.crediometer.com/api/v1"
   export const registerData = (registerState, history, setErrorHandler) => {
     return async (dispatch) => {
       dispatch(registerRequest())

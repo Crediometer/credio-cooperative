@@ -48,7 +48,7 @@ export const vaultFaliure = (error) =>{
     }
 }
 
-const baseUrl = "https://cooperative-be.onrender.com/api/v1"
+const baseUrl = "https://coopnode.crediometer.com/api/v1"
 
 
 export const fetchprofile = () => {

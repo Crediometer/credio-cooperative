@@ -57,7 +57,7 @@ export const groupFaliure = (error) => {
       payload: error,
   };
 };
-const baseUrl = "https://cooperative-be.onrender.com/api/v1"
+const baseUrl = "https://coopnode.crediometer.com/api/v1"
 const baseUrl2 = "https://www.reader.crediometer.com"
 export const creategroup = (registerState, history, setErrorHandler) => {
   return async (dispatch) => {

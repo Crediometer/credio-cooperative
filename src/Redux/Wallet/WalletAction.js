@@ -21,7 +21,7 @@ export const paymentFaliure = (error) =>{
     }
 }
 
-const baseUrl = "https://cooperative-be.onrender.com/api/v1"
+const baseUrl = "https://coopnode.crediometer.com/api/v1"
 export const postPayment = (postState, history, setErrorHandler) => {
     return async (dispatch) => {
       dispatch(paymentRequest())

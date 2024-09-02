@@ -46,7 +46,7 @@ export const singledepositFaliure = (error) => {
     payload: error,
   };
 };
-const baseUrl = "https://coop-sp-c896c5c4c3f0.herokuapp.com/api/v1"
+const baseUrl = "https://www.coopsp.crediometer.com/api/v1"
 
 export const depositData = (depositState, history, historyError) => {
   return async (dispatch) => {
