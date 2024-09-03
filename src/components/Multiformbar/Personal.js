@@ -106,7 +106,6 @@ const Personal = ({
     };
 
 
-
     return ( 
             <div>
               <form onSubmit={handelClick} method='post'>

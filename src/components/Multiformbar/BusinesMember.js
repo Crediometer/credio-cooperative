@@ -81,6 +81,7 @@ const BusinessMember = ({
         setcooperativeInfo({ ...cooperativeInfo, ...{ nextOfKinRelationship } });
     };
     const handleshow = () =>{
+        window.scrollTo(0, 0);
         setShow(!show)
     }
     return ( 
@@ -92,7 +93,7 @@ const BusinessMember = ({
             )}
             <div className={styles.form2}>
                 <div className={styles2.field}>
-                    <label className={styles2.fieldlabel}>Purpose of joinin<span>*</span> </label>
+                    <label className={styles2.fieldlabel}>Purpose of joining<span>*</span> </label>
                     <input 
                         className={styles2.fieldinput}
                         type="text"
@@ -134,7 +135,7 @@ const BusinessMember = ({
             </div>
             <div className={styles.form2}>
                 <div className={styles2.field}>
-                    <label className={styles2.fieldlabel}>Have you belong to any cooperative before <span>*</span></label>
+                    <label className={styles2.fieldlabel}>Have you belonged to any cooperative before?<span>*</span></label>
                     <select
                      className={styles2.fieldinput}
                         onBlur={handlebelongedToCooperative}
@@ -152,7 +153,7 @@ const BusinessMember = ({
             </div>
             <div className={styles.form2}>
                 <div className={styles2.field}>
-                    <label className={styles2.fieldlabel}>If yes, why did you leave <span></span></label>
+                    <label className={styles2.fieldlabel}>If yes, why did you leave? <span></span></label>
                     <input 
                         className={styles2.fieldinput}
                         type="text"

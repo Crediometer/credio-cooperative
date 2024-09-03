@@ -17,7 +17,7 @@ const MultiStepProgressbar = (props) => {
                     <div className={`step-number ${accomplished ? "completed" : ""}`}>
                         {accomplished ? (<FaCheck/>) : (<p>1</p>)}
                     </div>
-                    <p className={`step-name ${accomplished ? "completed" : ""}`}>Input copperative info </p>
+                    <p className={`step-name ${accomplished ? "completed" : ""}`}>Input cooperative info </p>
                 </div>
             )}
             </Step>
