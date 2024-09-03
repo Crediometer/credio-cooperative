@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+ import { useEffect, useState } from 'react';
 import MultiStepProgressbar from '../../components/Multiformbar/MultiStepProgressbar';
 import styles from './Activate.module.css'
 import Personal from '../../components/Multiformbar/Personal';
@@ -85,7 +85,7 @@ const Activate = ({
             <div className="right">
                 <div className="content">
                     <div className={styles.activate}>
-                        <p className={styles.activateHead}>Setup  new cooperative account </p> 
+                        <p className={styles.activateHead}>Setup new cooperative account </p> 
                         <div className={styles.activateProgress}>
                             <MultiStepProgressbar step={index}/>
                         </div>

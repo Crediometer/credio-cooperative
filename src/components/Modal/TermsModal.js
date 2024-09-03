@@ -7,8 +7,8 @@ const TermsModal = ({togglemodal}) => {
             <p className="terms-subhead">Ensure that the details provided are genuine and met with your current information. </p>
             <div className="terms-list">
                 <ol>
-                    <li>Ensure that the give data above is correct.</li>
-                    <li>I shall uphold all the rules and regulation of the cooperative society withe sincerity, honest sense of responsibility and commitment. </li>
+                    <li>Ensure that the given data above is correct.</li>
+                    <li>I shall uphold all the rules and regulation of the cooperative society with sincerity, honest sense of responsibility and commitment. </li>
                     <li>That i shall abide by the rules and regulation in which shall be reviewed periodically in accordance with the agreement of members.</li>
                 </ol>
             </div>
